@@ -1,0 +1,8 @@
+.search-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 400px;
+    z-index: 100;
+  }
+  

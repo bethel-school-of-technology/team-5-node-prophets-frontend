@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Container,
@@ -6,12 +6,16 @@ import {
   Nav,
   NavDropdown,
   Navbar,
-  Stack
+  Stack,
 } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import "../styles/Navigation.css";
+import { FaSearch } from "react-icons/fa";
+import Search from "./Search";
 
 const Navigation = () => {
+  const [showSearch, setShowSearch] = useState(false);
+  const [query, setQuery] = useState("");
   return (
     <>
       <Navbar expand="lg" bg="light">
@@ -53,7 +57,7 @@ const Navigation = () => {
                       <Form.Control
                         size="sm"
                         placeholder="password"
-                        type="text"
+                        type="password"
                       />
                       <br />
                       <Button>Sign In</Button>
@@ -64,18 +68,19 @@ const Navigation = () => {
               <Link to="/newsfeed" className="nav-link">
                 RSS Feed
               </Link>
-              <Link to="/about" className="nav-link">
+              {/* <Link to="/about" className="nav-link">
                 QAK
-              </Link>
+              </Link> */}
             </Nav>
-            <Form>
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              ></Form.Control>
-            </Form>
+
+            <Nav className="justify-content-end flex-grow-1 pe-3 color-white">
+              <div className="position-relative">
+                <Nav.Item onClick={() => setShowSearch(!showSearch)}>
+                  <FaSearch size={24} />
+                </Nav.Item>
+                {showSearch && <Search query={query} setQuery={setQuery} />}
+              </div>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
