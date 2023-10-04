@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Card, Col, Container, ListGroup, Nav, Row } from "react-bootstrap";
 import "../styles/RssFeed.css";
+import { Link } from "react-router-dom";
 
 const RssFeed = () => {
   return (
@@ -50,11 +51,17 @@ const RssFeed = () => {
               <Card>
                 <Card.Header>Trending</Card.Header>
                 <Card.Body>
-                  {Array.from({ length: 4 }).map((_, idx) => (
+                  {Array.from({ length: 3 }).map((_, idx) => (
                     <ListGroup variant="flush">
-                      <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                      <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                      <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                      <Nav.Link>
+                        <Card.Title>Cras justo odio...</Card.Title>
+                      </Nav.Link>
+                      <Nav.Link>
+                        <Card.Title>Dapibus ac facilisis in...</Card.Title>
+                      </Nav.Link>
+                      <Nav.Link>
+                        <Card.Title>Vestibulum at eros...</Card.Title>
+                      </Nav.Link>
                     </ListGroup>
                   ))}
                 </Card.Body>
