@@ -9,10 +9,12 @@ import "./styles/App.css";
 import RssFeed from "./components/RssFeed";
 import SignUp from "./components/SignUp";
 import { UserProvider } from "./contexts/UserProvider";
+import { Button } from "react-bootstrap";
+import Article from "./components/Article";
 
 function App() {
   return (
-    <div className="wrap">
+    <div className="wrap backgroundColor">
       <UserProvider>
         <BrowserRouter>
           <Routes>

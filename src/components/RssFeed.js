@@ -2,10 +2,15 @@ import React from "react";
 import { Card, Col, Container, ListGroup, Nav, Row } from "react-bootstrap";
 import "../styles/RssFeed.css";
 import { Link } from "react-router-dom";
+import Article from "./Article";
 
 const RssFeed = () => {
+  const [modalShow, setModalShow] = React.useState(false);
   return (
     <>
+      <>
+        <Article show={modalShow} onHide={() => setModalShow(false)} />
+      </>
       <h3>RSS Feed</h3>
       <div className="rss g-3">
         <div className="col-9">
@@ -21,7 +26,9 @@ const RssFeed = () => {
                     incididunt ut labore et dolore magna aliqua.
                   </Card.Text>
                   <Card.Text className="text-end">
-                    <Card.Link href="#">Read more...</Card.Link>
+                    <Card.Link onClick={() => setModalShow(true)}>
+                      Read more...
+                    </Card.Link>
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -37,7 +44,9 @@ const RssFeed = () => {
                       incididunt ut labore et dolore magna aliqua.
                     </Card.Text>
                     <Card.Text className="text-end">
-                      <Card.Link href="#">Read more...</Card.Link>
+                      <Card.Link onClick={() => setModalShow(true)}>
+                        Read more...
+                      </Card.Link>
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -53,13 +62,13 @@ const RssFeed = () => {
                 <Card.Body>
                   {Array.from({ length: 3 }).map((_, idx) => (
                     <ListGroup variant="flush">
-                      <Nav.Link>
+                      <Nav.Link onClick={() => setModalShow(true)}>
                         <Card.Title>Cras justo odio...</Card.Title>
                       </Nav.Link>
-                      <Nav.Link>
+                      <Nav.Link onClick={() => setModalShow(true)}>
                         <Card.Title>Dapibus ac facilisis in...</Card.Title>
                       </Nav.Link>
-                      <Nav.Link>
+                      <Nav.Link onClick={() => setModalShow(true)}>
                         <Card.Title>Vestibulum at eros...</Card.Title>
                       </Nav.Link>
                     </ListGroup>
