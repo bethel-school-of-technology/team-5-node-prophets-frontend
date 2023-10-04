@@ -1,1 +1,33 @@
+.Col {
+  float: left;
+  width: 50%;
+  padding: 15px;
+}
 
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.image-container img {
+  max-width: 100%; /* Allow the image to resize based on screen width */
+  height: auto; /* Maintain the image's aspect ratio */
+  border-radius: 15px;
+}
+
+.footer {
+  text-align: center;
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 10px;
+}

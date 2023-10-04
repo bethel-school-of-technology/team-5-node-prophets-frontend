@@ -11,7 +11,7 @@ import RssFeed from "./components/RssFeed";
 
 function App() {
   return (
-    <div className="wrap">
+    <div className="wrap backgroundColor">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigation />}>
