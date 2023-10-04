@@ -15,7 +15,7 @@ function Article(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>This Is The Full Article</h4>
+        <h4>This Is The Full Article View</h4>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi sit
