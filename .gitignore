@@ -1,7 +1,3 @@
-# Hidden folders
-node_modules
-
-./rss-server
-
-node_modules/.cache/.eslintcache
-.gitignore
+node_modules/
+rss-server/
+.DS_Store 
