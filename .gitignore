@@ -1,4 +1,7 @@
 # Hidden folders
-/node_modules
+node_modules
 
 ./rss-server
+
+node_modules/.cache/.eslintcache
+.gitignore
