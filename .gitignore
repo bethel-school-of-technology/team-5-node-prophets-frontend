@@ -3,6 +3,7 @@
 node_modules/
 rss-server/
 .DS_Store
+.gitignore
 
 #dev 
 
