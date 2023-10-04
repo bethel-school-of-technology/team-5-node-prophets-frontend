@@ -1,0 +1,8 @@
+.rss {
+  display: flex;
+  flex-direction: row;
+  column-gap: 30px;
+}
+.trending {
+  grid-area: 1 / col4-start / last-line / 6;
+}
