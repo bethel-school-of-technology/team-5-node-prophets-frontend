@@ -61,7 +61,7 @@ const Navigation = () => {
                   </Form>
                 </div>
               </NavDropdown>
-              <Link to="/newsfeed" className="nav-link">
+              <Link to="/rssfeed" className="nav-link">
                 RSS Feed
               </Link>
               <Link to="/about" className="nav-link">
