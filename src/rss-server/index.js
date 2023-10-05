@@ -2,7 +2,8 @@ import RSSparser from "rss-parser";
 import cors from "cors";
 import express from "express";
 
-const feedURL = "https://netflixtechblog.com/feed";
+const feedURL =
+  "https://www.techrepublic.com/rssfeeds/topic/smart-persons-guides/";
 
 const parser = new RSSparser();
 let articles = [];

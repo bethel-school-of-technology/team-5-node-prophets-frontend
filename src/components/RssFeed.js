@@ -64,6 +64,7 @@ const RssFeed = () => {
                       >
                         {item.item.title}
                       </Card.Link>
+                      <Card.Text>{item.item.contentSnippet}</Card.Text>
                     </Card.Title>
                     <Card.Text>{item.item.pubDate}</Card.Text>
                     {/* <Card.Text className="text-end">
