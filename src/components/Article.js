@@ -10,9 +10,7 @@ function Article(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Article Title
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <h4>This Is The Full Article View</h4>
