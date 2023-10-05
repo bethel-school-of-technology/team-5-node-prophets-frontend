@@ -9,12 +9,10 @@ let articles = [];
 
 const parse = async (url) => {
   const feed = await parser.parseURL(url);
-
   feed.items.forEach((item) => {
     articles.push({ item });
   });
 };
-
 parse(feedURL);
 
 let app = express();
@@ -25,5 +23,5 @@ app.get("/", (req, res) => {
 });
 
 const server = app.listen("4000", () => {
-  console.log("App is listening at http://locahost:4000");
+  console.log("App is listening at http://localhost:4000");
 });
