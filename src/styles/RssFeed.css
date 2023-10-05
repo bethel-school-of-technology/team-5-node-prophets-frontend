@@ -1,0 +1,9 @@
+.rss {
+  display: flex;
+  flex-direction: row;
+  column-gap: 30px;
+}
+
+.trending {
+  text-decoration: none;
+}
