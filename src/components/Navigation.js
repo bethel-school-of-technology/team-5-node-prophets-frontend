@@ -13,8 +13,8 @@ import "../styles/Navigation.css";
 
 const Navigation = () => {
   return (
-    <>
-      <Navbar expand="lg" bg="light">
+    <div>
+      <Navbar fixed="top" className="navi bg-body-tertiary" expand="lg">
         <Container fluid>
           <Navbar.Brand href="#home">
             <img
@@ -22,13 +22,13 @@ const Navigation = () => {
               src="logo.png"
               width="30"
               height="30"
-              className="d-inline-block align-top"
+              className="brand d-inline-block align-top"
             />{" "}
             ETM
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="justify-content-end flex-grow-1 pe-3 color-white">
+            <Nav className="navbar justify-content-end flex-grow-1 pe-3 color-white">
               <Link to="/" className="nav-link">
                 Home
               </Link>
@@ -67,15 +67,16 @@ const Navigation = () => {
               <Link to="/about" className="nav-link">
                 QAK
               </Link>
+
+              <Form className="search">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2"
+                  aria-label="Search"
+                ></Form.Control>
+              </Form>
             </Nav>
-            <Form>
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              ></Form.Control>
-            </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -83,7 +84,7 @@ const Navigation = () => {
       <Stack gap={3} className="col-md-10 mx-auto mt-3">
         <Outlet />
       </Stack>
-    </>
+    </div>
   );
 };
 

@@ -35,3 +35,8 @@
 .card-img {
   border-radius: 50%;
 }
+
+#home-wrap {
+  margin-top: 50px;
+  padding-top: 15px;
+}
