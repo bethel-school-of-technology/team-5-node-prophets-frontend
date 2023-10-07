@@ -72,7 +72,7 @@ const Navigation = () => {
                 QAK
               </Link>
             </Nav>
-
+            {/*Added Search in NavBar */}
             <Nav className="justify-content-end flex-grow-1 pe-3 color-white">
               <div className="position-relative">
                 <Nav.Item onClick={() => setShowSearch(!showSearch)}>
