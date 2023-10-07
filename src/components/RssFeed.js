@@ -9,16 +9,21 @@ import {
   ListGroupItem,
   Modal,
   Nav,
-  Row
+  Row,
 } from "react-bootstrap";
 import "../styles/RssFeed.css";
-import { Link } from "react-router-dom";
-import Article from "./Article";
-import context from "react-bootstrap/esm/AccordionContext";
+import { useContext } from "react";
+import { SearchContext } from "../contexts/SearchContext";
+
+// import { Link } from "react-router-dom";
+// import Article from "./Article";
+// import context from "react-bootstrap/esm/AccordionContext";
 
 const RssFeed = () => {
+  const { searches, setSearches } = useContext(SearchContext);
   const [articles, setArticles] = useState([]);
   console.log(articles);
+  console.log(searches);
 
   const getArticles = async () => {
     try {
