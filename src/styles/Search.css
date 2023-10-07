@@ -1,9 +1,31 @@
 .search-container {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 400px;
-    z-index: 1000;
-    background-color: rgb(242, 211, 211); 
-  }
-  
+  position: relative;
+  width: 80%; /* Adjust width as needed */
+  margin: auto;
+}
+
+.search-input {
+  width: 100%;
+}
+
+.search-suggestions {
+  max-height: 300px;
+  overflow-y: auto;
+  width: 50%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px 0;
+  float: left;
+}
+
+.search-results-display {
+  max-height: 300px;
+  overflow-y: auto;
+  width: 45%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}

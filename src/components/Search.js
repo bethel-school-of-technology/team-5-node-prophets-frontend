@@ -12,11 +12,14 @@ const Search = ({ query, setQuery }) => {
     articles: [],
   });
 
+  const [selectedDetail, setSelectedDetail] = useState(null);
+
   useEffect(() => {
     const fetchResults = async () => {
       try {
         const response = await fetch(`http://localhost:3000/search?q=${query}`);
         const data = await response.json();
+        // process the data and set the local results state
 
         let articleResults = [];
         if (results) {
@@ -29,6 +32,7 @@ const Search = ({ query, setQuery }) => {
           users: data.users || [],
           qaks: data.qaks || [],
           articles: articleResults,
+          // Add other categories if needed...
         });
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -39,8 +43,13 @@ const Search = ({ query, setQuery }) => {
       fetchResults();
     } else {
       setLocalResults({ users: [], qaks: [], articles: [] });
+      // Reset other categories if needed...
     }
   }, [query, results]);
+
+  function displayDetailedResults(item) {
+    setSelectedDetail(item);
+  }
 
   return (
     <div className="search-container mt-2">
@@ -52,50 +61,58 @@ const Search = ({ query, setQuery }) => {
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      <div className="list-group mt-2">
-        {localResults.users.length > 0 && (
-          <>
-            <h6 className="mt-2">Users:</h6>
-            {localResults.users.map((user) => (
-              <Link
-                key={user.user_id}
-                to={`/user/${user.user_id}`}
-                className="list-group-item list-group-item-action"
-              >
-                {user.fullname}
-              </Link>
-            ))}
-          </>
-        )}
+      <div className="list-group mt-2 search-results">
+        {localResults.users.slice(0, 5).map((user) => (
+          <Link
+            key={user.user_id}
+            to={`/user/${user.user_id}`}
+            className="list-group-item list-group-item-action"
+            onMouseOver={() => displayDetailedResults(user)}
+            onClick={() => displayDetailedResults(user)}
+          >
+            {user.fullname}
+          </Link>
+        ))}
 
-        {localResults.qaks.length > 0 && (
-          <>
-            <h6 className="mt-2">Qaks:</h6>
-            {localResults.qaks.map((qak) => (
-              <Link
-                key={qak.qak_id}
-                to={`/qak/${qak.qak_id}`}
-                className="list-group-item list-group-item-action"
-              >
-                {qak.qak}
-              </Link>
-            ))}
-          </>
-        )}
+        {localResults.qaks.slice(0, 5).map((qak) => (
+          <Link
+            key={qak.qak_id}
+            to={`/qak/${qak.qak_id}`}
+            className="list-group-item list-group-item-action"
+            onMouseOver={() => displayDetailedResults(qak)}
+            onClick={() => displayDetailedResults(qak)}
+          >
+            {qak.qak}
+          </Link>
+        ))}
 
-        {localResults.articles.length > 0 && (
-          <>
-            <h6 className="mt-2">Articles:</h6>
-            {localResults.articles.map((article) => (
-              <Link
-                key={article.id}
-                to={`/article/${article.item.title}`}
-                className="list-group-item list-group-item-action"
-              >
-                {article.item.title}
-              </Link>
-            ))}
-          </>
+        {localResults.articles.slice(0, 5).map((article) => (
+          <Link
+            key={article.id}
+            to={`/article/${article.item.title}`}
+            className="list-group-item list-group-item-action"
+            onMouseOver={() => displayDetailedResults(article)}
+            onClick={() => displayDetailedResults(article)}
+          >
+            {article.item.title}
+          </Link>
+        ))}
+      </div>
+
+      <div className="search-results-display">
+        {selectedDetail && (
+          <div>
+            <h2>
+              {selectedDetail.fullname ||
+                selectedDetail.qak ||
+                selectedDetail.item?.title}
+            </h2>
+            {selectedDetail.email && <p>Email: {selectedDetail.email}</p>}
+            {selectedDetail.qak && <p>Qak: {selectedDetail.qak}</p>}
+            {selectedDetail.item?.description && (
+              <p>Description: {selectedDetail.item.description}</p>
+            )}
+          </div>
         )}
       </div>
     </div>
