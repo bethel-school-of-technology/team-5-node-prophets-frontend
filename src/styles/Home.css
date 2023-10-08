@@ -1,3 +1,7 @@
+h2 {
+  text-align: center;
+}
+
 .Col {
   float: left;
   width: 50%;
@@ -15,10 +19,15 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 100%;
+  max-width: 100%;
 }
 
 .image-container img {
+  width: 75%;
+  height: 75%;
   max-width: 100%; /* Allow the image to resize based on screen width */
+  max-height: 100%;
   height: auto; /* Maintain the image's aspect ratio */
   border-radius: 15px;
 }

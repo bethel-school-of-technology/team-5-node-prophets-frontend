@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Home.css";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import video from "../videos/neuron_-_91633.mp4";
 
 const Home = () => {
   return (
@@ -8,18 +9,22 @@ const Home = () => {
       <Container fluid>
         {" "}
         <div className="home-wrap ">
-          <h2>Welcome To Our Site!</h2>
+          <h2>Welcome to Empowering Techincal Minds!</h2>
         </div>
+        <br />
         <Row>
           <Col>
             <div className="image-container">
-              <img
-                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80"
-                alt="Outer Space view of Earth"
-              />
+              <video controls>
+                <source src={video} type="video/mp4" />
+                Your brower does not support the video tag.
+              </video>
             </div>
           </Col>
-
+        </Row>
+        <br />
+        <br />
+        <Row>
           <Col>
             <h2>About Us</h2>
             <p>
