@@ -8,8 +8,8 @@ import Profile from "./components/Profile";
 import About from "./components/About";
 import RssFeed from "./components/RssFeed";
 import Search from "./components/Search";
-import UserDetail from "./components/UserDetails";
-import QakDetail from "./components/QakDetails";
+// import UserDetail from "./components/UserDetails";
+// import QakDetail from "./components/QakDetails";
 import Article from "./components/Article";
 import { UserProvider } from "./contexts/UserProvider";
 import { Button } from "react-bootstrap";
@@ -33,8 +33,8 @@ function App() {
               <Route path="/rssfeed" element={<RssFeed />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/about" element={<About />} />
-              <Route path="/user/:id" element={<UserDetail />} />
-              <Route path="/qak/:id" element={<QakDetail />} />
+              {/* <Route path="/user/:id" element={<UserDetail />} />
+              <Route path="/qak/:id" element={<QakDetail />} /> */}
             </Routes>
           </BrowserRouter>
         </UserProvider>

@@ -1,31 +1,30 @@
 .search-container {
   position: relative;
-  width: 80%; /* Adjust width as needed */
-  margin: auto;
 }
 
-.search-input {
-  width: 100%;
-}
-
-.search-suggestions {
-  max-height: 300px;
+.search-results {
+  max-height: 250px; /* Adjust to your preference */
   overflow-y: auto;
-  width: 50%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin: 10px 0;
-  float: left;
-}
-
-.search-results-display {
-  max-height: 300px;
-  overflow-y: auto;
-  width: 45%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin: 10px;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 100%;  /* Positions the start of this div right below its parent */
+  left: 0;
+  width: 300px; /* Ensures it takes full width */
+  padding: 10px 0; /* Padding at top and bottom */
+  z-index: 1;  /* Ensures overlay over other content */
 }
+
+/* Search results list style */
+.list-group.search-results {
+  width: 100%;
+  margin-right: 10px; /* Add a small margin between results and details */
+}
+
+/* Updated details display on the left */
+.search-results-display {
+  position: absolute;
+  right: 100%; /* Move to the right side */
+  margin-top: 100px;
+  width: 800px; /* Adjust to your preference */
+  padding: 25%;
+}
+
