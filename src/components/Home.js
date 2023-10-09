@@ -7,14 +7,13 @@ const Home = () => {
   return (
     <div id="home-wrap">
       <Container fluid>
-        {" "}
         <div className="home-wrap ">
-          <h2>Welcome to Empowering Techincal Minds!</h2>
+          <h2>Welcome to Empowering Technical Minds!</h2>
         </div>
-        <br />
+
         <Row>
           <Col>
-            <div className="image-container">
+            <div className="video-container">
               <video controls>
                 <source src={video} type="video/mp4" />
                 Your brower does not support the video tag.
