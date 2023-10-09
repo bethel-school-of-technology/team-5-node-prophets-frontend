@@ -69,15 +69,12 @@ const Navigation = () => {
               <Link to="/about" className="nav-link">
                 QAK
               </Link>
+
+              {/*Search component directly in the Nav bar */}
+              <div className="nav-search">
+                <Search query={query} setQuery={setQuery} />
+              </div>
             </Nav>
-            <Form>
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              ></Form.Control>
-            </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar>
