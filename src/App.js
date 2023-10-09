@@ -12,17 +12,17 @@ import { UserProvider } from "./contexts/UserProvider";
 import jwtDecode from "jwt-decode";
 
 function App() {
-  const [user, setUser] = useState;
+  // const [user, setUser] = useState();
 
-  useEffect(() => {
-    try {
-      const jwt = localStorage.getItem("userToken");
-      const userToken = jwtDecode;
-      setUser(userToken);
-      console.log(userToken);
-    } catch (ex) {}
-  }, []);
-
+  // useEffect(() => {
+  //   try {
+  //     const jwt = localStorage.getItem("userToken");
+  //     const userToken = jwtDecode;
+  //     setUser(userToken);
+  //     console.log(userToken);
+  //   } catch (ex) {}
+  // }, []);
+  // user = { user };
   return (
     <div className="wrap backgroundColor">
       <UserProvider>
