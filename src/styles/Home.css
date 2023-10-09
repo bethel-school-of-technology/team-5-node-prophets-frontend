@@ -14,22 +14,45 @@ h2 {
   clear: both;
 }
 
-.image-container {
+.video-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
-  max-width: 100%;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio (for widescreen videos) */
+  height: 0;
+  overflow: hidden;
 }
 
-.image-container img {
-  width: 75%;
-  height: 75%;
-  max-width: 100%; /* Allow the image to resize based on screen width */
-  max-height: 100%;
-  height: auto; /* Maintain the image's aspect ratio */
-  border-radius: 15px;
+.video-container video {
+  width: 75%; /* You can adjust the width as needed */
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+/* Define different video sizes for different screen widths */
+@media (max-width: 1200px) {
+  .video-container {
+    padding-bottom: 75%; /* Half size for large screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .video-container {
+    padding-bottom: 56.25%; /* Default size for medium screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .video-container {
+    padding-bottom: 100%; /* Full width for small screens */
+  }
 }
 
 .footer {
