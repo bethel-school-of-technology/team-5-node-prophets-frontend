@@ -8,6 +8,14 @@ const Search = ({ query, setQuery }) => {
   const { results, setResults } = useContext(SearchContext);
   const searchContainerRef = useRef(null);
 
+  const sitePages = [
+    //supposed to search in site content.....
+
+    { name: "Home", link: "/" },
+    { name: "About Us", link: "/about" },
+    // ... add other static pages as needed
+  ];
+
   const [localResults, setLocalResults] = useState({
     users: [],
     qaks: [],
@@ -17,25 +25,28 @@ const Search = ({ query, setQuery }) => {
 
   const [selectedDetail, setSelectedDetail] = useState(null);
 
+  // Determine if results are being shown
+  const showingResults =
+    localResults.users.length > 0 ||
+    localResults.qaks.length > 0 ||
+    localResults.articles.length > 0 ||
+    localResults.general.length > 0;
+
   useEffect(() => {
     const fetchResults = async () => {
       try {
         const response = await fetch(`http://localhost:3000/search?q=${query}`);
         const data = await response.json();
-        // Add generic search results for pages
-        const generalResults = [
-          { name: "Home", link: "/" },
-          { name: "About", link: "/about" },
-          // Add other pages here...
-        ].filter((item) =>
-          item.name.toLowerCase().includes(query.toLowerCase())
+
+        const matchingSitePages = sitePages.filter((page) =>
+          page.name.toLowerCase().includes(query.toLowerCase())
         );
 
         setLocalResults({
+          general: matchingSitePages,
           users: data.users || [],
           qaks: data.qaks || [],
-          articles: data.articles || [], // Changed this to directly use articles from the API
-          general: generalResults,
+          articles: data.articles || [],
         });
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -78,7 +89,12 @@ const Search = ({ query, setQuery }) => {
   }
 
   return (
-    <div className="search-container mt-2" ref={searchContainerRef}>
+    <div
+      className={`search-container mt-2 ${
+        showingResults ? "blurred-background" : ""
+      }`}
+      ref={searchContainerRef}
+    >
       <input
         type="text"
         className="form-control"
@@ -103,28 +119,6 @@ const Search = ({ query, setQuery }) => {
             </Link>
           ))
         )}
-
-        {localResults.qaks.slice(0, 5).map((qak) => (
-          <Link
-            key={qak.qak_id}
-            to={`/qak/${qak.qak_id}`}
-            className="list-group-item list-group-item-action"
-            onClick={() => displayDetailedResults(qak)}
-          >
-            {qak.qak}
-          </Link>
-        ))}
-
-        {localResults.articles.slice(0, 5).map((article) => (
-          <Link
-            key={article.id}
-            to={`/article/${article.item.title}`}
-            className="list-group-item list-group-item-action"
-            onClick={() => displayDetailedResults(article)}
-          >
-            {article.item.title}
-          </Link>
-        ))}
       </div>
 
       <div className="search-results-display">
@@ -138,6 +132,12 @@ const Search = ({ query, setQuery }) => {
             <Card.Body>
               {selectedDetail.email && (
                 <Card.Text>Email: {selectedDetail.email}</Card.Text>
+              )}
+              {selectedDetail.city && (
+                <Card.Text>City: {selectedDetail.city}</Card.Text>
+              )}
+              {selectedDetail.state && (
+                <Card.Text>State: {selectedDetail.state}</Card.Text>
               )}
               {selectedDetail.item?.description && (
                 <Card.Text>

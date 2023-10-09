@@ -2,8 +2,13 @@
   position: relative;
 }
 
+.blurred-background {
+  backdrop-filter: blur(4px);
+}
+
+
 .search-results {
-  max-height: 250px; /* Adjust to your preference */
+  max-height: 500px; /* Adjust to preference */
   overflow-y: auto;
   position: absolute;
   top: 100%;  /* Positions the start of this div right below its parent */
