@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 import { useEffect, useState } from "react";
 import PostContext from "./PostContext";
@@ -75,3 +76,12 @@ export const PostProvider = (props) => {
     </PostContext.Provider>
   );
 };
+=======
+import React from "react";
+
+const PostProvider = () => {
+  return <div>PostProvider</div>;
+};
+
+export default PostProvider;
+>>>>>>> 6983eeef6691716669e86bc1adf608c26ceea908
