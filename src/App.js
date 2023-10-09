@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
@@ -9,10 +9,20 @@ import "./styles/App.css";
 import RssFeed from "./components/RssFeed";
 import SignUp from "./components/SignUp";
 import { UserProvider } from "./contexts/UserProvider";
-import { Button } from "react-bootstrap";
-import Article from "./components/Article";
+import jwtDecode from "jwt-decode";
 
 function App() {
+  // const [user, setUser] = useState();
+
+  // useEffect(() => {
+  //   try {
+  //     const jwt = localStorage.getItem("userToken");
+  //     const userToken = jwtDecode;
+  //     setUser(userToken);
+  //     console.log(userToken);
+  //   } catch (ex) {}
+  // }, []);
+  // user = { user };
   return (
     <div className="wrap backgroundColor">
       <UserProvider>
