@@ -9,7 +9,7 @@ const Home = () => {
       <Container fluid>
         {" "}
         <div className="home-wrap ">
-          <h2>Welcome to Empowering Techincal Minds!</h2>
+          <h2>Welcome to Empowering Technical Minds!</h2>
         </div>
         <br />
         <Row>
