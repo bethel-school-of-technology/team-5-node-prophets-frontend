@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Container,
@@ -6,12 +6,15 @@ import {
   Nav,
   NavDropdown,
   Navbar,
-  Stack
+  Stack,
 } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import "../styles/Navigation.css";
+import Search from "./Search";
 
 const Navigation = () => {
+  const [query, setQuery] = useState("");
+
   return (
     <div>
       <Navbar fixed="top" className="navi bg-body-tertiary" expand="lg">
@@ -43,7 +46,6 @@ const Navigation = () => {
                 <div>
                   <Form className="sign-in">
                     <Form.Group className="mb-6">
-                      {/* <Form.Label>username</Form.Label> */}
                       <Form.Control
                         size="sm"
                         placeholder="username"
@@ -53,7 +55,7 @@ const Navigation = () => {
                       <Form.Control
                         size="sm"
                         placeholder="password"
-                        type="text"
+                        type="password"
                       />
                       <br />
                       <Button>Sign In</Button>
@@ -68,14 +70,10 @@ const Navigation = () => {
                 QAK
               </Link>
 
-              <Form className="search">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                ></Form.Control>
-              </Form>
+              {/*Search component directly in the Nav bar */}
+              <div className="nav-search">
+                <Search query={query} setQuery={setQuery} />
+              </div>
             </Nav>
           </Navbar.Collapse>
         </Container>
