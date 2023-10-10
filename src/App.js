@@ -10,46 +10,39 @@ import Search from "./components/Search";
 // import UserDetail from "./components/UserDetails";
 // import QakDetail from "./components/QakDetails";
 import { UserProvider } from "./contexts/UserProvider";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import jwtDecode from "jwt-decode";
-=======
-import { Button } from "react-bootstrap";
-=======
->>>>>>> 8063b11cd34ccf85ad9ca97591670fbe6c77cf67
+
+//import jwtDecode from "jwt-decode";
+
 import { SearchProvider } from "./contexts/SearchContext";
 import "./styles/App.css";
->>>>>>> 6983eeef6691716669e86bc1adf608c26ceea908
+import jwtDecode from "jwt-decode";
 
 function App() {
-  // const [user, setUser] = useState();
+  const [user, setUser] = useState();
 
-  // useEffect(() => {
-  //   try {
-  //     const jwt = localStorage.getItem("userToken");
-  //     const userToken = jwtDecode;
-  //     setUser(userToken);
-  //     console.log(userToken);
-  //   } catch (ex) {}
-  // }, []);
-  // user = { user };
+  useEffect(() => {
+    try {
+      const jwt = localStorage.getItem("userToken");
+      const userToken = jwtDecode(jwt);
+      setUser(userToken);
+      console.log(userToken);
+    } catch (ex) {}
+  }, []);
+
   return (
     <div className="wrap backgroundColor">
       <SearchProvider>
         <UserProvider>
           <BrowserRouter>
-            <Navigation />
             <Routes>
-              {/* <Route path="/" element={<Navigation />}>
-              <Route index element={<Home />} /> */}
-              <Route path="/" element={<Home />} index />
-              <Route path="/" element={<Search />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/rssfeed" element={<RssFeed />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/about" element={<About />} />
-              {/* <Route path="/user/:id" element={<UserDetail />} />
-              <Route path="/qak/:id" element={<QakDetail />} /> */}
+              <Route path="/" element={<Navigation />}>
+                <Route index element={<Home />} />
+                <Route path="/" element={<Search />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/rssfeed" element={<RssFeed />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/about" element={<About />} />
+              </Route>
             </Routes>
           </BrowserRouter>
         </UserProvider>
