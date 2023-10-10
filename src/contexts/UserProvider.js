@@ -20,7 +20,7 @@ export const UserProvider = (props) => {
       email,
       city,
       state,
-      profilePicture,
+      profilePicture
     };
 
     return axios.post(baseUrl, user).then((response) => {
@@ -32,7 +32,7 @@ export const UserProvider = (props) => {
     let user = { username, password };
 
     return axios.post(`${baseUrl}/login`, user).then((response) => {
-      localStorage.setItem("myPostToken", response.data.token);
+      localStorage.setItem("userToken", response.data.token);
       return new Promise((resolve) => resolve(response.data));
     });
   }
@@ -48,7 +48,7 @@ export const UserProvider = (props) => {
       value={{
         createUser,
         signInUser,
-        getUserProfile,
+        getUserProfile
       }}
     >
       {props.children}

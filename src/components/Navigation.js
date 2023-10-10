@@ -6,14 +6,14 @@ import {
   Nav,
   NavDropdown,
   Navbar,
-  Stack,
+  Stack
 } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import "../styles/Navigation.css";
 import UserContext from "../contexts/UserContext";
 import Search from "./Search";
 
-const Navigation = () => {
+const Navigation = ({ user }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [query, setQuery] = useState("");

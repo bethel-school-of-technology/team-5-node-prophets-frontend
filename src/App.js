@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     try {
-      const jwt = localStorage.getItem("userPostToken");
+      const jwt = localStorage.getItem("userToken");
       const userToken = jwtDecode(jwt);
       setUser(userToken);
       console.log(userToken);
