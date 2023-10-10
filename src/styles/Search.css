@@ -1,0 +1,35 @@
+.search-container {
+  position: relative;
+}
+
+.blurred-background {
+  backdrop-filter: blur(4px);
+}
+
+
+.search-results {
+  max-height: 500px; /* Adjust to preference */
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;  /* Positions the start of this div right below its parent */
+  left: 0;
+  width: 300px; /* Ensures it takes full width */
+  padding: 10px 0; /* Padding at top and bottom */
+  z-index: 1;  /* Ensures overlay over other content */
+}
+
+/* Search results list style */
+.list-group.search-results {
+  width: 100%;
+  margin-right: 10px; /* Add a small margin between results and details */
+}
+
+/* Updated details display on the left */
+.search-results-display {
+  position: absolute;
+  right: 100%; /* Move to the right side */
+  margin-top: 100px;
+  width: 800px; 
+  padding: 25%;
+}
+

@@ -11,10 +11,12 @@ import {
 import { Link, Outlet } from "react-router-dom";
 import "../styles/Navigation.css";
 import UserContext from "../contexts/UserContext";
+import Search from "./Search";
 
 const Navigation = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [query, setQuery] = useState("");
 
   let { signInUser } = useContext(UserContext);
   //let navigate = useNavigate();
@@ -86,21 +88,17 @@ const Navigation = () => {
                     </Form>
                   </div>
                 </NavDropdown>
-                <Link to="/newsfeed" className="nav-link">
+                <Link to="/rssfeed" className="nav-link">
                   RSS Feed
                 </Link>
                 <Link to="/about" className="nav-link">
                   QAK
                 </Link>
+                {/*Search component directly in the Nav bar */}
+                <div className="nav-search">
+                  <Search query={query} setQuery={setQuery} />
+                </div>
               </Nav>
-              <Form>
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                ></Form.Control>
-              </Form>
             </Navbar.Collapse>
           </Container>
         </Navbar>

@@ -13,7 +13,7 @@ const SignIn = () => {
     event.preventDefault();
     signInUser(username, password)
       .then(() => {
-        navigate("/post");
+        navigate("/qaks");
       })
       .catch((error) => {
         console.log(error);

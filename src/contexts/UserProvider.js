@@ -14,7 +14,7 @@ export const UserProvider = (props) => {
       state,
     };
 
-    return axios.post(baseUrl, user).then((response) => {
+    return axios.qak(baseUrl, user).then((response) => {
       return new Promise((resolve) => resolve(response.data));
     });
   }
@@ -22,8 +22,8 @@ export const UserProvider = (props) => {
   function signInUser(username, password) {
     let user = { username, password };
 
-    return axios.post(`${baseUrl}/login`, user).then((response) => {
-      localStorage.setItem("myPostToken", response.data.token);
+    return axios.qak(`${baseUrl}/login`, user).then((response) => {
+      localStorage.setItem("myQakToken", response.data.token);
       return new Promise((resolve) => resolve(response.data));
     });
   }
