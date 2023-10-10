@@ -10,9 +10,7 @@ import RssFeed from "./components/RssFeed";
 import Search from "./components/Search";
 // import UserDetail from "./components/UserDetails";
 // import QakDetail from "./components/QakDetails";
-import Article from "./components/Article";
 import { UserProvider } from "./contexts/UserProvider";
-import { Button } from "react-bootstrap";
 import { SearchProvider } from "./contexts/SearchContext";
 import "./styles/App.css";
 
