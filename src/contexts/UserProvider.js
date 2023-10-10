@@ -4,14 +4,23 @@ import UserContext from "./UserContext";
 export const UserProvider = (props) => {
   const baseUrl = "http://localhost:3000/api/users";
 
-  function createUser(username, password, fullname, email, city, state) {
+  function createUser(
+    username,
+    password,
+    fullname,
+    email,
+    city,
+    state,
+    profilePicture
+  ) {
     let user = {
       username,
       password,
       fullname,
       email,
       city,
-      state
+      state,
+      profilePicture,
     };
 
     return axios.post(baseUrl, user).then((response) => {
@@ -39,7 +48,7 @@ export const UserProvider = (props) => {
       value={{
         createUser,
         signInUser,
-        getUserProfile
+        getUserProfile,
       }}
     >
       {props.children}
