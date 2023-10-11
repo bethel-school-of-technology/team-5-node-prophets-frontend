@@ -15,13 +15,32 @@ const Search = ({ query, setQuery }) => {
     { name: "About Us", link: "/about" },
     // ... add other static pages as needed
   ];
-
   const [localResults, setLocalResults] = useState({
     users: [],
     qaks: [],
     articles: [],
     general: [],
   });
+  const fetchResults = async () => {
+    try {
+      // fetch from the RSS server
+      const response = await fetch(`http://localhost:4000?search=${query}`);
+      const data = await response.json();
+
+      const matchingSitePages = sitePages.filter((page) =>
+        page.name.toLowerCase().includes(query.toLowerCase())
+      );
+
+      setLocalResults({
+        general: matchingSitePages,
+        users: data.users || [],
+        qaks: data.qaks || [],
+        articles: data, // directly setting data to articles, as RSS server responds with array of articles
+      });
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
 
   const [selectedDetail, setSelectedDetail] = useState(null);
 
@@ -35,8 +54,17 @@ const Search = ({ query, setQuery }) => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/search?q=${query}`);
-        const data = await response.json();
+        // Fetching from the local server
+        const localResponse = await fetch(
+          `http://localhost:3000/search?q=${query}`
+        );
+        const localData = await localResponse.json();
+
+        // Fetching from the RSS server
+        const rssResponse = await fetch(
+          `http://localhost:4000?search=${query}`
+        );
+        const rssData = await rssResponse.json();
 
         const matchingSitePages = sitePages.filter((page) =>
           page.name.toLowerCase().includes(query.toLowerCase())
@@ -44,9 +72,9 @@ const Search = ({ query, setQuery }) => {
 
         setLocalResults({
           general: matchingSitePages,
-          users: data.users || [],
-          qaks: data.qaks || [],
-          articles: data.articles || [],
+          users: localData.users || [],
+          qaks: localData.qaks || [],
+          articles: rssData, // Directly setting rssData to articles, as RSS server responds with array of articles
         });
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -127,7 +155,8 @@ const Search = ({ query, setQuery }) => {
             <Card.Header>
               {selectedDetail.fullname ||
                 selectedDetail.qak ||
-                selectedDetail.item?.title}
+                selectedDetail.title}{" "}
+              // added selectedDetail.title
             </Card.Header>
             <Card.Body>
               {selectedDetail.email && (
@@ -139,10 +168,8 @@ const Search = ({ query, setQuery }) => {
               {selectedDetail.state && (
                 <Card.Text>State: {selectedDetail.state}</Card.Text>
               )}
-              {selectedDetail.item?.description && (
-                <Card.Text>
-                  Description: {selectedDetail.item.description}
-                </Card.Text>
+              {selectedDetail.description && ( // display article description
+                <Card.Text>Description: {selectedDetail.description}</Card.Text>
               )}
             </Card.Body>
           </Card>
