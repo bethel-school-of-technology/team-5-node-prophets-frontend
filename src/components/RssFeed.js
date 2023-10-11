@@ -6,7 +6,6 @@ import moment from "moment";
 
 const RssFeed = () => {
   const [articles, setArticles] = useState([]);
-  //console.log(articles);
 
   const getArticles = async () => {
     try {
