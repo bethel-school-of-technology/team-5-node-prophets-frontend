@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 function SignOut() {
   const [user, setUser] = useState();
 
+  console.log(user);
   useEffect(() => {
     try {
-      const jwt = localStorage.removeItem("myPostToken");
+      const jwt = localStorage.removeItem("userToken");
       const userToken = jwtDecode(jwt);
-      setUser(userToken);
+      setUser(userToken).then(() => {
+        window.location = "/";
+      });
     } catch (ex) {}
   }, []);
-
-  return (window.location = "/");
 }
 
 export default SignOut;

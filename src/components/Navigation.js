@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Button,
   Container,
@@ -8,12 +8,13 @@ import {
   Navbar,
   Stack
 } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import "../styles/Navigation.css";
 import UserContext from "../contexts/UserContext";
 import Search from "./Search";
 
 const Navigation = ({ user }) => {
+  const [loggedUser, setLoggedUser] = useState({});
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [query, setQuery] = useState("");
@@ -32,6 +33,19 @@ const Navigation = ({ user }) => {
         window.alert("Failed Login");
       });
   }
+  let { userid } = useParams();
+  let params = useParams();
+
+  //console.log(loggedUser);
+
+  let { getUserQaks } = useContext(UserContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
+    }
+    fetchData();
+  }, [getUserQaks, params.user_id]);
 
   return (
     <>
@@ -54,40 +68,56 @@ const Navigation = ({ user }) => {
                 <Link to="/" className="nav-link">
                   Home
                 </Link>
-                <Link to="/signup" className="nav-link">
-                  Sign Up
-                </Link>
-                <NavDropdown
-                  id="nav-dropdown-light-example"
-                  title="Sign In"
-                  menuVariant="light"
-                >
-                  <div>
-                    <Form className="sign-in" onSubmit={handleSubmit}>
-                      <Form.Group className="mb-6">
-                        <Form.Control
-                          size="sm"
-                          placeholder="username"
-                          type="text"
-                          name="username"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <br></br>
-                        <Form.Control
-                          size="sm"
-                          placeholder="password"
-                          type="password"
-                          name="password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                      </Form.Group>
-                      <br />
-                      <Button type="submit">Sign In</Button>
-                    </Form>
-                  </div>
-                </NavDropdown>
+
+                {user && (
+                  <React.Fragment>
+                    <Link to={"/"} className="nav-link" key={userid}>
+                      Hello {loggedUser.fullname}!
+                    </Link>
+                    <Link to="/signout" className="nav-link">
+                      SignOut
+                    </Link>
+                  </React.Fragment>
+                )}
+                {!user && (
+                  <React.Fragment>
+                    <Link to="/signup" className="nav-link">
+                      Sign Up
+                    </Link>
+                    <NavDropdown
+                      id="nav-dropdown-light-example"
+                      title="Sign In"
+                      menuVariant="light"
+                    >
+                      <div>
+                        <Form className="sign-in" onSubmit={handleSubmit}>
+                          <Form.Group className="mb-6">
+                            <Form.Control
+                              size="sm"
+                              placeholder="username"
+                              type="text"
+                              name="username"
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
+                            />
+                            <br></br>
+                            <Form.Control
+                              size="sm"
+                              placeholder="password"
+                              type="password"
+                              name="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                            />
+                          </Form.Group>
+                          <br />
+                          <Button type="submit">Sign In</Button>
+                        </Form>
+                      </div>
+                    </NavDropdown>
+                  </React.Fragment>
+                )}
+
                 <Link to="/rssfeed" className="nav-link">
                   RSS Feed
                 </Link>

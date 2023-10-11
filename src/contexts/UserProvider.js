@@ -37,8 +37,19 @@ export const UserProvider = (props) => {
     });
   }
 
-  function getUserProfile(_id) {
-    return axios.get(baseUrl + _id).then((response) => {
+  function getUserProfile(user_id) {
+    return axios.get(baseUrl + user_id).then((response) => {
+      return new Promise((resolve) => resolve(response.data));
+    });
+  }
+
+  function getUserQaks(user_id) {
+    const url = "http://localhost:3000/api/users/qaks/";
+    let headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
+    };
+
+    return axios.get(url + user_id, { headers }).then((response) => {
       return new Promise((resolve) => resolve(response.data));
     });
   }
@@ -48,7 +59,8 @@ export const UserProvider = (props) => {
       value={{
         createUser,
         signInUser,
-        getUserProfile
+        getUserProfile,
+        getUserQaks
       }}
     >
       {props.children}
