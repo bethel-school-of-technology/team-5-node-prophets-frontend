@@ -20,7 +20,7 @@ export const UserProvider = (props) => {
       email,
       city,
       state,
-      profilePicture,
+      profilePicture
     };
 
     return axios.post(baseUrl, user).then((response) => {
@@ -32,13 +32,24 @@ export const UserProvider = (props) => {
     let user = { username, password };
 
     return axios.post(`${baseUrl}/login`, user).then((response) => {
-      localStorage.setItem("myPostToken", response.data.token);
+      localStorage.setItem("userToken", response.data.token);
       return new Promise((resolve) => resolve(response.data));
     });
   }
 
-  function getUserProfile(_id) {
-    return axios.get(baseUrl + _id).then((response) => {
+  function getUserProfile(user_id) {
+    return axios.get(baseUrl + user_id).then((response) => {
+      return new Promise((resolve) => resolve(response.data));
+    });
+  }
+
+  function getUserQaks(user_id) {
+    const url = "http://localhost:3000/api/users/qaks/";
+    let headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
+    };
+
+    return axios.get(url + user_id, { headers }).then((response) => {
       return new Promise((resolve) => resolve(response.data));
     });
   }
@@ -49,6 +60,7 @@ export const UserProvider = (props) => {
         createUser,
         signInUser,
         getUserProfile,
+        getUserQaks
       }}
     >
       {props.children}
