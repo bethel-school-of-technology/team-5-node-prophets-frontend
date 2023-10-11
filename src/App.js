@@ -23,7 +23,6 @@ function App() {
       const jwt = localStorage.getItem("userToken");
       const userToken = jwtDecode(jwt);
       setUser(userToken);
-      console.log(userToken);
     } catch (ex) {}
   }, []);
 

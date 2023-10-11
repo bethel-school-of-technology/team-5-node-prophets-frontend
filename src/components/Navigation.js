@@ -14,7 +14,7 @@ import UserContext from "../contexts/UserContext";
 import Search from "./Search";
 
 const Navigation = ({ user }) => {
-  const [loggedUser, setLoggedUser] = useState({});
+  //const [loggedUser, setLoggedUser] = useState({});
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [query, setQuery] = useState("");
@@ -32,28 +32,14 @@ const Navigation = ({ user }) => {
         window.alert("Failed Login");
       });
   }
-  let { userid } = useParams();
-  let params = useParams();
 
-  let { getUserQaks } = useContext(UserContext);
-
-  useEffect(() => {
-    async function fetchData() {
-      const result = await getUserQaks(params.user_id);
-      if (result !== undefined) {
-        setLoggedUser(result);
-      } else {
-        return null;
-      }
-    }
-    fetchData();
-  }, [getUserQaks, params.user_id]);
+  let { user_id } = useParams;
 
   return (
     <>
       <>
-        <Navbar expand="lg" bg="light">
-          <Container fluid>
+        <Navbar fixed="top" expand="lg" bg="light">
+          <Container>
             <Navbar.Brand href="#home">
               <img
                 alt=""
@@ -73,8 +59,8 @@ const Navigation = ({ user }) => {
 
                 {user && (
                   <React.Fragment>
-                    <Link to={"/"} className="nav-link" key={userid}>
-                      Hello {loggedUser.fullname}!
+                    <Link to={"/profile"} className="nav-link" key={user_id}>
+                      Hello {user.fullname}!
                     </Link>
                     <Link to={"/signout"} className="nav-link">
                       SignOut

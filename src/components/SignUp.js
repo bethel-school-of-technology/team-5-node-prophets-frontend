@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { Row, Col } from "react-bootstrap";
+import "../styles/SignUp.css";
 
 const SignUp = () => {
   const [username, setUserName] = useState("");
@@ -27,85 +28,87 @@ const SignUp = () => {
   }
 
   return (
-    <>
-      <Row>
-        <Col>
-          <div className="signupimg">
-            <img
-              alt="site img"
-              src="https://gaba.healthcare/wp-content/uploads/2017/11/telepsychiatry-safe-practices-1.jpg"
-            />
-          </div>
-        </Col>
-        <Col>
-          <form onSubmit={handleSubmit}>
-            <h1>Register</h1>
-            <br></br>
-            <span>Username </span>
-            <input
-              placeholder="Enter Username"
-              type="text"
-              name="username"
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
-            />
-            <br></br>
-            <br></br>
-            <span>Password </span>
-            <input
-              placeholder="Enter Password"
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <br></br>
-            <br></br>
-            <span>Full Name </span>
-            <input
-              placeholder="Enter Full Name"
-              type="text"
-              name="fullname"
-              value={fullname}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-            <br></br>
-            <br></br>
-            <span>Email </span>
-            <input
-              placeholder="Enter Email"
-              type="text"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <br></br>
-            <br></br>
-            <span>City </span>
-            <input
-              placeholder="Enter City"
-              type="text"
-              name="city"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-            <br></br>
-            <br></br>
-            <span>State </span>
-            <input
-              placeholder="Enter State"
-              type="text"
-              name="state"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            />
-            <br />
-            <br></br>
-            <button>Create Account</button>
-          </form>
-        </Col>
-      </Row>
-    </>
+    <div className="signup-wrap">
+      <div className="signup-bg">
+        <Row>
+          <Col>
+            <div className="signupimg">
+              <img
+                alt="site img"
+                src="https://gaba.healthcare/wp-content/uploads/2017/11/telepsychiatry-safe-practices-1.jpg"
+              />
+            </div>
+          </Col>
+          <Col>
+            <form onSubmit={handleSubmit}>
+              <h1>Register</h1>
+              <br></br>
+              <span>Username </span>
+              <input
+                placeholder="Enter Username"
+                type="text"
+                name="username"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+              <br></br>
+              <br></br>
+              <span>Password </span>
+              <input
+                placeholder="Enter Password"
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <br></br>
+              <br></br>
+              <span>Full Name </span>
+              <input
+                placeholder="Enter Full Name"
+                type="text"
+                name="fullname"
+                value={fullname}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+              <br></br>
+              <br></br>
+              <span>Email </span>
+              <input
+                placeholder="Enter Email"
+                type="text"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <br></br>
+              <br></br>
+              <span>City </span>
+              <input
+                placeholder="Enter City"
+                type="text"
+                name="city"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <br></br>
+              <br></br>
+              <span>State </span>
+              <input
+                placeholder="Enter State"
+                type="text"
+                name="state"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              />
+              <br />
+              <br></br>
+              <button>Create Account</button>
+            </form>
+          </Col>
+        </Row>
+      </div>
+    </div>
   );
 };
 

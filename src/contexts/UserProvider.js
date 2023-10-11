@@ -49,12 +49,9 @@ export const UserProvider = (props) => {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
 
-    return axios
-      .get(url + user_id, { headers })
-      .then((response) => {
-        return new Promise((resolve) => resolve(response.data));
-      })
-      .catch((error) => {});
+    return axios.get(url + user_id, { headers }).then((response) => {
+      return new Promise((resolve) => resolve(response.data));
+    });
   }
 
   return (
