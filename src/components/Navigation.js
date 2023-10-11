@@ -36,16 +36,40 @@ const Navigation = ({ user }) => {
   let { userid } = useParams();
   let params = useParams();
 
-  //console.log(loggedUser);
+  console.log(loggedUser);
 
   let { getUserQaks } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchData() {
-      await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
+      try {
+        const result = await getUserQaks(params.user_id);
+        setLoggedUser(result);
+      } catch (error) {}
     }
+
     fetchData();
   }, [getUserQaks, params.user_id]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
+  //   }
+  //   fetchData();
+  // }, [getUserQaks, params.user_id]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     if (params.user_id === undefined) {
+  //       return null;
+  //     } else {
+  //       await getUserQaks(params.user_id).then((result) =>
+  //         setLoggedUser(result)
+  //       );
+  //     }
+  //   }
+  //   fetchData();
+  // }, [getUserQaks, params.user_id]);
 
   return (
     <>
@@ -74,7 +98,7 @@ const Navigation = ({ user }) => {
                     <Link to={"/"} className="nav-link" key={userid}>
                       Hello {loggedUser.fullname}!
                     </Link>
-                    <Link to="/signout" className="nav-link">
+                    <Link to={"/signout"} className="nav-link">
                       SignOut
                     </Link>
                   </React.Fragment>

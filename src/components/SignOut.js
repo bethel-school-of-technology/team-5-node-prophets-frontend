@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function SignOut() {
   const [user, setUser] = useState();
@@ -9,10 +10,9 @@ function SignOut() {
     try {
       const jwt = localStorage.removeItem("userToken");
       const userToken = jwtDecode(jwt);
-      setUser(userToken).then(() => {
-        window.location = "/";
-      });
+      setUser(userToken).then(() => {});
     } catch (ex) {}
+    window.location = "/";
   }, []);
 }
 

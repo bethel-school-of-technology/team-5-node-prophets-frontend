@@ -25,6 +25,7 @@ function App() {
       setUser(userToken);
       console.log(userToken);
     } catch (ex) {}
+    return;
   }, []);
 
   return (
