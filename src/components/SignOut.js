@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function SignOut() {
-  const [user, setUser] = useState();
+  const [LoggeUser, setLoggedUser] = useState();
 
-  console.log(user);
+  console.log(LoggeUser);
   useEffect(() => {
     try {
       const jwt = localStorage.removeItem("userToken");
       const userToken = jwtDecode(jwt);
-      setUser(userToken).then(() => {});
+      setLoggedUser(userToken).then(() => {});
     } catch (ex) {}
     window.location = "/";
   }, []);

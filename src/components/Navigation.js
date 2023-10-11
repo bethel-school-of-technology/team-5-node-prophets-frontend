@@ -20,7 +20,6 @@ const Navigation = ({ user }) => {
   const [query, setQuery] = useState("");
 
   let { signInUser } = useContext(UserContext);
-  //let navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -36,40 +35,19 @@ const Navigation = ({ user }) => {
   let { userid } = useParams();
   let params = useParams();
 
-  console.log(loggedUser);
-
   let { getUserQaks } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const result = await getUserQaks(params.user_id);
+      const result = await getUserQaks(params.user_id);
+      if (result !== undefined) {
         setLoggedUser(result);
-      } catch (error) {}
+      } else {
+        return null;
+      }
     }
-
     fetchData();
   }, [getUserQaks, params.user_id]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
-  //   }
-  //   fetchData();
-  // }, [getUserQaks, params.user_id]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     if (params.user_id === undefined) {
-  //       return null;
-  //     } else {
-  //       await getUserQaks(params.user_id).then((result) =>
-  //         setLoggedUser(result)
-  //       );
-  //     }
-  //   }
-  //   fetchData();
-  // }, [getUserQaks, params.user_id]);
 
   return (
     <>
