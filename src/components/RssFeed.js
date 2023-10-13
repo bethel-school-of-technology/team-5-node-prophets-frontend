@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Accordion, Button, Card, Col, Modal, Row } from "react-bootstrap";
 import "../styles/RssFeed.css";
@@ -7,17 +6,20 @@ import moment from "moment";
 const RssFeed = () => {
   const [articles, setArticles] = useState([]);
 
-  const getArticles = async () => {
-    try {
-      const res = await axios.get("http://localhost:4000");
-      setArticles(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getArticles();
+    const fetchRssFeeds = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/rss/feeds");
+        if (response.ok) {
+          const data = await response.json();
+          setArticles(data);
+        }
+      } catch (error) {
+        console.error("Error fetching RSS feeds:", error);
+      }
+    };
+
+    fetchRssFeeds();
   }, []);
 
   const [modalShow, setModalShow] = useState(false);
@@ -30,7 +32,7 @@ const RssFeed = () => {
           <div className="latest col-9" xs={1} md={1}>
             <Row xs={1} md={1} className="g-3">
               <h3>Latest Content</h3>
-              {articles.slice(0, 10).map((item, idx) => (
+              {articles.slice(1, 10).map((item, idx) => (
                 <Col key={idx}>
                   <Card className="card">
                     <Card.Body>
