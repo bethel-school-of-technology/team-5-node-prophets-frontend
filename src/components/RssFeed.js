@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Accordion, Button, Card, Col, Modal, Row } from "react-bootstrap";
+import {
+  Accordion,
+  Button,
+  Card,
+  CardHeader,
+  Col,
+  Image,
+  ListGroup,
+  Modal,
+  Row
+} from "react-bootstrap";
 import "../styles/RssFeed.css";
 import moment from "moment";
 
@@ -32,13 +42,13 @@ const RssFeed = () => {
           <div className="latest col-9" xs={1} md={1}>
             <Row xs={1} md={1} className="g-3">
               <h3>Latest Content</h3>
-              {articles.slice(1, 10).map((item, idx) => (
+              {articles.slice(1, 6).map((item, idx) => (
                 <Col key={idx}>
-                  <Card className="card">
+                  <Card>
                     <Card.Body>
                       <Card.Title>
                         <Card.Link
-                          className="link"
+                          className="link text-secondary"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -47,7 +57,9 @@ const RssFeed = () => {
                           {item.title}
                         </Card.Link>
                       </Card.Title>
-                      <Card.Text>{item.content}</Card.Text>
+
+                      <Card.Text className="p-3">{item.content}</Card.Text>
+
                       <Card.Footer>
                         <Card.Text>
                           Published:{" "}
@@ -58,6 +70,7 @@ const RssFeed = () => {
                         </Card.Text>
                         <Card.Text className="text-end">
                           <Card.Link
+                            className="text-secondary"
                             onClick={() => {
                               setSelectedArticle(item);
                               setModalShow(true);
@@ -78,11 +91,9 @@ const RssFeed = () => {
               <h3>Popular Feeds</h3>
 
               <Col>
-                <Accordion defaultActiveKey="1">
+                <Accordion defaultActiveKey="1" flush>
                   <Accordion.Item eventKey="1">
-                    <Accordion.Header className="feed-head">
-                      Artificial Intelligence
-                    </Accordion.Header>
+                    <Accordion.Header>Artificial Intelligence</Accordion.Header>
                     <Accordion.Body>
                       {articles.slice(10, 15).map((item, idx) => (
                         <p
@@ -213,6 +224,66 @@ const RssFeed = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
+                <br />
+                <Card>
+                  <Card.Header>
+                    <strong>Top Commenters</strong>
+                  </Card.Header>
+                  <Card.Body>
+                    <ListGroup>
+                      <div className="top-com">
+                        <ListGroup.Item>
+                          <img
+                            alt="Avatar"
+                            className="tc-img"
+                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
+                          />
+                          Barney Fife
+                        </ListGroup.Item>
+                      </div>
+                      <div className="top-com">
+                        <ListGroup.Item>
+                          <img
+                            alt="Avatar"
+                            className="tc-img"
+                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
+                          />
+                          Barney Fife
+                        </ListGroup.Item>
+                      </div>
+                      <div className="top-com">
+                        <ListGroup.Item>
+                          <img
+                            alt="Avatar"
+                            className="tc-img"
+                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
+                          />
+                          Barney Fife
+                        </ListGroup.Item>
+                      </div>
+                      <div className="top-com">
+                        <ListGroup.Item>
+                          <img
+                            alt="Avatar"
+                            className="tc-img"
+                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
+                          />
+                          Barney Fife
+                        </ListGroup.Item>
+                      </div>
+                      <div className="top-com">
+                        <ListGroup.Item>
+                          <img
+                            alt="Avatar"
+                            className="tc-img"
+                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
+                          />
+                          Barney Fife
+                        </ListGroup.Item>
+                      </div>
+                    </ListGroup>
+                  </Card.Body>
+                </Card>
               </Col>
             </Row>
           </div>
@@ -227,12 +298,14 @@ const RssFeed = () => {
           onHide={() => setModalShow(false)}
         >
           <Modal.Header closeButton>
-            <Modal.Title>You are about the leave the ETM website!</Modal.Title>
+            <Modal.Title className="text-danger">
+              You are about the leave the ETM website!
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>{selectedArticle?.contentSnippet}</p>
+            <p className="mod-txt1">{selectedArticle?.contentSnippet}</p>
 
-            <p>
+            <p className="mod-txt2">
               Author: {selectedArticle?.creator} | Published:{" "}
               {moment
                 .parseZone(selectedArticle?.pubDate)
@@ -242,7 +315,7 @@ const RssFeed = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              variant="primary"
+              variant="outline-primary"
               href={selectedArticle?.link}
               target="_blank"
               rel="noopener noreferrer"
@@ -250,7 +323,10 @@ const RssFeed = () => {
             >
               Read Full Article
             </Button>
-            <Button variant="secondary" onClick={() => setModalShow(false)}>
+            <Button
+              variant="outline-secondary"
+              onClick={() => setModalShow(false)}
+            >
               Cancel
             </Button>
           </Modal.Footer>
