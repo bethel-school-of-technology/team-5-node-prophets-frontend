@@ -33,21 +33,21 @@
 .pop-feeds h3 {
   color: rgb(74, 95, 112);
 }
-.mod-txt1 {
-  color: rgb(74, 95, 112);
-}
+
 .mod-txt2 {
-  color: rgb(160, 160, 160);
-  font-style: italic;
   font-family: sans-serif;
+  color: rgb(116, 116, 116);
 }
 .top-com {
   padding: 5px;
 }
 
 .tc-img {
+  background-color: rgb(211, 212, 216);
   vertical-align: middle;
   margin: 2px;
+  border: solid 0.5px;
+  border-color: rgb(74, 95, 112);
   border-radius: 50px;
   height: 50px;
   width: 50px;

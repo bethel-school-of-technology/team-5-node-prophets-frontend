@@ -1,19 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Accordion,
   Button,
   Card,
-  CardHeader,
   Col,
-  Image,
   ListGroup,
   Modal,
   Row
 } from "react-bootstrap";
+import UserContext from "../contexts/QakContext";
 import "../styles/RssFeed.css";
 import moment from "moment";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const RssFeed = () => {
+  const [topCommenter, setTopCommenter] = useState([]);
+
+  console.log(topCommenter);
+  const baseUrl = "http://localhost:3000/api/users";
+
+  useEffect(() => {
+    async function fetchData() {
+      await getAllUsers();
+    }
+    fetchData();
+  }, []);
+
+  function getAllUsers() {
+    return axios
+      .get(baseUrl)
+      .then((response) => setTopCommenter(response.data));
+  }
+
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -225,62 +244,25 @@ const RssFeed = () => {
                   </Accordion.Item>
                 </Accordion>
                 <br />
+
                 <Card>
                   <Card.Header>
                     <strong>Top Commenters</strong>
                   </Card.Header>
                   <Card.Body>
                     <ListGroup>
-                      <div className="top-com">
-                        <ListGroup.Item>
-                          <img
-                            alt="Avatar"
-                            className="tc-img"
-                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
-                          />
-                          Barney Fife
-                        </ListGroup.Item>
-                      </div>
-                      <div className="top-com">
-                        <ListGroup.Item>
-                          <img
-                            alt="Avatar"
-                            className="tc-img"
-                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
-                          />
-                          Barney Fife
-                        </ListGroup.Item>
-                      </div>
-                      <div className="top-com">
-                        <ListGroup.Item>
-                          <img
-                            alt="Avatar"
-                            className="tc-img"
-                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
-                          />
-                          Barney Fife
-                        </ListGroup.Item>
-                      </div>
-                      <div className="top-com">
-                        <ListGroup.Item>
-                          <img
-                            alt="Avatar"
-                            className="tc-img"
-                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
-                          />
-                          Barney Fife
-                        </ListGroup.Item>
-                      </div>
-                      <div className="top-com">
-                        <ListGroup.Item>
-                          <img
-                            alt="Avatar"
-                            className="tc-img"
-                            src="https://www.southernliving.com/thmb/LbSIkRIGvoFC-BfGkzlcBLNS5Ss=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-119452789-2000-e023c7cacad04d928cafc6c4fe6bd694.jpg"
-                          />
-                          Barney Fife
-                        </ListGroup.Item>
-                      </div>
+                      {topCommenter.slice(1, 6).map((user, idx) => (
+                        <div className="top-com">
+                          <ListGroup.Item>
+                            <img
+                              alt="Avatar"
+                              className="tc-img"
+                              src={user.profilePicture}
+                            />
+                            {user.fullname}
+                          </ListGroup.Item>
+                        </div>
+                      ))}
                     </ListGroup>
                   </Card.Body>
                 </Card>
@@ -298,7 +280,7 @@ const RssFeed = () => {
           onHide={() => setModalShow(false)}
         >
           <Modal.Header closeButton>
-            <Modal.Title className="text-danger">
+            <Modal.Title className="text-primary">
               You are about the leave the ETM website!
             </Modal.Title>
           </Modal.Header>
