@@ -250,11 +250,12 @@ const RssFeed = () => {
                     <strong>Top Commenters</strong>
                   </Card.Header>
                   <Card.Body>
-                    <ListGroup>
-                      {topCommenter.slice(1, 6).map((user, idx) => (
+                    {topCommenter.slice(1, 6).map((user, id) => (
+                      <ListGroup key={id}>
                         <div className="top-com">
                           <ListGroup.Item>
                             <img
+                              key={id}
                               alt="Avatar"
                               className="tc-img"
                               src={user.profilePicture}
@@ -262,8 +263,8 @@ const RssFeed = () => {
                             {user.fullname}
                           </ListGroup.Item>
                         </div>
-                      ))}
-                    </ListGroup>
+                      </ListGroup>
+                    ))}
                   </Card.Body>
                 </Card>
               </Col>
