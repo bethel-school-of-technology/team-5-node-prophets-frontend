@@ -11,7 +11,7 @@ import {
 import UserContext from "../contexts/QakContext";
 import "../styles/RssFeed.css";
 import moment from "moment";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const RssFeed = () => {
@@ -67,7 +67,7 @@ const RssFeed = () => {
                     <Card.Body>
                       <Card.Title>
                         <Card.Link
-                          className="link text-secondary"
+                          className="title-link"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -76,11 +76,19 @@ const RssFeed = () => {
                           {item.title}
                         </Card.Link>
                       </Card.Title>
-
-                      <Card.Text className="p-3">{item.content}</Card.Text>
-
+                      <Card.Link
+                        className="title-link"
+                        onClick={() => {
+                          setSelectedArticle(item);
+                          setModalShow(true);
+                        }}
+                      >
+                        <Card.Text className="p-3" style={{ color: "black" }}>
+                          {item.content}
+                        </Card.Text>
+                      </Card.Link>
                       <Card.Footer>
-                        <Card.Text>
+                        <Card.Text className="author">
                           Published:{" "}
                           {moment
                             .parseZone(item.pubDate)
@@ -89,7 +97,7 @@ const RssFeed = () => {
                         </Card.Text>
                         <Card.Text className="text-end">
                           <Card.Link
-                            className="text-secondary"
+                            className="read-more text-secondary"
                             onClick={() => {
                               setSelectedArticle(item);
                               setModalShow(true);
@@ -117,7 +125,7 @@ const RssFeed = () => {
                       {articles.slice(10, 15).map((item, idx) => (
                         <p
                           key={idx}
-                          className="link"
+                          className="accordlink"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -136,7 +144,7 @@ const RssFeed = () => {
                       {articles.slice(20, 25).map((item, idx) => (
                         <p
                           key={idx}
-                          className="link"
+                          className="accordlink"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -155,7 +163,7 @@ const RssFeed = () => {
                       {articles.slice(30, 35).map((item, idx) => (
                         <p
                           key={idx}
-                          className="link"
+                          className="accordlink"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -174,7 +182,7 @@ const RssFeed = () => {
                       {articles.slice(40, 45).map((item, idx) => (
                         <p
                           key={idx}
-                          className="link"
+                          className="accordlink"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -193,7 +201,7 @@ const RssFeed = () => {
                       {articles.slice(50, 55).map((item, idx) => (
                         <p
                           key={idx}
-                          className="link"
+                          className="accordlink"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -212,7 +220,7 @@ const RssFeed = () => {
                       {articles.slice(60, 65).map((item, idx) => (
                         <p
                           key={idx}
-                          className="link"
+                          className="accordlink"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -231,7 +239,7 @@ const RssFeed = () => {
                       {articles.slice(70, 75).map((item, idx) => (
                         <p
                           key={idx}
-                          className="link"
+                          className="accordlink"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -253,15 +261,17 @@ const RssFeed = () => {
                     {topCommenter.slice(1, 6).map((user, id) => (
                       <ListGroup key={id}>
                         <div className="top-com">
-                          <ListGroup.Item>
-                            <img
-                              key={id}
-                              alt="Avatar"
-                              className="tc-img"
-                              src={user.profilePicture}
-                            />
-                            {user.fullname}
-                          </ListGroup.Item>
+                          <Link to="/profile" className="top-com-link">
+                            <ListGroup.Item>
+                              <img
+                                key={id}
+                                alt="Avatar"
+                                className="tc-img"
+                                src={user.profilePicture}
+                              />
+                              {user.fullname}
+                            </ListGroup.Item>
+                          </Link>
                         </div>
                       </ListGroup>
                     ))}
@@ -286,19 +296,30 @@ const RssFeed = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p className="mod-txt1">{selectedArticle?.contentSnippet}</p>
+            <p style={{ color: "dimgray" }}>
+              <u>Snippet:</u>
+            </p>
+            <Link
+              to={selectedArticle?.link}
+              className="mod-txt1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <p style={{ color: "black" }}>
+                {selectedArticle?.contentSnippet}
+              </p>
+            </Link>
           </Modal.Body>
           <Modal.Footer>
             <div className="mod-foot">
-              <div>
-                <p className="mod-txt2">
-                  Author: {selectedArticle?.creator} | Published:{" "}
-                  {moment
-                    .parseZone(selectedArticle?.pubDate)
-                    .local()
-                    .format("LLLL")}{" "}
-                </p>
-              </div>
+              <p className="mod-txt2">
+                Author: {selectedArticle?.creator} | Published:{" "}
+                {moment
+                  .parseZone(selectedArticle?.pubDate)
+                  .local()
+                  .format("LLLL")}{" "}
+              </p>
+
               <div>
                 <Button
                   variant="outline-primary"
@@ -308,7 +329,7 @@ const RssFeed = () => {
                   onClick={() => setModalShow(false)}
                 >
                   Read Full Article
-                </Button>
+                </Button>{" "}
                 <Button
                   variant="outline-secondary"
                   onClick={() => setModalShow(false)}
