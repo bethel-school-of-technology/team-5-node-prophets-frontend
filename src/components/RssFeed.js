@@ -287,31 +287,36 @@ const RssFeed = () => {
           </Modal.Header>
           <Modal.Body>
             <p className="mod-txt1">{selectedArticle?.contentSnippet}</p>
-
-            <p className="mod-txt2">
-              Author: {selectedArticle?.creator} | Published:{" "}
-              {moment
-                .parseZone(selectedArticle?.pubDate)
-                .local()
-                .format("LLLL")}{" "}
-            </p>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              variant="outline-primary"
-              href={selectedArticle?.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setModalShow(false)}
-            >
-              Read Full Article
-            </Button>
-            <Button
-              variant="outline-secondary"
-              onClick={() => setModalShow(false)}
-            >
-              Cancel
-            </Button>
+            <div className="mod-foot">
+              <div>
+                <p className="mod-txt2">
+                  Author: {selectedArticle?.creator} | Published:{" "}
+                  {moment
+                    .parseZone(selectedArticle?.pubDate)
+                    .local()
+                    .format("LLLL")}{" "}
+                </p>
+              </div>
+              <div>
+                <Button
+                  variant="outline-primary"
+                  href={selectedArticle?.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setModalShow(false)}
+                >
+                  Read Full Article
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => setModalShow(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
           </Modal.Footer>
         </Modal>
       </div>
