@@ -2,9 +2,9 @@
   padding: 10px;
   width: 200px;
 }
-.navi {
+.nav {
   height: 80px;
-  background-color: brown;
+  color: black;
 }
 
 .brand {
@@ -14,7 +14,7 @@
 .search {
   margin-right: 25px;
 }
-.nav-search{
-padding: auto;
-padding-left: 20px;
+.nav-search {
+  padding: auto;
+  padding-left: 20px;
 }
