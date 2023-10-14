@@ -58,6 +58,7 @@ const RssFeed = () => {
     <div className="rss-wrap">
       <div className="rss-bg">
         <div className="rss">
+          {/* Main RSS Feed */}
           <Container className="container" fluid>
             <div className="latest col-12 col-md-12 col-lg-9 pe-3">
               <Row xs={1} md={1} className="g-3">
@@ -117,6 +118,7 @@ const RssFeed = () => {
             <br />
             <div className="pop-feeds col-12 col-md-12 col-lg-3">
               <div>
+                {/* Side Bar Top (Popular Feeds) */}
                 <Row xs={1} md={1} className="g-3">
                   <h3>Popular Feeds</h3>
                   <Col>
@@ -256,7 +258,7 @@ const RssFeed = () => {
                       </Accordion.Item>
                     </Accordion>
                     <br />
-
+                    {/* Side Bar Bottom (Top Commenters) */}
                     <Card>
                       <Card.Header>
                         <strong>Top Commenters</strong>
@@ -291,6 +293,7 @@ const RssFeed = () => {
           </Container>
         </div>
       </div>
+      {/* Modal Action */}
       <div className="modal">
         <Modal
           size="lg"
