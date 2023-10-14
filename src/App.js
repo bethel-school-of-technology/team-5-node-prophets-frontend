@@ -14,6 +14,8 @@ import { SearchProvider } from "./contexts/SearchContext";
 import "./styles/App.css";
 import jwtDecode from "jwt-decode";
 import SignOut from "./components/SignOut";
+import QakContext from "./contexts/QakContext";
+import Qak from "./components/Qak";
 
 function App() {
   const [user, setUser] = useState();
@@ -39,7 +41,7 @@ function App() {
               <Route path="/signout" element={<SignOut />} />
               <Route path="/rssfeed" element={<RssFeed />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/about" element={<Qak />} />
             </Routes>
           </BrowserRouter>
         </UserProvider>
