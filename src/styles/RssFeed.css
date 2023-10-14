@@ -69,9 +69,7 @@
 .top-com-link {
   text-decoration: none;
 }
-.top-com-link:hover list-group-item {
-  color: blueviolet;
-}
+
 .tc-img {
   background-color: rgb(211, 212, 216);
   vertical-align: middle;
