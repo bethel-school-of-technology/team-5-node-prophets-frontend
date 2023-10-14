@@ -39,7 +39,7 @@ const Navigation = ({ user }) => {
     <>
       <>
         <Navbar fixed="top" expand="lg" bg="light">
-          <Container>
+          <Container fluid>
             <Navbar.Brand href="#home">
               <img
                 alt=""

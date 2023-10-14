@@ -1,8 +1,23 @@
 import axios from "axios";
 import UserContext from "./UserContext";
+import { useEffect, useState } from "react";
 
 export const UserProvider = (props) => {
+  const [users, setUsers] = useState([]);
+
+  console.log(users);
   const baseUrl = "http://localhost:3000/api/users";
+
+  useEffect(() => {
+    async function fetchData() {
+      await getAllUsers();
+    }
+    fetchData();
+  }, []);
+
+  function getAllUsers() {
+    return axios.get(baseUrl).then((response) => setUsers(response.data));
+  }
 
   function createUser(
     username,
@@ -57,6 +72,7 @@ export const UserProvider = (props) => {
   return (
     <UserContext.Provider
       value={{
+        getAllUsers,
         createUser,
         signInUser,
         getUserProfile,

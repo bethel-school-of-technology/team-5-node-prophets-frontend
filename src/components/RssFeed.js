@@ -1,9 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { Accordion, Button, Card, Col, Modal, Row } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  Accordion,
+  Button,
+  Card,
+  Col,
+  ListGroup,
+  Modal,
+  Row
+} from "react-bootstrap";
+import UserContext from "../contexts/QakContext";
 import "../styles/RssFeed.css";
 import moment from "moment";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const RssFeed = () => {
+  const [topCommenter, setTopCommenter] = useState([]);
+
+  console.log(topCommenter);
+  const baseUrl = "http://localhost:3000/api/users";
+
+  useEffect(() => {
+    async function fetchData() {
+      await getAllUsers();
+    }
+    fetchData();
+  }, []);
+
+  function getAllUsers() {
+    return axios
+      .get(baseUrl)
+      .then((response) => setTopCommenter(response.data));
+  }
+
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -32,13 +61,13 @@ const RssFeed = () => {
           <div className="latest col-9" xs={1} md={1}>
             <Row xs={1} md={1} className="g-3">
               <h3>Latest Content</h3>
-              {articles.slice(1, 10).map((item, idx) => (
+              {articles.slice(1, 6).map((item, idx) => (
                 <Col key={idx}>
-                  <Card className="card">
+                  <Card>
                     <Card.Body>
                       <Card.Title>
                         <Card.Link
-                          className="link"
+                          className="link text-secondary"
                           onClick={() => {
                             setSelectedArticle(item);
                             setModalShow(true);
@@ -47,7 +76,9 @@ const RssFeed = () => {
                           {item.title}
                         </Card.Link>
                       </Card.Title>
-                      <Card.Text>{item.content}</Card.Text>
+
+                      <Card.Text className="p-3">{item.content}</Card.Text>
+
                       <Card.Footer>
                         <Card.Text>
                           Published:{" "}
@@ -58,6 +89,7 @@ const RssFeed = () => {
                         </Card.Text>
                         <Card.Text className="text-end">
                           <Card.Link
+                            className="text-secondary"
                             onClick={() => {
                               setSelectedArticle(item);
                               setModalShow(true);
@@ -78,11 +110,9 @@ const RssFeed = () => {
               <h3>Popular Feeds</h3>
 
               <Col>
-                <Accordion defaultActiveKey="1">
+                <Accordion defaultActiveKey="1" flush>
                   <Accordion.Item eventKey="1">
-                    <Accordion.Header className="feed-head">
-                      Artificial Intelligence
-                    </Accordion.Header>
+                    <Accordion.Header>Artificial Intelligence</Accordion.Header>
                     <Accordion.Body>
                       {articles.slice(10, 15).map((item, idx) => (
                         <p
@@ -213,6 +243,30 @@ const RssFeed = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
+                <br />
+
+                <Card>
+                  <Card.Header>
+                    <strong>Top Commenters</strong>
+                  </Card.Header>
+                  <Card.Body>
+                    {topCommenter.slice(1, 6).map((user, id) => (
+                      <ListGroup key={id}>
+                        <div className="top-com">
+                          <ListGroup.Item>
+                            <img
+                              key={id}
+                              alt="Avatar"
+                              className="tc-img"
+                              src={user.profilePicture}
+                            />
+                            {user.fullname}
+                          </ListGroup.Item>
+                        </div>
+                      </ListGroup>
+                    ))}
+                  </Card.Body>
+                </Card>
               </Col>
             </Row>
           </div>
@@ -227,12 +281,14 @@ const RssFeed = () => {
           onHide={() => setModalShow(false)}
         >
           <Modal.Header closeButton>
-            <Modal.Title>You are about the leave the ETM website!</Modal.Title>
+            <Modal.Title className="text-primary">
+              You are about the leave the ETM website!
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>{selectedArticle?.contentSnippet}</p>
+            <p className="mod-txt1">{selectedArticle?.contentSnippet}</p>
 
-            <p>
+            <p className="mod-txt2">
               Author: {selectedArticle?.creator} | Published:{" "}
               {moment
                 .parseZone(selectedArticle?.pubDate)
@@ -242,7 +298,7 @@ const RssFeed = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              variant="primary"
+              variant="outline-primary"
               href={selectedArticle?.link}
               target="_blank"
               rel="noopener noreferrer"
@@ -250,7 +306,10 @@ const RssFeed = () => {
             >
               Read Full Article
             </Button>
-            <Button variant="secondary" onClick={() => setModalShow(false)}>
+            <Button
+              variant="outline-secondary"
+              onClick={() => setModalShow(false)}
+            >
               Cancel
             </Button>
           </Modal.Footer>

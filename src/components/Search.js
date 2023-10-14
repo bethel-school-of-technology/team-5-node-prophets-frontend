@@ -12,14 +12,14 @@ const Search = ({ query, setQuery }) => {
     //supposed to search in site content.....
 
     { name: "Home", link: "/" },
-    { name: "About Us", link: "/about" },
+    { name: "About Us", link: "/about" }
     // ... add other static pages as needed
   ];
   const [localResults, setLocalResults] = useState({
     users: [],
     qaks: [],
     articles: [],
-    general: [],
+    general: []
   });
   const fetchResults = async () => {
     try {
@@ -35,7 +35,7 @@ const Search = ({ query, setQuery }) => {
         general: matchingSitePages,
         users: data.users || [],
         qaks: data.qaks || [],
-        articles: data, // directly setting data to articles, as RSS server responds with array of articles
+        articles: data // directly setting data to articles, as RSS server responds with array of articles
       });
     } catch (error) {
       console.error("Error fetching search results:", error);
@@ -74,7 +74,7 @@ const Search = ({ query, setQuery }) => {
           general: matchingSitePages,
           users: localData.users || [],
           qaks: localData.qaks || [],
-          articles: rssData, // Directly setting rssData to articles, as RSS server responds with array of articles
+          articles: rssData // Directly setting rssData to articles, as RSS server responds with array of articles
         });
       } catch (error) {
         console.error("Error fetching search results:", error);
