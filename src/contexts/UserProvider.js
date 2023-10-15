@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
 
-  console.log(users);
   const baseUrl = "http://localhost:3000/api/users";
 
   useEffect(() => {

@@ -1,39 +1,31 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Nav,
-  NavDropdown,
-  Navbar,
-  Stack
-} from "react-bootstrap";
+import { Container, Nav, Navbar, Stack } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import "../styles/Navigation.css";
-import UserContext from "../contexts/UserContext";
 import Search from "./Search";
+import SignIn from "./SignIn";
 
 const Navigation = ({ user }) => {
-  //const [loggedUser, setLoggedUser] = useState({});
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [loggedUser, setLoggedUser] = useState({});
   const [query, setQuery] = useState("");
 
-  let { signInUser } = useContext(UserContext);
+  const [showSignInModal, setShowSignInModal] = useState(false);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    signInUser(username, password)
-      .then(() => {
-        window.location = "/";
-      })
-      .catch((error) => {
-        console.log(error);
-        window.alert("Failed Login");
-      });
-  }
+  const openSignInModal = () => {
+    setShowSignInModal(true);
+  };
 
-  let { user_id } = useParams;
+  const closeSignInModal = () => {
+    setShowSignInModal(false);
+  };
+
+  const handleSubmit = (e) => {
+    // Handle sign-in form submission
+    e.preventDefault();
+    // Your sign-in form submission logic here
+  };
+
+  let { user_id } = useParams();
 
   return (
     <>
@@ -72,7 +64,48 @@ const Navigation = ({ user }) => {
                     <Link to="/signup" className="nav-link">
                       Sign Up
                     </Link>
-                    <NavDropdown
+                    <Link
+                      to={openSignInModal}
+                      className="nav-link"
+                      onClick={openSignInModal}
+                    >
+                      Sign In
+                    </Link>
+                  </React.Fragment>
+                )}
+
+                <Link to="/rssfeed" className="nav-link">
+                  RSS Feed
+                </Link>
+                <Link to="/about" className="nav-link">
+                  QAK
+                </Link>
+                {/*Search component directly in the Nav bar */}
+                <div className="nav-search">
+                  <Search query={query} setQuery={setQuery} />
+                </div>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+
+        <Stack gap={3} className="col-md-10 mx-auto mt-3">
+          <Outlet />
+        </Stack>
+        <SignIn
+          show={showSignInModal}
+          handleClose={closeSignInModal}
+          handleSubmit={handleSubmit}
+        />
+      </>
+    </>
+  );
+};
+
+export default Navigation;
+
+{
+  /* <NavDropdown
                       id="nav-dropdown-light-example"
                       title="Sign In"
                       menuVariant="light"
@@ -102,31 +135,5 @@ const Navigation = ({ user }) => {
                           <Button type="submit">Sign In</Button>
                         </Form>
                       </div>
-                    </NavDropdown>
-                  </React.Fragment>
-                )}
-
-                <Link to="/rssfeed" className="nav-link">
-                  RSS Feed
-                </Link>
-                <Link to="/about" className="nav-link">
-                  QAK
-                </Link>
-                {/*Search component directly in the Nav bar */}
-                <div className="nav-search">
-                  <Search query={query} setQuery={setQuery} />
-                </div>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-
-        <Stack gap={3} className="col-md-10 mx-auto mt-3">
-          <Outlet />
-        </Stack>
-      </>
-    </>
-  );
-};
-
-export default Navigation;
+                    </NavDropdown> */
+}
