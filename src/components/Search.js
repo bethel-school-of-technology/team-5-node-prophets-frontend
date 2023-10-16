@@ -1,21 +1,26 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { SearchContext } from "../contexts/SearchContext";
+import debounce from "lodash.debounce";
+import { MDBCol } from "mdbreact";
 import "../styles/Search.css";
 
 const Search = ({ query, setQuery }) => {
+  // Use SearchContext to access and update search results
   const { results, setResults } = useContext(SearchContext);
   const searchContainerRef = useRef(null);
 
+  // Initialize selectedDetail, showingResults, selectedCategory, and sitePages
+  const [selectedDetail, setSelectedDetail] = useState(null);
+  const [showingResults, setShowingResults] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const sitePages = [
-    //supposed to search in site content.....
-
     { name: "Home", link: "/" },
     { name: "About Us", link: "/about" },
-    // ... add other static pages as needed
+    // trying to search home and other static pages, still working on it.....
   ];
 
+  // Initialize localResults state to store search results
   const [localResults, setLocalResults] = useState({
     users: [],
     qaks: [],
@@ -23,43 +28,74 @@ const Search = ({ query, setQuery }) => {
     general: [],
   });
 
-  const [selectedDetail, setSelectedDetail] = useState(null);
-
-  // Determine if results are being shown
-  const showingResults =
-    localResults.users.length > 0 ||
-    localResults.qaks.length > 0 ||
-    localResults.articles.length > 0 ||
-    localResults.general.length > 0;
-
+  // Fetch search results based on the query and selected category
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/search?q=${query}`);
+        // Define the category to search
+        let categoryParam = "";
+        if (selectedCategory !== "All") {
+          categoryParam = `&category=${selectedCategory.toLowerCase()}`;
+        }
+
+        // Fetch search results using query and category parameters
+        const response = await fetch(
+          `http://localhost:3000/search?q=${query}${categoryParam}`
+        );
         const data = await response.json();
 
-        const matchingSitePages = sitePages.filter((page) =>
-          page.name.toLowerCase().includes(query.toLowerCase())
-        );
+        // Extract RSS feed results from the data
+        const { rssArticles } = data;
 
-        setLocalResults({
-          general: matchingSitePages,
-          users: data.users || [],
-          qaks: data.qaks || [],
-          articles: data.articles || [],
-        });
+        // Initialize localResults with empty arrays for all categories
+        const newLocalResults = {
+          users: [],
+          qaks: [],
+          articles: [],
+          general: [],
+        };
+
+        // Update localResults based on the selected category
+        if (selectedCategory === "Users") {
+          newLocalResults.users = data.users || [];
+        } else if (selectedCategory === "Qaks") {
+          newLocalResults.qaks = data.qaks || [];
+        } else if (selectedCategory === "Articles") {
+          newLocalResults.articles = rssArticles || [];
+        } else if (selectedCategory === "General") {
+          newLocalResults.general = sitePages;
+        } else if (selectedCategory === "All") {
+          newLocalResults.users = data.users || [];
+          newLocalResults.qaks = data.qaks || [];
+          newLocalResults.articles = rssArticles || [];
+          newLocalResults.general = sitePages;
+        }
+
+        // Update localResults with the new data
+        setLocalResults(newLocalResults);
+
+        // Set showingResults to true to display results
+        setShowingResults(true);
       } catch (error) {
-        console.error("Error fetching search results:", error);
+        console.error("Error fetching search results:", error.message);
+        console.error(error); // Logging the whole error for more details
+
+        // Set showingResults to false in case of an error
+        setShowingResults(false);
       }
     };
 
+    // Only fetch results if there's a query
     if (query) {
       fetchResults();
     } else {
+      // Clear results and hide them when the query is empty
       setLocalResults({ users: [], qaks: [], articles: [], general: [] });
+      setShowingResults(false);
     }
-  }, [query, results]);
+  }, [query, results, selectedCategory]); // Update results when query or selectedCategory changes
 
+  // Handle clicks outside the search container to clear selectedDetail and hide results
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
@@ -68,6 +104,7 @@ const Search = ({ query, setQuery }) => {
       ) {
         setSelectedDetail(null);
         setLocalResults({ users: [], qaks: [], articles: [], general: [] });
+        setShowingResults(false);
       }
     };
 
@@ -78,56 +115,157 @@ const Search = ({ query, setQuery }) => {
     };
   }, []);
 
+  // Handeling information when a search result is clicked - QUESTION
   function displayDetailedResults(item) {
-    setSelectedDetail(item);
+    if (selectedCategory === "Users") {
+      // Show an alert for the "Users" category
+      alert("You must be signed in to view this user's profile");
+    } else if (selectedCategory === "Qaks") {
+      // Show an alert for the "Qaks" category
+      alert("Nothing more to view");
+    } else if (selectedCategory === "Articles" || selectedCategory === "All") {
+      // Open the full link for articles
+      if (item.link) {
+        window.open(item.link, "_blank");
+      }
+    } else {
+      // Display details for other categories
+      setSelectedDetail(item);
+    }
   }
 
-  function handleInputChange(e) {
-    setQuery(e.target.value);
-    setSelectedDetail(null);
-    setLocalResults({ users: [], qaks: [], articles: [], general: [] });
-  }
+  // Handle input changes in the search bar
+  const handleInputChange = (e) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+
+    // Only fetch results if there's a query
+    if (newQuery) {
+      debounceFetchResults(newQuery);
+    } else {
+      // Clear results and hide them when the query is empty
+      setLocalResults({ users: [], qaks: [], articles: [], general: [] });
+      setShowingResults(false);
+    }
+  };
+
+  // Use debounce to delay fetching results as you type, - help with looping?
+  const debounceFetchResults = debounce((newQuery) => {
+    // Results are fetched in the useEffect hook based on the newQuery
+  }, 500);
+
+  // Handle changes in the selected category from the dropdown
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  // Define the available categories for searching
+  const categories = ["All", "Users", "Qaks", "Articles", "General"];
 
   return (
-    <div
-      className={`search-container mt-2 ${
-        showingResults ? "blurred-background" : ""
-      }`}
-      ref={searchContainerRef}
-    >
-      <input
-        type="text"
-        className="form-control"
-        placeholder="Search..."
-        value={query}
-        onChange={handleInputChange}
-        onClick={() => {
-          setSelectedDetail(null);
-          setLocalResults({ users: [], qaks: [], articles: [], general: [] });
-        }}
-      />
-      <div className="list-group mt-2 search-results">
-        {["users", "qaks", "articles", "general"].map((category) =>
-          localResults[category].slice(0, 5).map((item, index) => (
-            <Link
-              key={item.id || index}
-              to={item.link || `/article/${item.title}`}
-              className="list-group-item list-group-item-action"
-              onClick={() => displayDetailedResults(item)}
+    <div className="search-container mt-1" ref={searchContainerRef}>
+      <div className="input-group md-form form-sm form-1 pl-0">
+        <MDBCol md="10">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search Here"
+            value={query}
+            onChange={handleInputChange}
+          />
+        </MDBCol>
+        <div className="pick-category-text">Pick Category</div>
+        {/* Display Catagories in Search */}
+        <select
+          className="ml-2"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+        >
+          {categories.map((cat) => (
+            <option
+              key={cat}
+              value={cat}
+              className={cat === "All" ? "all-category" : ""}
             >
-              {item.fullname || item.qak || item.title || item.name}
-            </Link>
-          ))
-        )}
+              {cat}
+            </option>
+          ))}
+        </select>
       </div>
 
-      <div className="search-results-display">
-        {selectedDetail && (
+      {showingResults && (
+        <div className="list-group mt-2 search-results">
+          {/* Display RSS Feed results */}
+          {selectedCategory === "Articles" &&
+            localResults.articles.length > 0 && (
+              <div className="result-category">
+                <h5 className="category-title">RSS Feed</h5>
+                {localResults.articles.map((rssItem, index) => (
+                  <a
+                    key={rssItem.id || index}
+                    href={rssItem.link} // Link to the RSS Feed item
+                    className="list-group-item list-group-item-action d-flex justify-content-between"
+                  >
+                    <div>
+                      <strong>{rssItem.title}</strong>
+                    </div>
+                    <div>
+                      {rssItem.description && (
+                        <span>Description: {rssItem.description}</span>
+                      )}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            )}
+
+          {/* Display other search categories */}
+          {selectedCategory !== "Articles" &&
+            Object.keys(localResults).map((category) => {
+              if (localResults[category].length > 0) {
+                return (
+                  <div
+                    key={category}
+                    className="result-category d-flex flex-column"
+                  >
+                    <h5 className="category-title">{category}</h5>
+                    {localResults[category].map((item, index) => (
+                      <div
+                        key={item.id || index}
+                        className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                        onClick={() => displayDetailedResults(item)}
+                      >
+                        <strong>
+                          {item.fullname || item.qak || item.title}
+                        </strong>
+                        <div>
+                          {item.email && (
+                            <span className="user-info">
+                              Email: {item.email}{" "}
+                            </span>
+                          )}
+                          {item.city && (
+                            <span className="user-info">City: {item.city}</span>
+                          )}
+                          {item.state && <span>State: {item.state}</span>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              }
+              return null;
+            })}
+        </div>
+      )}
+
+      {selectedDetail && (
+        <div className="search-results-display">
           <Card>
             <Card.Header>
               {selectedDetail.fullname ||
                 selectedDetail.qak ||
-                selectedDetail.item?.title}
+                selectedDetail.title}
             </Card.Header>
             <Card.Body>
               {selectedDetail.email && (
@@ -139,15 +277,13 @@ const Search = ({ query, setQuery }) => {
               {selectedDetail.state && (
                 <Card.Text>State: {selectedDetail.state}</Card.Text>
               )}
-              {selectedDetail.item?.description && (
-                <Card.Text>
-                  Description: {selectedDetail.item.description}
-                </Card.Text>
+              {selectedDetail.description && (
+                <Card.Text>Description: {selectedDetail.description}</Card.Text>
               )}
             </Card.Body>
           </Card>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

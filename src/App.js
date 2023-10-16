@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
-import About from "./components/About";
 import RssFeed from "./components/RssFeed";
 import Search from "./components/Search";
 // import UserDetail from "./components/UserDetails";
@@ -12,25 +11,37 @@ import Search from "./components/Search";
 import { UserProvider } from "./contexts/UserProvider";
 import { SearchProvider } from "./contexts/SearchContext";
 import "./styles/App.css";
+import jwtDecode from "jwt-decode";
+import SignOut from "./components/SignOut";
+import Qak from "./components/Qak";
+import SignIn from "./components/SignIn";
 
 function App() {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    try {
+      const jwt = localStorage.getItem("userToken");
+      const userToken = jwtDecode(jwt);
+      setUser(userToken);
+    } catch (ex) {}
+  }, []);
+
   return (
     <div className="wrap backgroundColor">
       <SearchProvider>
         <UserProvider>
           <BrowserRouter>
-            <Navigation />
+            <Navigation user={user} />
             <Routes>
-              {/* <Route path="/" element={<Navigation />}>
-              <Route index element={<Home />} /> */}
               <Route path="/" element={<Home />} index />
               <Route path="/" element={<Search />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signout" element={<SignOut />} />
               <Route path="/rssfeed" element={<RssFeed />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/about" element={<About />} />
-              {/* <Route path="/user/:id" element={<UserDetail />} />
-              <Route path="/qak/:id" element={<QakDetail />} /> */}
+              <Route path="/about" element={<Qak />} />
             </Routes>
           </BrowserRouter>
         </UserProvider>
