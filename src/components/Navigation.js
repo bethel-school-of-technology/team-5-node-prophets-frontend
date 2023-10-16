@@ -1,13 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Nav, Navbar, Stack } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import "../styles/Navigation.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search";
 import SignIn from "./SignIn";
 
 const Navigation = ({ user }) => {
-  const [loggedUser, setLoggedUser] = useState({});
   const [query, setQuery] = useState("");
+  const [searchVisible, setSearchVisible] = useState(false); // Add state for search visibility - Joe
 
   const [showSignInModal, setShowSignInModal] = useState(false);
 
@@ -20,12 +22,15 @@ const Navigation = ({ user }) => {
   };
 
   const handleSubmit = (e) => {
-    // Handle sign-in form submission
     e.preventDefault();
-    // Your sign-in form submission logic here
   };
 
   let { user_id } = useParams();
+
+  // Function to toggle search visibility - Joe
+  const toggleSearch = () => {
+    setSearchVisible(!searchVisible);
+  };
 
   return (
     <>
@@ -80,10 +85,20 @@ const Navigation = ({ user }) => {
                 <Link to="/about" className="nav-link">
                   QAK
                 </Link>
+                {/* Search icon - Joe */}
+                <div className="nav-search-icon" onClick={toggleSearch}>
+                  <FontAwesomeIcon icon={faSearch} />
+                </div>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
+        {/* Floating search bar - Joe */}
+        {searchVisible && (
+          <div className="floating-search">
+            <Search query={query} setQuery={setQuery} />
+          </div>
+        )}
 
         <Stack gap={3} className="col-md-10 mx-auto mt-3">
           <Outlet />
