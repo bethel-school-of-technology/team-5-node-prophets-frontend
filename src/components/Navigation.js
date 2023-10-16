@@ -6,11 +6,13 @@ import {
   Nav,
   NavDropdown,
   Navbar,
-  Stack
+  Stack,
 } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import "../styles/Navigation.css";
 import UserContext from "../contexts/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search";
 
 const Navigation = ({ user }) => {
@@ -18,6 +20,7 @@ const Navigation = ({ user }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [query, setQuery] = useState("");
+  const [searchVisible, setSearchVisible] = useState(false); // Add state for search visibility - Joe
 
   let { signInUser } = useContext(UserContext);
 
@@ -34,6 +37,11 @@ const Navigation = ({ user }) => {
   }
 
   let { user_id } = useParams;
+
+  // Function to toggle search visibility - Joe
+  const toggleSearch = () => {
+    setSearchVisible(!searchVisible);
+  };
 
   return (
     <>
@@ -112,14 +120,21 @@ const Navigation = ({ user }) => {
                 <Link to="/about" className="nav-link">
                   QAK
                 </Link>
-                {/*Search component directly in the Nav bar */}
-                <div className="nav-search">
-                  <Search query={query} setQuery={setQuery} />
+                {/* Search icon - Joe */}
+                <div className="nav-search-icon" onClick={toggleSearch}>
+                  <FontAwesomeIcon icon={faSearch} />
                 </div>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
+
+        {/* Floating search bar - Joe */}
+        {searchVisible && (
+          <div className="floating-search">
+            <Search query={query} setQuery={setQuery} />
+          </div>
+        )}
 
         <Stack gap={3} className="col-md-10 mx-auto mt-3">
           <Outlet />
