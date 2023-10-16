@@ -4,7 +4,6 @@ import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
-import About from "./components/About";
 import RssFeed from "./components/RssFeed";
 import Search from "./components/Search";
 // import UserDetail from "./components/UserDetails";
@@ -14,8 +13,8 @@ import { SearchProvider } from "./contexts/SearchContext";
 import "./styles/App.css";
 import jwtDecode from "jwt-decode";
 import SignOut from "./components/SignOut";
-import QakContext from "./contexts/QakContext";
 import Qak from "./components/Qak";
+import SignIn from "./components/SignIn";
 
 function App() {
   const [user, setUser] = useState();
@@ -38,6 +37,7 @@ function App() {
               <Route path="/" element={<Home />} index />
               <Route path="/" element={<Search />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
               <Route path="/signout" element={<SignOut />} />
               <Route path="/rssfeed" element={<RssFeed />} />
               <Route path="/profile" element={<Profile />} />

@@ -1,42 +1,31 @@
-import React, { useState, useContext, useEffect } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Nav,
-  NavDropdown,
-  Navbar,
-  Stack,
-} from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Nav, Navbar, Stack } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import "../styles/Navigation.css";
-import UserContext from "../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search";
+import SignIn from "./SignIn";
 
 const Navigation = ({ user }) => {
-  //const [loggedUser, setLoggedUser] = useState({});
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [query, setQuery] = useState("");
   const [searchVisible, setSearchVisible] = useState(false); // Add state for search visibility - Joe
 
-  let { signInUser } = useContext(UserContext);
+  const [showSignInModal, setShowSignInModal] = useState(false);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    signInUser(username, password)
-      .then(() => {
-        window.location = "/";
-      })
-      .catch((error) => {
-        console.log(error);
-        window.alert("Failed Login");
-      });
-  }
+  const openSignInModal = () => {
+    setShowSignInModal(true);
+  };
 
-  let { user_id } = useParams;
+  const closeSignInModal = () => {
+    setShowSignInModal(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  let { user_id } = useParams();
 
   // Function to toggle search visibility - Joe
   const toggleSearch = () => {
@@ -80,37 +69,13 @@ const Navigation = ({ user }) => {
                     <Link to="/signup" className="nav-link">
                       Sign Up
                     </Link>
-                    <NavDropdown
-                      id="nav-dropdown-light-example"
-                      title="Sign In"
-                      menuVariant="light"
+                    <Link
+                      to={openSignInModal}
+                      className="nav-link"
+                      onClick={openSignInModal}
                     >
-                      <div>
-                        <Form className="sign-in" onSubmit={handleSubmit}>
-                          <Form.Group className="mb-6">
-                            <Form.Control
-                              size="sm"
-                              placeholder="username"
-                              type="text"
-                              name="username"
-                              value={username}
-                              onChange={(e) => setUsername(e.target.value)}
-                            />
-                            <br></br>
-                            <Form.Control
-                              size="sm"
-                              placeholder="password"
-                              type="password"
-                              name="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                            />
-                          </Form.Group>
-                          <br />
-                          <Button type="submit">Sign In</Button>
-                        </Form>
-                      </div>
-                    </NavDropdown>
+                      Sign In
+                    </Link>
                   </React.Fragment>
                 )}
 
@@ -128,7 +93,6 @@ const Navigation = ({ user }) => {
             </Navbar.Collapse>
           </Container>
         </Navbar>
-
         {/* Floating search bar - Joe */}
         {searchVisible && (
           <div className="floating-search">
@@ -139,6 +103,11 @@ const Navigation = ({ user }) => {
         <Stack gap={3} className="col-md-10 mx-auto mt-3">
           <Outlet />
         </Stack>
+        <SignIn
+          show={showSignInModal}
+          handleClose={closeSignInModal}
+          handleSubmit={handleSubmit}
+        />
       </>
     </>
   );
