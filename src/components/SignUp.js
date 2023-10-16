@@ -11,7 +11,6 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  console.log(username);
   let { createUser } = useContext(UserContext);
   let navigate = useNavigate();
 
