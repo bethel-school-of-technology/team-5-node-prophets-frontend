@@ -2,10 +2,11 @@
   border: solid 1px rgba(92, 87, 76, 0.136);
   margin-top: 50px;
   padding: 20px;
+  background-color: rgba(37, 67, 109, 0.412);
 }
 .signup-bg {
   border: solid 1px rgba(92, 87, 76, 0.148);
-
+  padding: 20px;
   background-color: rgba(210, 207, 203, 0.487);
   border-radius: 10px;
 }

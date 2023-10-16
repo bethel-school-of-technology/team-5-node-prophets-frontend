@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { Row, Col, Container } from "react-bootstrap";
-import "./styles/SignUp.css";
+import "../styles/SignUp.css";
 
 const SignUp = () => {
   const [username, setUserName] = useState("");
@@ -25,7 +25,7 @@ const SignUp = () => {
     event.preventDefault();
     createUser(username, password, fullname, email, city, state, profilePicture)
       .then(() => {
-        navigate("/signin");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -35,96 +35,100 @@ const SignUp = () => {
 
   return (
     <>
-      <Container style={containerStyle}>
-        <Row>
-          <Col className="signupimg" md={{ span: 6, offset: 3 }}>
-            <form onSubmit={handleSubmit}>
-              <h1>Register</h1>
-              <br></br>
-              <span>Username </span>
-              <input
-                placeholder="Enter Username"
-                type="text"
-                name="username"
-                value={username}
-                onChange={(e) => setUserName(e.target.value)}
-              />
-              <br></br>
-              <br></br>
-              <span>Password </span>
-              <input
-                placeholder="Enter Password"
-                type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <br></br>
-              <br></br>
-              <span>Full Name </span>
-              <input
-                placeholder="Enter Full Name"
-                type="text"
-                name="fullname"
-                value={fullname}
-                onChange={(e) => setFullName(e.target.value)}
-              />
-              <br></br>
-              <br></br>
-              <span>Email </span>
-              <input
-                placeholder="Enter Email"
-                type="text"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <br></br>
-              <br></br>
-              <span>City </span>
-              <input
-                placeholder="Enter City"
-                type="text"
-                name="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <br></br>
-              <br></br>
-              <span>State </span>
-              <input
-                placeholder="Enter State"
-                type="text"
-                name="state"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-              />
-              <br></br>
-              <br></br>
-              <input
-                placeholder="Enter Image URL"
-                type="text"
-                name="profilePicture"
-                value={profilePicture}
-                onChange={(e) => setProfilePicture(e.target.value)}
-              />
-              <br />
-              <br></br>
-              <button>Create Account</button>
-            </form>
-          </Col>
-        </Row>
-        <Row>
-          <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-          </div>
-        </Row>
-      </Container>
+      <div className="signup-wrap">
+        <div className="signup-bg">
+          <Container style={containerStyle}>
+            <Row>
+              <Col className="signupimg" md={{ span: 7, offset: 3 }}>
+                <form onSubmit={handleSubmit}>
+                  <br />
+                  <br></br>
+                  <h1>Register</h1>
+                  <br></br>
+                  <span>Username </span>
+                  <input
+                    placeholder="Enter Username"
+                    type="text"
+                    name="username"
+                    value={username}
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                  <br></br>
+                  <br></br>
+                  <span>Password </span>
+                  <input
+                    placeholder="Enter Password"
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <br></br>
+                  <br></br>
+                  <span>Full Name </span>
+                  <input
+                    placeholder="Enter Full Name"
+                    type="text"
+                    name="fullname"
+                    value={fullname}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                  <br></br>
+                  <br></br>
+                  <span>Email </span>
+                  <input
+                    placeholder="Enter Email"
+                    type="text"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <br></br>
+                  <br></br>
+                  <span>City </span>
+                  <input
+                    placeholder="Enter City"
+                    type="text"
+                    name="city"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                  />
+                  <br></br>
+                  <br></br>
+                  <span>State </span>
+                  <input
+                    placeholder="Enter State"
+                    type="text"
+                    name="state"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
+                  />
+                  <br></br>
+                  <br></br>
+                  <span>Image URL</span>
+                  <input
+                    placeholder="Enter Image URL"
+                    type="text"
+                    name="profilePicture"
+                    value={profilePicture}
+                    onChange={(e) => setProfilePicture(e.target.value)}
+                  />
+                  <br />
+                  <br></br>
+                  <button>
+                    <strong>Create Account</strong>
+                  </button>
+                </form>
+
+                <br />
+                <br></br>
+                <br />
+                <br></br>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </div>
     </>
   );
 };
