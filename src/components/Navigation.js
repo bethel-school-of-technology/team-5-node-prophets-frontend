@@ -1,13 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Container, Nav, Navbar, Stack } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import "../styles/Navigation.css";
+import { Navbar, Stack, Container, Nav } from "react-bootstrap";
+import "../styles/Navigation.css";
+import UserContext from "../contexts/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search";
 import SignIn from "./SignIn";
 
 const Navigation = ({ user }) => {
   const [loggedUser, setLoggedUser] = useState({});
   const [query, setQuery] = useState("");
+  const [searchVisible, setSearchVisible] = useState(false); // Add state for search visibility - Joe
 
   const [showSignInModal, setShowSignInModal] = useState(false);
 
@@ -26,6 +31,11 @@ const Navigation = ({ user }) => {
   };
 
   let { user_id } = useParams();
+
+  // Function to toggle search visibility - Joe
+  const toggleSearch = () => {
+    setSearchVisible(!searchVisible);
+  };
 
   return (
     <>
@@ -80,60 +90,28 @@ const Navigation = ({ user }) => {
                 <Link to="/about" className="nav-link">
                   QAK
                 </Link>
-                {/*Search component directly in the Nav bar */}
-                <div className="nav-search">
-                  <Search query={query} setQuery={setQuery} />
+                {/* Search icon - Joe */}
+                <div className="nav-search-icon" onClick={toggleSearch}>
+                  <FontAwesomeIcon icon={faSearch} />
                 </div>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
 
+        {/* Floating search bar - Joe */}
+        {searchVisible && (
+          <div className="floating-search">
+            <Search query={query} setQuery={setQuery} />
+          </div>
+        )}
+
         <Stack gap={3} className="col-md-10 mx-auto mt-3">
           <Outlet />
         </Stack>
-        <SignIn
-          show={showSignInModal}
-          handleClose={closeSignInModal}
-          handleSubmit={handleSubmit}
-        />
       </>
     </>
   );
 };
 
 export default Navigation;
-
-{
-  /* <NavDropdown
-                      id="nav-dropdown-light-example"
-                      title="Sign In"
-                      menuVariant="light"
-                    >
-                      <div>
-                        <Form className="sign-in" onSubmit={handleSubmit}>
-                          <Form.Group className="mb-6">
-                            <Form.Control
-                              size="sm"
-                              placeholder="username"
-                              type="text"
-                              name="username"
-                              value={username}
-                              onChange={(e) => setUsername(e.target.value)}
-                            />
-                            <br></br>
-                            <Form.Control
-                              size="sm"
-                              placeholder="password"
-                              type="password"
-                              name="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                            />
-                          </Form.Group>
-                          <br />
-                          <Button type="submit">Sign In</Button>
-                        </Form>
-                      </div>
-                    </NavDropdown> */
-}

@@ -1,35 +1,53 @@
+
+
+/* Style the search container */
 .search-container {
+  padding-top: 42px;
+  width: 100%;
   position: relative;
+  display: flex; /* Display children in a row */
+  align-items: center; /* Vertically align items */
+  /* justify-content: flex-end; Push items to the right side */
 }
 
-.blurred-background {
-  backdrop-filter: blur(4px);
-}
 
-
+/* Style the search results dropdown */
 .search-results {
-  max-height: 500px; /* Adjust to preference */
+  max-height: 500px;
   overflow-y: auto;
   position: absolute;
-  top: 100%;  /* Positions the start of this div right below its parent */
+  top: calc(100% + 10px); /* Position right below the search bar with a gap */
   left: 0;
-  width: 300px; /* Ensures it takes full width */
-  padding: 10px 0; /* Padding at top and bottom */
-  z-index: 1;  /* Ensures overlay over other content */
-}
-
-/* Search results list style */
-.list-group.search-results {
   width: 100%;
-  margin-right: 10px; /* Add a small margin between results and details */
+  z-index: 1;
+  background-color: white; /* Set the background color to white for light mode */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
-/* Updated details display on the left */
-.search-results-display {
-  position: absolute;
-  right: 100%; /* Move to the right side */
-  margin-top: 100px;
-  width: 800px; 
-  padding: 25%;
+/* Style the list of search results */
+.list-group.search-results {
+  margin: 0px; /* Removed margin to avoid unnecessary spacing */
+  padding: 15px;
 }
 
+
+.user-info{
+  margin-right: 50px;
+  text-align: left;
+}
+
+
+.input-group{
+  margin-left: 0px;
+  margin-top: 8px;
+  padding: auto;
+  align-items: flex-start;
+  width: 8%;
+}
+
+.pick-category-text{
+  padding: 8px;
+}
