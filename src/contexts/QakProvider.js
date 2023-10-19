@@ -28,28 +28,9 @@ export const QakProvider = (props) => {
   function getAllUserWithQaks() {
     console.log(allQaks);
     return axios
-      .get("http://localhost:3000/api/qaks/allqaks")
+      .get("http://localhost:3000/api/qaks/")
       .then((response) => setAllQaks(response.data));
   }
-
-  // function getAllUserWithQaks() {
-  //   return axios
-  //     .get("http://localhost:3000/api/qaks/allqaks")
-  //     .then((response) => {
-  //       return response.data;
-  //     });
-  // }
-
-  // // Add an event listener to fetch data after page reload
-  // window.addEventListener("load", function () {
-  //   getAllUserWithQaks()
-  //     .then((data) => {
-  //       console.log(data); // Do something with the data
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // });
 
   function getQak(_id) {
     return axios.get(baseUrl + _id).then((response) => {
