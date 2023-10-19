@@ -15,6 +15,7 @@ import jwtDecode from "jwt-decode";
 import SignOut from "./components/SignOut";
 import Qak from "./components/Qak";
 import SignIn from "./components/SignIn";
+import NewQak from "./components/NewQak";
 
 function App() {
   const [user, setUser] = useState();
@@ -41,7 +42,8 @@ function App() {
               <Route path="/signout" element={<SignOut />} />
               <Route path="/rssfeed" element={<RssFeed />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/about" element={<Qak />} />
+              <Route path="/qaks" element={<Qak />} />
+              <Route path="/qaks/new" element={<NewQak />} />
             </Routes>
           </BrowserRouter>
         </UserProvider>
