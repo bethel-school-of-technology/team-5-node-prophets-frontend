@@ -2,6 +2,7 @@ import React from "react";
 import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 const Qak = () => {
   return (
@@ -12,7 +13,7 @@ const Qak = () => {
             <h1>QAK</h1>
             <h2>Questions Answers Knowledge</h2>
             <Link to="/qaks/new">Create A Question or Share Knowledge</Link>
-            {console.log(qak)}
+            {/* {console.log(qak)} */}
             <div>
               {qak.map((q) => {
                 return (
@@ -21,10 +22,18 @@ const Qak = () => {
                       <Accordion.Item>
                         <Accordion.Header>
                           <div>
-                            <h4>{q.user_id}</h4>
+                            <h4>{q.User.username}</h4>
                             <p>{q.qak}</p>
                             <p>
-                              {q.createdAt} | {q.updatedAt}
+                              {moment
+                                .parseZone(q.createdAt)
+                                .local()
+                                .format("LLLL")}{" "}
+                              |{" "}
+                              {moment
+                                .parseZone(q.createdAt)
+                                .local()
+                                .format("LLLL")}{" "}
                             </p>
                           </div>
                         </Accordion.Header>
