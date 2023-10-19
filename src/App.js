@@ -10,6 +10,7 @@ import Search from "./components/Search";
 // import QakDetail from "./components/QakDetails";
 import { UserProvider } from "./contexts/UserProvider";
 import { SearchProvider } from "./contexts/SearchContext";
+import { QakProvider } from "./contexts/QakProvider";
 import "./styles/App.css";
 import jwtDecode from "jwt-decode";
 import SignOut from "./components/SignOut";
@@ -30,24 +31,26 @@ function App() {
 
   return (
     <div className="wrap backgroundColor">
-      <SearchProvider>
-        <UserProvider>
-          <BrowserRouter>
-            <Navigation user={user} />
-            <Routes>
-              <Route path="/" element={<Home />} index />
-              <Route path="/" element={<Search />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/signout" element={<SignOut />} />
-              <Route path="/rssfeed" element={<RssFeed />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/qaks" element={<Qak />} />
-              <Route path="/qaks/new" element={<NewQak />} />
-            </Routes>
-          </BrowserRouter>
-        </UserProvider>
-      </SearchProvider>
+      <QakProvider>
+        <SearchProvider>
+          <UserProvider>
+            <BrowserRouter>
+              <Navigation user={user} />
+              <Routes>
+                <Route path="/" element={<Home />} index />
+                <Route path="/" element={<Search />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signout" element={<SignOut />} />
+                <Route path="/rssfeed" element={<RssFeed />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/qaks" element={<Qak />} />
+                <Route path="/qaks/new" element={<NewQak />} />
+              </Routes>
+            </BrowserRouter>
+          </UserProvider>
+        </SearchProvider>
+      </QakProvider>
     </div>
   );
 }
