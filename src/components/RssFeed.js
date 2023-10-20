@@ -17,7 +17,7 @@ import axios from "axios";
 const RssFeed = () => {
   const [topCommenter, setTopCommenter] = useState([]);
 
-  console.log(topCommenter);
+  //console.log(topCommenter);
   const baseUrl = "http://localhost:3000/api/users";
 
   useEffect(() => {

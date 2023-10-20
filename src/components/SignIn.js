@@ -61,9 +61,9 @@ const SignIn = ({ show, handleClose }) => {
         <div className="form-wrap">
           <div className="form-case">
             <div className="close-button">
-              <CloseButton className="button-close" onClick={handleClose} />
+              {/* <CloseButton className="button-close" onClick={handleClose} /> */}
             </div>
-            <Modal.Body closeButton>
+            <Modal.Body>
               <p className="register">
                 Not a member?{" "}
                 <a className="register-link" href="/signup">

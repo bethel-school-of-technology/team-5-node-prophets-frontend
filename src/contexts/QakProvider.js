@@ -4,6 +4,7 @@ import QakContext from "./QakContext";
 
 export const QakProvider = (props) => {
   const [qak, setQak] = useState([]);
+  const [allQaks, setAllQaks] = useState([]);
   const baseUrl = "http://localhost:3000/api/qaks/";
 
   useEffect(() => {
@@ -17,6 +18,20 @@ export const QakProvider = (props) => {
     return axios.get(baseUrl).then((response) => setQak(response.data));
   }
 
+  useEffect(() => {
+    async function fetchData() {
+      await getAllUserWithQaks();
+    }
+    fetchData();
+  }, []);
+
+  function getAllUserWithQaks() {
+    console.log(allQaks);
+    return axios
+      .get("http://localhost:3000/api/qaks/")
+      .then((response) => setAllQaks(response.data));
+  }
+
   function getQak(_id) {
     return axios.get(baseUrl + _id).then((response) => {
       getAllQaks();
@@ -26,7 +41,7 @@ export const QakProvider = (props) => {
 
   function addQak(qak) {
     let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`,
+      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
     };
 
     return axios.qak(baseUrl, qak, { headers: myHeaders }).then((response) => {
@@ -37,7 +52,7 @@ export const QakProvider = (props) => {
 
   function editQak(pqak) {
     let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`,
+      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
     };
     return axios
       .put(baseUrl + qak._id, qak, { headers: myHeaders })
@@ -49,7 +64,7 @@ export const QakProvider = (props) => {
 
   function deleteQak(_id) {
     let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`,
+      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
     };
     return axios
       .delete(baseUrl + _id, { headers: myHeaders })
@@ -63,10 +78,12 @@ export const QakProvider = (props) => {
     <QakContext.Provider
       value={{
         qak,
+        allQaks,
         getQak,
         addQak,
         editQak,
         deleteQak,
+        getAllUserWithQaks
       }}
     >
       {props.children}

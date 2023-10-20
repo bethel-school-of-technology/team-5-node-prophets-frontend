@@ -82,7 +82,7 @@ const Navigation = ({ user }) => {
                 <Link to="/rssfeed" className="nav-link">
                   RSS Feed
                 </Link>
-                <Link to="/about" className="nav-link">
+                <Link to="/qaks" className="nav-link">
                   QAK
                 </Link>
                 {/* Search icon - Joe */}

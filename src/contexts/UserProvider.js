@@ -71,6 +71,7 @@ export const UserProvider = (props) => {
   return (
     <UserContext.Provider
       value={{
+        users,
         getAllUsers,
         createUser,
         signInUser,
