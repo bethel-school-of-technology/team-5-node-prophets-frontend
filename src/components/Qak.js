@@ -37,7 +37,13 @@ const Qak = () => {
                                     .format("MM/DD/YYYY")}`}
                             </p>
                           </div>
-                          <Link to={`/qaks/edit/${q.qak_id}`}>Edit</Link>
+                          <Link
+                            to={`/qaks/edit/${q.qak_id}`}
+                            style={{ marginRight: "10px" }}
+                          >
+                            Edit
+                          </Link>
+                          <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
                         </Accordion.Header>
                         <Accordion.Body>
                           Lorem ipsum dolor sit amet, consectetur adipiscing
