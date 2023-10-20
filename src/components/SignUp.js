@@ -26,13 +26,17 @@ const SignUp = () => {
     createUser(username, password, fullname, email, city, state, profilePicture)
       .then(() => {
         navigate("/");
+        const successMessage = "Welcome, " + username + "!";
+        showAlert(successMessage);
       })
       .catch((error) => {
         console.log(error);
-        window.alert("Failed registration: error creating user");
+        window.alert("Failed registration: Error creating user.");
       });
   }
-
+  function showAlert(message) {
+    window.alert(message);
+  }
   return (
     <>
       <div className="signup-wrap">
