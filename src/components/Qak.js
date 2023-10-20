@@ -13,7 +13,6 @@ const Qak = () => {
             <h1>QAK</h1>
             <h2>Questions Answers Knowledge</h2>
             <Link to="/qaks/new">Create A Question or Share Knowledge</Link>
-            {/* {console.log(qak)} */}
 
             <div>
               {qak.map((q) => {
@@ -22,28 +21,34 @@ const Qak = () => {
                     <Accordion defaultActiveKey={null}>
                       <Accordion.Item>
                         <Accordion.Header>
-                          <div>
-                            <h4>{q.User.username}</h4>
-                            <p>{q.qak}</p>
-                            <p>
-                              {q.updatedAt &&
-                              moment.parseZone(q.createdAt).format() !==
-                                moment.parseZone(q.updatedAt).format()
-                                ? `Edited: ${moment
-                                    .parseZone(q.updatedAt)
-                                    .format("MM/DD/YYYY")}`
-                                : `Created: ${moment
-                                    .parseZone(q.createdAt)
-                                    .format("MM/DD/YYYY")}`}
-                            </p>
-                          </div>
-                          <Link
-                            to={`/qaks/edit/${q.qak_id}`}
-                            style={{ marginRight: "10px" }}
+                          <div
+                            style={{ display: "flex", alignItems: "center" }}
                           >
-                            Edit
-                          </Link>
-                          <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
+                            <div>
+                              <h4>{q.User.username}</h4>
+                              <p>{q.qak}</p>
+                              <p>
+                                {q.updatedAt &&
+                                moment.parseZone(q.createdAt).format() !==
+                                  moment.parseZone(q.updatedAt).format()
+                                  ? `Edited: ${moment
+                                      .parseZone(q.updatedAt)
+                                      .format("MM/DD/YYYY")}`
+                                  : `Created: ${moment
+                                      .parseZone(q.createdAt)
+                                      .format("MM/DD/YYYY")}`}
+                              </p>
+                            </div>
+                            <div style={{ marginLeft: "auto" }}>
+                              <Link
+                                to={`/qaks/edit/${q.qak_id}`}
+                                style={{ marginRight: "10px" }}
+                              >
+                                Edit
+                              </Link>
+                              <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
+                            </div>
+                          </div>
                         </Accordion.Header>
                         <Accordion.Body>
                           Lorem ipsum dolor sit amet, consectetur adipiscing
