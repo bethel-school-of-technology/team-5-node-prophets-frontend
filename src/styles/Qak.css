@@ -1,0 +1,21 @@
+.navbar {
+  z-index: 2; /* Higher z-index for the navbar */
+}
+
+.fixed-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1; /* Lower z-index to ensure it's below the navbar */
+  padding: 10px;
+  text-align: center;
+  background-color: lightgray;
+  opacity: 1; /* Ensure the top panel is not transparent */
+}
+
+.content-below-top-panel {
+  margin-top: 155px; /* Adjust the margin-top to match the height of the fixed top panel */
+  padding: 15px;
+  /* No need to set z-index here */
+}

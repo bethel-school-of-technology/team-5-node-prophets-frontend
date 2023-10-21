@@ -3,6 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import "../styles/Qak.css";
 
 const Qak = () => {
   return (
@@ -10,11 +11,15 @@ const Qak = () => {
       {({ qak }) => {
         return (
           <div>
-            <h1>QAK</h1>
-            <h2>Questions Answers Knowledge</h2>
-            <Link to="/qaks/new">Create A Question or Share Knowledge</Link>
-
-            <div>
+            <div className="fixed-content">
+              {/* Working around CSS issues with the br code */}
+              <br />
+              <br />
+              <br />
+              <h2>Questions Answers Knowledge</h2>
+              <Link to="/qaks/new">Create A Question or Share Knowledge</Link>
+            </div>
+            <div className="content-below-top-panel">
               {qak.map((q) => {
                 return (
                   <div key={q.qak_id} style={{ marginBottom: "15px" }}>
@@ -27,28 +32,37 @@ const Qak = () => {
                             <div>
                               <h4>{q.User.username}</h4>
                               <p>{q.qak}</p>
-                              <p>
-                                {q.updatedAt &&
-                                moment.parseZone(q.createdAt).format() !==
-                                  moment.parseZone(q.updatedAt).format()
-                                  ? `Edited: ${moment
-                                      .parseZone(q.updatedAt)
-                                      .format("MM/DD/YYYY")}`
-                                  : `Created: ${moment
-                                      .parseZone(q.createdAt)
-                                      .format("MM/DD/YYYY")}`}
-                              </p>
-                            </div>
-                            <div style={{ marginLeft: "auto" }}>
-                              <Link
-                                to={`/qaks/edit/${q.qak_id}`}
-                                style={{ marginRight: "10px" }}
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
                               >
-                                Edit
-                              </Link>
-                              <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
+                                <p>
+                                  {q.updatedAt &&
+                                  moment.parseZone(q.createdAt).format() !==
+                                    moment.parseZone(q.updatedAt).format()
+                                    ? `Edited: ${moment
+                                        .parseZone(q.updatedAt)
+                                        .format("MM/DD/YYYY")}`
+                                    : `Created: ${moment
+                                        .parseZone(q.createdAt)
+                                        .format("MM/DD/YYYY")}`}
+                                </p>
+                                <div style={{ marginLeft: "auto" }}>
+                                  <Link
+                                    to={`/qaks/edit/${q.qak_id}`}
+                                    style={{ marginRight: "10px" }}
+                                  >
+                                    Edit
+                                  </Link>
+                                  <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
+                                </div>
+                              </div>
                             </div>
                           </div>
+                          {/* Add a line space here */}
+                          <hr style={{ margin: "10px 0" }} />
                         </Accordion.Header>
                         <Accordion.Body>
                           Lorem ipsum dolor sit amet, consectetur adipiscing

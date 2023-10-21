@@ -14,44 +14,25 @@ h2 {
   clear: both;
 }
 
+/* For larger screens */
 .video-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio (for widescreen videos) */
+  padding-bottom: 35%; /* 16:9 aspect ratio (change this to your video's aspect ratio) */
   height: 0;
-  overflow: hidden;
 }
 
 .video-container video {
-  width: 75%; /* You can adjust the width as needed */
-  height: 100%;
-  object-fit: contain;
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  width: 100%;
+  height: auto;
 }
 
-/* Define different video sizes for different screen widths */
-@media (max-width: 1200px) {
-  .video-container {
-    padding-bottom: 75%; /* Half size for large screens */
-  }
-}
-
+/* For smaller screens (e.g., mobile devices) */
 @media (max-width: 768px) {
   .video-container {
-    padding-bottom: 56.25%; /* Default size for medium screens */
-  }
-}
-
-@media (max-width: 576px) {
-  .video-container {
-    padding-bottom: 100%; /* Full width for small screens */
+    padding-bottom: 75%; /* Adjust the aspect ratio for smaller screens if needed */
   }
 }
 
