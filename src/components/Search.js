@@ -1,31 +1,25 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Card } from "react-bootstrap";
 import { SearchContext } from "../contexts/SearchContext";
 import debounce from "lodash.debounce";
-import { MDBCol } from "mdbreact";
 import "../styles/Search.css";
 
 const Search = ({ query, setQuery }) => {
   // Use SearchContext to access and update search results
-  const { results, setResults } = useContext(SearchContext);
+  const { results } = useContext(SearchContext);
+
   const searchContainerRef = useRef(null);
 
-  // Initialize selectedDetail, showingResults, selectedCategory, and sitePages
-  const [selectedDetail, setSelectedDetail] = useState(null);
+  // Initialize selectedDetail, showingResults, selectedCategory, and NoResults
+  const [, setSelectedDetail] = useState(null);
   const [showingResults, setShowingResults] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const sitePages = [
-    { name: "Home", link: "/" },
-    { name: "About Us", link: "/about" },
-    // trying to search home and other static pages, still working on it.....
-  ];
+  const [noResults, setNoResults] = useState(false);
 
   // Initialize localResults state to store search results
   const [localResults, setLocalResults] = useState({
     users: [],
     qaks: [],
     articles: [],
-    general: [],
   });
 
   // Fetch search results based on the query and selected category
@@ -52,7 +46,6 @@ const Search = ({ query, setQuery }) => {
           users: [],
           qaks: [],
           articles: [],
-          general: [],
         };
 
         // Update localResults based on the selected category
@@ -62,13 +55,10 @@ const Search = ({ query, setQuery }) => {
           newLocalResults.qaks = data.qaks || [];
         } else if (selectedCategory === "Articles") {
           newLocalResults.articles = rssArticles || [];
-        } else if (selectedCategory === "General") {
-          newLocalResults.general = sitePages;
         } else if (selectedCategory === "All") {
           newLocalResults.users = data.users || [];
           newLocalResults.qaks = data.qaks || [];
           newLocalResults.articles = rssArticles || [];
-          newLocalResults.general = sitePages;
         }
 
         // Update localResults with the new data
@@ -76,6 +66,13 @@ const Search = ({ query, setQuery }) => {
 
         // Set showingResults to true to display results
         setShowingResults(true);
+        // Check if there are no results in any category
+        const hasNoResults = Object.values(newLocalResults).every(
+          (categoryResults) => categoryResults.length === 0
+        );
+
+        // Set noResults state accordingly
+        setNoResults(hasNoResults);
       } catch (error) {
         console.error("Error fetching search results:", error.message);
         console.error(error); // Logging the whole error for more details
@@ -90,7 +87,7 @@ const Search = ({ query, setQuery }) => {
       fetchResults();
     } else {
       // Clear results and hide them when the query is empty
-      setLocalResults({ users: [], qaks: [], articles: [], general: [] });
+      setLocalResults({ users: [], qaks: [], articles: [] });
       setShowingResults(false);
     }
   }, [query, results, selectedCategory]); // Update results when query or selectedCategory changes
@@ -103,7 +100,7 @@ const Search = ({ query, setQuery }) => {
         !searchContainerRef.current.contains(event.target)
       ) {
         setSelectedDetail(null);
-        setLocalResults({ users: [], qaks: [], articles: [], general: [] });
+        setLocalResults({ users: [], qaks: [], articles: [] });
         setShowingResults(false);
       }
     };
@@ -144,7 +141,7 @@ const Search = ({ query, setQuery }) => {
       debounceFetchResults(newQuery);
     } else {
       // Clear results and hide them when the query is empty
-      setLocalResults({ users: [], qaks: [], articles: [], general: [] });
+      setLocalResults({ users: [], qaks: [], articles: [] });
       setShowingResults(false);
     }
   };
@@ -160,27 +157,31 @@ const Search = ({ query, setQuery }) => {
   };
 
   // Define the available categories for searching
-  const categories = ["All", "Users", "Qaks", "Articles", "General"];
+  const categories = ["All", "Users", "Qaks", "Articles"];
 
   return (
     <div className="search-container mt-1" ref={searchContainerRef}>
-      <div className="input-group md-form form-sm form-1 pl-0">
-        <MDBCol md="10">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search Here"
-            value={query}
-            onChange={handleInputChange}
-          />
-        </MDBCol>
-        <div className="pick-category-text">Pick Category</div>
-        {/* Display Catagories in Search */}
+      <div className="input-group">
+        {/* Text input for search */}
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search Here"
+          value={query}
+          onChange={handleInputChange}
+          aria-label="Search Input"
+        />
+
+        {/* Category dropdown */}
         <select
-          className="ml-2"
+          className="custom-select"
           value={selectedCategory}
           onChange={handleCategoryChange}
+          aria-label="Category Dropdown"
         >
+          <option value="" disabled>
+            Pick Category
+          </option>
           {categories.map((cat) => (
             <option
               key={cat}
@@ -195,93 +196,73 @@ const Search = ({ query, setQuery }) => {
 
       {showingResults && (
         <div className="list-group mt-2 search-results">
-          {/* Display RSS Feed results */}
-          {selectedCategory === "Articles" &&
-            localResults.articles.length > 0 && (
-              <div className="result-category">
-                <h5 className="category-title">RSS Feed</h5>
-                {localResults.articles.map((rssItem, index) => (
-                  <a
-                    key={rssItem.id || index}
-                    href={rssItem.link} // Link to the RSS Feed item
-                    className="list-group-item list-group-item-action d-flex justify-content-between"
-                  >
-                    <div>
-                      <strong>{rssItem.title}</strong>
-                    </div>
-                    <div>
-                      {rssItem.description && (
-                        <span>Description: {rssItem.description}</span>
-                      )}
-                    </div>
-                  </a>
-                ))}
-              </div>
-            )}
-
-          {/* Display other search categories */}
-          {selectedCategory !== "Articles" &&
-            Object.keys(localResults).map((category) => {
-              if (localResults[category].length > 0) {
-                return (
-                  <div
-                    key={category}
-                    className="result-category d-flex flex-column"
-                  >
-                    <h5 className="category-title">{category}</h5>
-                    {localResults[category].map((item, index) => (
-                      <div
-                        key={item.id || index}
-                        className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                        onClick={() => displayDetailedResults(item)}
+          {noResults ? (
+            <div className="result-category">
+              <h5 className="category-title">Search Not Found</h5>
+              <p>No matching results found for "{query}".</p>
+            </div>
+          ) : (
+            // Display RSS Feed results and other categories
+            <>
+              {/* Display RSS Feed results */}
+              {selectedCategory === "Articles" &&
+                localResults.articles.length > 0 && (
+                  <div className="result-category">
+                    <h5 className="category-title">RSS Feed</h5>
+                    {localResults.articles.map((rssItem, index) => (
+                      <a
+                        key={rssItem.id || index}
+                        href={rssItem.link} // Link to the RSS Feed item
+                        className="list-group-item list-group-item-action d-flex justify-content-between"
                       >
-                        <strong>
-                          {item.fullname || item.qak || item.title}
-                        </strong>
                         <div>
-                          {item.email && (
-                            <span className="user-info">
-                              Email: {item.email}{" "}
-                            </span>
-                          )}
-                          {item.city && (
-                            <span className="user-info">City: {item.city}</span>
-                          )}
-                          {item.state && <span>State: {item.state}</span>}
+                          <strong>{rssItem.title}</strong>
                         </div>
-                      </div>
+                        <div>
+                          {rssItem.description && (
+                            <span>Description: {rssItem.description}</span>
+                          )}
+                        </div>
+                      </a>
                     ))}
                   </div>
-                );
-              }
-              return null;
-            })}
-        </div>
-      )}
+                )}
 
-      {selectedDetail && (
-        <div className="search-results-display">
-          <Card>
-            <Card.Header>
-              {selectedDetail.fullname ||
-                selectedDetail.qak ||
-                selectedDetail.title}
-            </Card.Header>
-            <Card.Body>
-              {selectedDetail.email && (
-                <Card.Text>Email: {selectedDetail.email}</Card.Text>
-              )}
-              {selectedDetail.city && (
-                <Card.Text>City: {selectedDetail.city}</Card.Text>
-              )}
-              {selectedDetail.state && (
-                <Card.Text>State: {selectedDetail.state}</Card.Text>
-              )}
-              {selectedDetail.description && (
-                <Card.Text>Description: {selectedDetail.description}</Card.Text>
-              )}
-            </Card.Body>
-          </Card>
+              {/* Display other search categories */}
+              {selectedCategory !== "Articles" &&
+                Object.keys(localResults).map((category) => {
+                  if (localResults[category].length > 0) {
+                    return (
+                      <div
+                        key={category}
+                        className="result-category d-flex flex-column"
+                      >
+                        <h5 className="category-title">{category}</h5>
+                        {localResults[category].map((item, index) => (
+                          <div
+                            key={item.id || index}
+                            className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                            onClick={() => displayDetailedResults(item)}
+                          >
+                            <strong>
+                              {item.fullname || item.qak || item.title}
+                            </strong>
+                            <div>
+                              {item.city && (
+                                <span className="user-info">
+                                  City: {item.city}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+            </>
+          )}
         </div>
       )}
     </div>
