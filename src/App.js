@@ -40,7 +40,7 @@ function App() {
               <Navigation user={user} />
               <Routes>
                 {/* <Route path="/" element={<Home />} index /> */}
-                <Route path="/" element={<Landing />} index />
+                <Route path="/" element={<Home />} index />
                 <Route path="/" element={<Search />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/signin" element={<SignIn />} />

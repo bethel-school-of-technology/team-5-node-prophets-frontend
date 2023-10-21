@@ -13,11 +13,13 @@ const Home = () => {
 
         <Row>
           <Col>
-            <div className="video-container">
-              <video controls style={{ width: "65%", height: "auto" }}>
-                <source src={video} type="video/mp4" />
-                Your brower does not support the video tag.
-              </video>
+            <div className="video-case">
+              <div className="video-container">
+                <video controls style={{ width: "65%", height: "auto" }}>
+                  <source src={video} type="video/mp4" />
+                  Your brower does not support the video tag.
+                </video>
+              </div>
             </div>
           </Col>
         </Row>
