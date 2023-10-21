@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Profile.css";
+import { Modal, Button, Form } from "react-bootstrap";
 
 const Profile = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [displayedText, setDisplayedText] = useState(""); // New state variable
+
+  const handleShowModal = () => {
+    setInputValue(""); // Clear the inputValue when the modal is shown
+    setDisplayedText(""); // Clear the displayedText when the modal is shown
+    setShowModal(true);
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value); // Update input value
+  };
+
+  const handlePost = () => {
+    setDisplayedText(inputValue); // Store the entered text in displayedText
+    setShowModal(false); // Close the modal
+  };
+
   return (
-    <section className="profile-section">
+    <div className="profile-section">
       <div className="row">
         <div className="col-lg-4">
           <div className="card mb-4">
@@ -14,13 +34,15 @@ const Profile = () => {
                 className="rounded-circle img-fluid"
                 style={{ width: "150px" }}
               />
-              <h5 className="my-3">John Smith</h5>
-              <p className="text-muted mb-1">Full Stack Developer</p>
-              <p className="text-muted mb-4">Grand Rapids, MI</p>
+              <h5 className="my-3">John-Smith 12656</h5>
+              <h5 className="my-3">John.Smith@example.com</h5>
+
               <div className="d-flex justify-content-center mb-2">
+                {/* Button to trigger the Bootstrap modal */}
                 <button
                   type="button"
-                  className="btn btn-primary btn-lg btn-block"
+                  className="btn btn-primary btn-lg"
+                  onClick={handleShowModal}
                 >
                   QAK
                 </button>
@@ -28,84 +50,99 @@ const Profile = () => {
             </div>
           </div>
         </div>
-
         <div className="col-lg-8">
-          <div className="card mb-4">
+          <div className="card mb-4 m-5">
             <div className="card-body">
-              <div className="row">
-                <div className="col-sm-3">
-                  <p className="mb-0">User_ID</p>
-                </div>
-                <div className="col-sm-9">
-                  <p className="text-muted mb-0">123456</p>
-                </div>
-              </div>
-              <hr />
               <div className="row">
                 <div className="col-sm-3">
                   <p className="mb-0">Full Name</p>
                 </div>
                 <div className="col-sm-9">
-                  <p className="text-muted mb-0">Johnatan Smith</p>
+                  <p className="text-muted mb-0">John Smith</p>
                 </div>
               </div>
               <hr />
               <div className="row">
                 <div className="col-sm-3">
-                  <p className="mb-0">Email</p>
+                  <p className="mb-0">City</p>
                 </div>
                 <div className="col-sm-9">
-                  <p className="text-muted mb-0">example@example.com</p>
+                  <p className="text-muted mb-0">Grand Rapids</p>
                 </div>
               </div>
+
               <hr />
               <div className="row">
                 <div className="col-sm-3">
-                  <p className="mb-0">Phone</p>
+                  <p className="mb-0">State</p>
                 </div>
                 <div className="col-sm-9">
-                  <p className="text-muted mb-0">(097) 234-5678</p>
+                  <p className="text-muted mb-0">Michigan</p>
+                </div>
+              </div>
+
+              <hr />
+
+              <div className="row">
+                <div className="col-sm-3">
+                  <p className="mb-0">Member Since:</p>
+                </div>
+                <div className="col-sm-9">
+                  <p className="text-muted mb-0">May 04, 2022</p>
                 </div>
                 <hr />
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">City</p>
-                  </div>
-                  <div className="col-sm-9">
-                    <p className="text-muted mb-0">Grand Rapids</p>
-                  </div>
-                  <hr />
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <p className="mb-0">State</p>
-                    </div>
-                    <div className="col-sm-9">
-                      <p className="text-muted mb-0">Michigan</p>
-                    </div>
-                    <hr />
-                    <div className="row">
-                      <div className="col-sm-3">
-                        <p className="mb-0">Member-Since</p>
-                      </div>
-                      <div className="col-sm-9">
-                        <p className="text-muted mb-0">10/06/2023</p>
-                      </div>
-                    </div>
-                  </div>
+
+                <div className="d-flex justify-content-center">
+                  <button type="button" class="btn btn-primary btn-lg">
+                    Edit Profile
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <section>
-        <div class="row">
-          <div class="col-8">Latest Content</div>
-          <div class="col-4">Connections</div>
-        </div>
-      </section>
-    </section>
+        {/* Bootstrap Modal */}
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Any Questions or Thoughts?</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group>
+                <Form.Label>Enter Text:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Type something..."
+                  value={inputValue}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handlePost}>
+              Post
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* Display the entered text */}
+        {displayedText && (
+          <div className="mt-3">
+            <h5>User Name</h5>
+            <p>{displayedText}</p>
+          </div>
+        )}
+        <div class="row"></div>
+        <div class="col-8">Latest QAKS</div>
+
+        <div className="col-4">Featured Articles</div>
+      </div>
+    </div>
   );
 };
 
