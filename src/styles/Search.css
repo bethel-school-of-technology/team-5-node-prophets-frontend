@@ -31,6 +31,7 @@
 .list-group.search-results {
   margin: 0px; /* Removed margin to avoid unnecessary spacing */
   padding: 15px;
+  width: 100%;
 }
 
 
@@ -45,9 +46,12 @@
   margin-top: 8px;
   padding: auto;
   align-items: flex-start;
-  width: 8%;
+  /* width: 80%; */
 }
 
 .pick-category-text{
-  padding: 8px;
+  padding: 7px;
+}
+.form-control{
+  margin-right: 1%;
 }
