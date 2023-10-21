@@ -66,8 +66,8 @@ const Home = () => {
             <Card style={{ width: "10rem" }}>
               <Card.Img
                 variant="top"
-                src="https://images.unsplash.com/photo-1579458342405-52d7d969e0d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=874&q=80"
-                alt="Chain Breaker"
+                src="https://static.wixstatic.com/media/be78d6_99f14e81c3254e4ab6c95b16eaff0980~mv2.jpg/v1/fill/w_764,h_570,al_c,q_85,usm_4.00_1.00_0.00,enc_auto/Joe%20%26%20Mule.jpg"
+                alt="Joe Lester"
               />
               <Card.Body className="text-center">
                 <Card.Text>Joe Lester</Card.Text>
