@@ -8,8 +8,10 @@ import Search from "./Search";
 import SignIn from "./SignIn";
 
 const Navigation = ({ user }) => {
-  const [query, setQuery] = useState("");
-  const [searchVisible, setSearchVisible] = useState(false); // Add state for search visibility - Joe
+  const [, setQuery] = useState("");
+  const [searchModalVisible, setSearchModalVisible] = useState(false);
+
+  // Add state for search visibility MODAL - Joe
 
   const [showSignInModal, setShowSignInModal] = useState(false);
 
@@ -28,9 +30,7 @@ const Navigation = ({ user }) => {
   let { user_id } = useParams();
 
   // Function to toggle search visibility - Joe
-  const toggleSearch = () => {
-    setSearchVisible(!searchVisible);
-  };
+  const toggleSearchModal = () => setSearchModalVisible(!searchModalVisible);
 
   return (
     <>
@@ -86,7 +86,7 @@ const Navigation = ({ user }) => {
                   QAK
                 </Link>
                 {/* Search icon - Joe */}
-                <div className="nav-search-icon" onClick={toggleSearch}>
+                <div className="nav-search-icon" onClick={toggleSearchModal}>
                   <FontAwesomeIcon icon={faSearch} />
                 </div>
               </Nav>
@@ -94,11 +94,11 @@ const Navigation = ({ user }) => {
           </Container>
         </Navbar>
         {/* Floating search bar - Joe */}
-        {searchVisible && (
-          <div className="floating-search">
-            <Search query={query} setQuery={setQuery} />
-          </div>
-        )}
+        <Search
+          show={searchModalVisible}
+          handleClose={toggleSearchModal}
+          setQuery={setQuery}
+        />
 
         <Stack gap={3} className="col-md-10 mx-auto mt-3">
           <Outlet />

@@ -1,37 +1,21 @@
 
-
-/* Style the search container */
-.search-container {
-  padding-top: 42px;
-  width: 100%;
-  position: relative;
-  display: flex; /* Display children in a row */
-  align-items: center; /* Vertically align items */
-  /* justify-content: flex-end; Push items to the right side */
-}
-
-
-/* Style the search results dropdown */
+/* Style the search results */
 .search-results {
-  max-height: 500px;
-  overflow-y: auto;
-  position: absolute;
-  top: calc(100% + 10px); /* Position right below the search bar with a gap */
-  left: 0;
+  max-height: 50%;
+  background-color: rgb(124, 124, 213);
   width: 100%;
-  z-index: 1;
-  background-color: white; /* Set the background color to white for light mode */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  padding: 20px;
+
+
 }
 
 /* Style the list of search results */
 .list-group.search-results {
-  margin: 0px; /* Removed margin to avoid unnecessary spacing */
-  padding: 15px;
+  margin-top: 50px; /* Removed margin to avoid unnecessary spacing */
+  padding: 0px;
   width: 100%;
+  text-align: center;
+  text-transform: capitalize;
 }
 
 
@@ -54,4 +38,8 @@
 }
 .form-control{
   margin-right: 1%;
+}
+
+.result-category{
+  padding-top: 8px;
 }
