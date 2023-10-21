@@ -39,23 +39,23 @@ export const QakProvider = (props) => {
     });
   }
 
-  function addQak(qak) {
+  function createQak(qak) {
     let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
 
-    return axios.qak(baseUrl, qak, { headers: myHeaders }).then((response) => {
+    return axios.post(baseUrl, qak, { headers: myHeaders }).then((response) => {
       getAllQaks();
       return new Promise((resolve) => resolve(response.data));
     });
   }
 
-  function editQak(pqak) {
+  function editQak(qak, user_id) {
     let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
     return axios
-      .put(baseUrl + qak._id, qak, { headers: myHeaders })
+      .put(baseUrl + qak.qak_id, qak, user_id, { headers: myHeaders })
       .then((response) => {
         getAllQaks();
         return new Promise((resolve) => resolve(response.data));
@@ -64,7 +64,7 @@ export const QakProvider = (props) => {
 
   function deleteQak(_id) {
     let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
     return axios
       .delete(baseUrl + _id, { headers: myHeaders })
@@ -80,7 +80,7 @@ export const QakProvider = (props) => {
         qak,
         allQaks,
         getQak,
-        addQak,
+        createQak,
         editQak,
         deleteQak,
         getAllUserWithQaks

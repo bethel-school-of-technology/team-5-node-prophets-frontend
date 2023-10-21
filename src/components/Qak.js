@@ -30,12 +30,15 @@ const Qak = () => {
                             style={{ display: "flex", alignItems: "center" }}
                           >
                             <div>
-                              <h4>{q.User.username}</h4>
+                              <Link to={`/profile/${q.user_id}`}>
+                                <h4>{q.User.username}</h4>
+                              </Link>
+
                               <p>{q.qak}</p>
                               <div
                                 style={{
                                   display: "flex",
-                                  alignItems: "center",
+                                  alignItems: "center"
                                 }}
                               >
                                 <p>

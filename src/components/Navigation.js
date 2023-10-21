@@ -56,7 +56,11 @@ const Navigation = ({ user }) => {
 
                 {user && (
                   <React.Fragment>
-                    <Link to={"/profile"} className="nav-link" key={user_id}>
+                    <Link
+                      to={`/profile/${user.user_id}`}
+                      className="nav-link"
+                      key={user_id}
+                    >
                       Hello {user.fullname}!
                     </Link>
                     <Link to={"/signout"} className="nav-link">
