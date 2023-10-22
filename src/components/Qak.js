@@ -11,15 +11,20 @@ const Qak = () => {
   return (
     <QakContext.Consumer>
       {({ qak }) => {
-        // Define functions to filter QAKs based on your requirements
         const filterQAKs = (qakData) => {
           const now = moment();
           if (filter === "today") {
-            return qakData.filter((q) => now.diff(q.createdAt, "days") === 0);
+            return qakData.filter((q) => now.isSame(q.createdAt, "day"));
           } else if (filter === "yesterday") {
-            return qakData.filter((q) => now.diff(q.createdAt, "days") === 1);
+            return qakData.filter((q) =>
+              now.clone().subtract(1, "day").isSame(q.createdAt, "day")
+            );
           } else if (filter === "30") {
-            return qakData.filter((q) => now.diff(q.createdAt, "days") <= 30);
+            return qakData.filter(
+              (q) =>
+                now.diff(q.createdAt, "days") <= 30 &&
+                now.diff(q.createdAt, "days") >= 0
+            );
           } else if (filter === "older") {
             return qakData.filter((q) => now.diff(q.createdAt, "days") > 30);
           } else {
@@ -72,8 +77,12 @@ const Qak = () => {
                               >
                                 <p>
                                   {q.updatedAt &&
-                                  moment.parseZone(q.createdAt).format() !==
-                                    moment.parseZone(q.updatedAt).format()
+                                  moment
+                                    .parseZone(q.createdAt)
+                                    .format("MM/DD/YYYY") !==
+                                    moment
+                                      .parseZone(q.updatedAt)
+                                      .format("MM/DD/YYYY")
                                     ? `Edited: ${moment
                                         .parseZone(q.updatedAt)
                                         .format("MM/DD/YYYY")}`
