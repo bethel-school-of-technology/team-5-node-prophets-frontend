@@ -46,10 +46,10 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signout" element={<SignOut />} />
                 <Route path="/rssfeed" element={<RssFeed />} />
-                <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/qaks" element={<Qak />} />
                 <Route path="/qaks/new" element={<NewQak />} />
-                <Route path="/qaks/edit/id" element={<EditQak />} />
+                <Route path="/qaks/:id/edit" element={<EditQak />} />
+                <Route path="/profile/:id" element={<Profile />} />
               </Routes>
             </BrowserRouter>
           </UserProvider>

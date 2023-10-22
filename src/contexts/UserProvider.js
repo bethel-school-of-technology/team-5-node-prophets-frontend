@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
 
-  const baseUrl = "http://localhost:3000/api/users";
+  const baseUrl = "http://localhost:3000/api/users/";
 
   useEffect(() => {
     async function fetchData() {

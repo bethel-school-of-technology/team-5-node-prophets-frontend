@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, Stack } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import "../styles/Navigation.css";
@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search";
 import SignIn from "./SignIn";
+import UserContext from "../contexts/UserContext";
 
 const Navigation = ({ user }) => {
   const [query, setQuery] = useState("");
@@ -25,12 +26,12 @@ const Navigation = ({ user }) => {
     e.preventDefault();
   };
 
-  let { user_id } = useParams();
-
   // Function to toggle search visibility - Joe
   const toggleSearch = () => {
     setSearchVisible(!searchVisible);
   };
+
+  let { user_id } = useParams();
 
   return (
     <>

@@ -1,11 +1,53 @@
-import React from "react";
+import React, { useContext } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
 
-const Qak = () => {
+const Qak = ({ user }) => {
+  let params = useParams();
+  let navigate = useNavigate();
+
+  let { deleteQak } = useContext(QakContext);
+
+  function handleDelete(qak_id) {
+    if (params.user_id !== user) {
+      return alert("You are not allowed to perform this operation").then(() => {
+        navigate("/qaks");
+      });
+    }
+    deleteQak(qak_id)
+      .then(() => {
+        navigate("/qaks");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("You need to sign in to perform this operation");
+        navigate("/signin");
+      });
+  }
+
+  function handleDelete(qak_id) {
+    if (params.user !== user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate("/qaks");
+    } else {
+      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      if (confirmDelete) {
+        deleteQak(qak_id)
+          .then(() => {
+            navigate("/qaks");
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate("/qaks");
+          });
+      }
+    }
+  }
+
   return (
     <QakContext.Consumer>
       {({ qak }) => {
@@ -54,12 +96,17 @@ const Qak = () => {
                                 </p>
                                 <div style={{ marginLeft: "auto" }}>
                                   <Link
-                                    to={`/qaks/edit/${q.qak_id}`}
+                                    to={`/qaks/${q.qak_id}/edit`}
                                     style={{ marginRight: "10px" }}
                                   >
                                     Edit
                                   </Link>
-                                  <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
+                                  <Link
+                                    to={"#"}
+                                    onClick={handleDelete.bind(this, q.qak_id)}
+                                  >
+                                    Delete
+                                  </Link>
                                 </div>
                               </div>
                             </div>

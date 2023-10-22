@@ -13,16 +13,16 @@ const Profile = ({ user }) => {
 
   let { getUserQaks } = useContext(UserContext);
 
-  const [showModal, setShowModal] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const [displayedText, setDisplayedText] = useState(""); // New state variable
-
   useEffect(() => {
     async function fetchData() {
       await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
     }
     fetchData();
   }, [getUserQaks, params.user_id]);
+
+  const [showModal, setShowModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [displayedText, setDisplayedText] = useState(""); // New state variable
 
   const handleShowModal = () => {
     setInputValue(""); // Clear the inputValue when the modal is shown

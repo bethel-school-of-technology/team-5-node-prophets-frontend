@@ -39,14 +39,14 @@ const NewQak = () => {
   return (
     <div>
       <form className="newForm" onSubmit={handleSubmit} key={qak_id}>
-        <h3>Ask or Share</h3>
-        <Stack>
-          <input
+        <h3>Create Qak</h3>
+        <Stack gap={4} className="mx-auto">
+          <textarea
+            rows={4}
+            cols={50}
             className="qakform"
             name="qak"
             value={qak}
-            rows="4"
-            cols="50"
             onChange={(e) => setNewQak({ ...newQak, qak: e.target.value })}
           />
           <button type="submit">Submit</button>
