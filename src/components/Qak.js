@@ -51,18 +51,53 @@ const Qak = ({ user }) => {
   return (
     <QakContext.Consumer>
       {({ qak }) => {
+        const filterQAKs = (qakData) => {
+          const now = moment();
+          if (filter === "today") {
+            return qakData.filter((q) => now.isSame(q.createdAt, "day"));
+          } else if (filter === "yesterday") {
+            return qakData.filter((q) =>
+              now.clone().subtract(1, "day").isSame(q.createdAt, "day")
+            );
+          } else if (filter === "30") {
+            return qakData.filter(
+              (q) =>
+                now.diff(q.createdAt, "days") <= 30 &&
+                now.diff(q.createdAt, "days") >= 0
+            );
+          } else if (filter === "older") {
+            return qakData.filter((q) => now.diff(q.createdAt, "days") > 30);
+          } else {
+            return qakData.filter((q) => now.diff(q.createdAt, "days") <= 7);
+          }
+        };
+
+        const filteredQAKs = filterQAKs(qak);
+
         return (
           <div>
             <div className="fixed-content">
-              {/* Working around CSS issues with the br code */}
               <br />
               <br />
               <br />
               <h2>Questions Answers Knowledge</h2>
               <Link to="/qaks/new">Create A Question or Share Knowledge</Link>
+
+              <div>
+                <select
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                >
+                  <option value="today">Today</option>
+                  <option value="yesterday">Yesterday</option>
+                  <option value="7">Within 7 days</option>
+                  <option value="30">Within 30 days</option>
+                  <option value="older">Older</option>
+                </select>
+              </div>
             </div>
             <div className="content-below-top-panel">
-              {qak.map((q) => {
+              {filteredQAKs.map((q) => {
                 return (
                   <div key={q.qak_id} style={{ marginBottom: "15px" }}>
                     <Accordion defaultActiveKey={null}>
@@ -85,8 +120,12 @@ const Qak = ({ user }) => {
                               >
                                 <p>
                                   {q.updatedAt &&
-                                  moment.parseZone(q.createdAt).format() !==
-                                    moment.parseZone(q.updatedAt).format()
+                                  moment
+                                    .parseZone(q.createdAt)
+                                    .format("MM/DD/YYYY") !==
+                                    moment
+                                      .parseZone(q.updatedAt)
+                                      .format("MM/DD/YYYY")
                                     ? `Edited: ${moment
                                         .parseZone(q.updatedAt)
                                         .format("MM/DD/YYYY")}`

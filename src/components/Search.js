@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { SearchContext } from "../contexts/SearchContext";
+import React, { useState, useEffect, useRef } from "react";
+import { useSearch } from "../contexts/SearchContext"; // Corrected import path
 import debounce from "lodash.debounce";
+import Modal from "react-bootstrap/Modal";
 import "../styles/Search.css";
 
-const Search = ({ query, setQuery }) => {
-  // Use SearchContext to access and update search results
-  const { results } = useContext(SearchContext);
+const Search = ({ show, handleClose }) => {
+  // Use useSearch to access and update search results
+  const { query, setQuery } = useSearch(); // Corrected context usage
 
   const searchContainerRef = useRef(null);
 
@@ -90,7 +91,7 @@ const Search = ({ query, setQuery }) => {
       setLocalResults({ users: [], qaks: [], articles: [] });
       setShowingResults(false);
     }
-  }, [query, results, selectedCategory]); // Update results when query or selectedCategory changes
+  }, [query, selectedCategory]);
 
   // Handle clicks outside the search container to clear selectedDetail and hide results
   useEffect(() => {
@@ -112,7 +113,7 @@ const Search = ({ query, setQuery }) => {
     };
   }, []);
 
-  // Handeling information when a search result is clicked - QUESTION
+  // Handling information when a search result is clicked
   function displayDetailedResults(item) {
     if (selectedCategory === "Users") {
       // Show an alert for the "Users" category
@@ -146,7 +147,7 @@ const Search = ({ query, setQuery }) => {
     }
   };
 
-  // Use debounce to delay fetching results as you type, - help with looping?
+  // Use debounce to delay fetching results as you type
   const debounceFetchResults = debounce((newQuery) => {
     // Results are fetched in the useEffect hook based on the newQuery
   }, 500);
@@ -160,112 +161,124 @@ const Search = ({ query, setQuery }) => {
   const categories = ["All", "Users", "Qaks", "Articles"];
 
   return (
-    <div className="search-container mt-1" ref={searchContainerRef}>
-      <div className="input-group">
-        {/* Text input for search */}
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search Here"
-          value={query}
-          onChange={handleInputChange}
-          aria-label="Search Input"
-        />
-
-        {/* Category dropdown */}
-        <select
-          className="custom-select"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-          aria-label="Category Dropdown"
-        >
-          <option value="" disabled>
-            Pick Category
-          </option>
-          {categories.map((cat) => (
-            <option
-              key={cat}
-              value={cat}
-              className={cat === "All" ? "all-category" : ""}
+    <Modal show={show} onHide={handleClose} centered size="lg">
+      <Modal.Header>
+        {/*closeButton optional*/}
+        <Modal.Title>Search</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="row align-items-center">
+          <div className="col-md-8">
+            {/* Text input for search */}
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search Here"
+              value={query}
+              onChange={handleInputChange}
+              aria-label="Search Input"
+            />
+          </div>
+          <div className="col-md-4">
+            {/* Category dropdown */}
+            <select
+              className="custom-select"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              aria-label="Category Dropdown"
             >
-              {cat}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {showingResults && (
-        <div className="list-group mt-2 search-results">
-          {noResults ? (
-            <div className="result-category">
-              <h5 className="category-title">Search Not Found</h5>
-              <p>No matching results found for "{query}".</p>
-            </div>
-          ) : (
-            // Display RSS Feed results and other categories
-            <>
-              {/* Display RSS Feed results */}
-              {selectedCategory === "Articles" &&
-                localResults.articles.length > 0 && (
-                  <div className="result-category">
-                    <h5 className="category-title">RSS Feed</h5>
-                    {localResults.articles.map((rssItem, index) => (
-                      <a
-                        key={rssItem.id || index}
-                        href={rssItem.link} // Link to the RSS Feed item
-                        className="list-group-item list-group-item-action d-flex justify-content-between"
-                      >
-                        <div>
-                          <strong>{rssItem.title}</strong>
-                        </div>
-                        <div>
-                          {rssItem.description && (
-                            <span>Description: {rssItem.description}</span>
-                          )}
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                )}
-
-              {/* Display other search categories */}
-              {selectedCategory !== "Articles" &&
-                Object.keys(localResults).map((category) => {
-                  if (localResults[category].length > 0) {
-                    return (
-                      <div
-                        key={category}
-                        className="result-category d-flex flex-column"
-                      >
-                        <h5 className="category-title">{category}</h5>
-                        {localResults[category].map((item, index) => (
-                          <div
-                            key={item.id || index}
-                            className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                            onClick={() => displayDetailedResults(item)}
-                          >
-                            <strong>
-                              {item.fullname || item.qak || item.title}
-                            </strong>
-                            <div>
-                              {item.city && (
-                                <span className="user-info">
-                                  City: {item.city}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
-            </>
-          )}
+              <option value="" disabled>
+                Pick Category
+              </option>
+              {categories.map((cat) => (
+                <option
+                  key={cat}
+                  value={cat}
+                  className={cat === "All" ? "all-category" : ""}
+                >
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      )}
-    </div>
+
+        {showingResults && (
+          <div className="list-group mt-2 search-results">
+            {noResults ? (
+              <div className="result-category">
+                <h5 className="category-title">
+                  Sorry folks, Search Result Not Found
+                </h5>
+
+                <p>No matching results found for "{query}".</p>
+              </div>
+            ) : (
+              // Display RSS Feed results and other categories
+              <>
+                {/* Display RSS Feed results */}
+                {selectedCategory === "Articles" &&
+                  localResults.articles.length > 0 && (
+                    <div className="result-category">
+                      <h5 className="category-title">RSS Feed</h5>
+                      {localResults.articles.map((rssItem, index) => (
+                        <a
+                          key={rssItem.id || index}
+                          href={rssItem.link} // Link to the RSS Feed item
+                          className="list-group-item list-group-item-action d-flex justify-content-between"
+                        >
+                          <div>
+                            <strong>{rssItem.title}</strong>
+                          </div>
+                          <div>
+                            {rssItem.description && (
+                              <span>Description: {rssItem.description}</span>
+                            )}
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  )}
+
+                {/* Display other search categories */}
+                {selectedCategory !== "Articles" &&
+                  Object.keys(localResults).map((category) => {
+                    if (localResults[category].length > 0) {
+                      return (
+                        <div
+                          key={category}
+                          className="result-category d-flex flex-column"
+                        >
+                          <h5 className="category-title">{category}</h5>
+                          {localResults[category].map((item, index) => (
+                            <div
+                              key={item.id || index}
+                              className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                              onClick={() => displayDetailedResults(item)}
+                            >
+                              <strong>
+                                {item.fullname || item.qak || item.title}
+                              </strong>
+                              <div>
+                                {item.city && (
+                                  <span className="user-info">
+                                    City: {item.city}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+              </>
+            )}
+          </div>
+        )}
+      </Modal.Body>
+    </Modal>
   );
 };
 

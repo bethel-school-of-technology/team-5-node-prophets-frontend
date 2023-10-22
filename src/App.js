@@ -6,8 +6,6 @@ import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
 import RssFeed from "./components/RssFeed";
 import Search from "./components/Search";
-// import UserDetail from "./components/UserDetails";
-// import QakDetail from "./components/QakDetails";
 import { UserProvider } from "./contexts/UserProvider";
 import { SearchProvider } from "./contexts/SearchContext";
 import { QakProvider } from "./contexts/QakProvider";
@@ -38,6 +36,7 @@ function App() {
           <UserProvider>
             <BrowserRouter>
               <Navigation user={user} />
+
               <Routes>
                 {/* <Route path="/" element={<Home />} index /> */}
                 <Route path="/" element={<Home />} index />
