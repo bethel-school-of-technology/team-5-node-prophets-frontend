@@ -1,10 +1,54 @@
-import React, { useContext } from "react";
+import React, { useContext, useContext } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
 
+const Qak = ({ user }) => {
+  let params = useParams();
+  let navigate = useNavigate();
+
+  let { deleteQak } = useContext(QakContext);
+
+  function handleDelete(qak_id) {
+    if (params.user_id !== user) {
+      return alert("You are not allowed to perform this operation").then(() => {
+        navigate("/qaks");
+      });
+    }
+    deleteQak(qak_id)
+      .then(() => {
+        navigate("/qaks");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("You need to sign in to perform this operation");
+        navigate("/signin");
+      });
+  }
+
+  function handleDelete(qak_id) {
+    if (params.user !== user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate("/qaks");
+    } else {
+      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      if (confirmDelete) {
+        deleteQak(qak_id)
+          .then(() => {
+            navigate("/qaks");
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate("/qaks");
+          });
+      }
+    }
+  }
+
+  const [filter, setFilter] = useState("7"); // Initialize the filter as "within 7 days"
 const Qak = ({ user }) => {
   let params = useParams();
   let navigate = useNavigate();
