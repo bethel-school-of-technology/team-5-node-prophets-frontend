@@ -1,12 +1,52 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
+import NewQak from "./NewQak";
 
-const Qak = () => {
+const Qak = ({ user }) => {
+  let params = useParams();
+  let navigate = useNavigate();
+
+  let { deleteQak } = useContext(QakContext);
+
+  function handleDelete(qak_id) {
+    if (user !== user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate("/qaks");
+    } else {
+      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      if (confirmDelete) {
+        deleteQak(qak_id)
+          .then(() => {
+            navigate("/qaks");
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate("/qaks");
+          });
+      }
+    }
+  }
+
   const [filter, setFilter] = useState("7"); // Initialize the filter as "within 7 days"
+
+  const [showSignInModal, setShowSignInModal] = useState(false);
+
+  const openSignInModal = () => {
+    setShowSignInModal(true);
+  };
+
+  const closeSignInModal = () => {
+    setShowSignInModal(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <QakContext.Consumer>
@@ -68,7 +108,17 @@ const Qak = () => {
               <br />
               <br />
               <h2>Questions Answers Knowledge</h2>
-              <Link to="/qaks/new">Create A Question or Share Knowledge</Link>
+              <div>
+                <Link to={openSignInModal} onClick={openSignInModal}>
+                  Create A Question or Share Knowledge
+                </Link>
+
+                <NewQak
+                  show={showSignInModal}
+                  handleClose={closeSignInModal}
+                  handleSubmit={handleSubmit}
+                />
+              </div>
 
               <div>
                 <select
@@ -94,12 +144,15 @@ const Qak = () => {
                             style={{ display: "flex", alignItems: "center" }}
                           >
                             <div>
-                              <h4>{q.User.username}</h4>
+                              <Link to={`/profile/${q.user_id}`}>
+                                <h4>{q.User.username}</h4>
+                              </Link>
+
                               <p>{q.qak}</p>
                               <div
                                 style={{
                                   display: "flex",
-                                  alignItems: "center",
+                                  alignItems: "center"
                                 }}
                               >
                                 <p>
@@ -117,12 +170,21 @@ const Qak = () => {
                                 </p>
                                 <p style={{ marginLeft: "auto" }}>
                                   <Link
-                                    to={`/qaks/edit/${q.qak_id}`}
+                                    to={`/qaks/${q.qak_id}/edit`}
                                     style={{ marginRight: "10px" }}
                                   >
                                     Edit
                                   </Link>
-                                  <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
+                                  <Link
+                                    to={"#"}
+                                    onClick={handleDelete.bind(
+                                      this,
+                                      q.qak_id,
+                                      q.user_id
+                                    )}
+                                  >
+                                    Delete
+                                  </Link>
                                 </p>
                               </div>
                             </div>
@@ -146,8 +208,9 @@ const Qak = () => {
                               laborum.
                             </p>
                             <p>
-                              Created: MM/DD/YYYY <span class="edit">Edit</span>{" "}
-                              <span class="delete">Delete</span>
+                              Created: MM/DD/YYYY{" "}
+                              <span className="edit">Edit</span>{" "}
+                              <span className="delete">Delete</span>
                             </p>
                           </div>
                         </Accordion.Body>

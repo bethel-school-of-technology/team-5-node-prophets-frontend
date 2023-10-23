@@ -4,7 +4,6 @@ import QakContext from "./QakContext";
 
 export const QakProvider = (props) => {
   const [qak, setQak] = useState([]);
-  const [allQaks, setAllQaks] = useState([]);
   const baseUrl = "http://localhost:3000/api/qaks/";
 
   useEffect(() => {
@@ -18,72 +17,55 @@ export const QakProvider = (props) => {
     return axios.get(baseUrl).then((response) => setQak(response.data));
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      await getAllUserWithQaks();
-    }
-    fetchData();
-  }, []);
+  function createQak(qak) {
+    let myHeaders = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
+    };
 
-  function getAllUserWithQaks() {
-    console.log(allQaks);
-    return axios
-      .get("http://localhost:3000/api/qaks/")
-      .then((response) => setAllQaks(response.data));
-  }
-
-  function getQak(_id) {
-    return axios.get(baseUrl + _id).then((response) => {
+    return axios.post(baseUrl, qak, { headers: myHeaders }).then((response) => {
       getAllQaks();
       return new Promise((resolve) => resolve(response.data));
     });
   }
 
-  function addQak(qak) {
-    let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
-    };
-
-    return axios.qak(baseUrl, qak, { headers: myHeaders }).then((response) => {
+  function getOneQak(qak_id) {
+    return axios.get(baseUrl + qak_id).then((response) => {
       getAllQaks();
+      console.log(response.data);
       return new Promise((resolve) => resolve(response.data));
     });
   }
 
-  function editQak(pqak) {
-    let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
+  function editQak(qak) {
+    let headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
     return axios
-      .put(baseUrl + qak._id, qak, { headers: myHeaders })
+      .put(baseUrl + qak.qak_id, qak, { headers })
       .then((response) => {
         getAllQaks();
         return new Promise((resolve) => resolve(response.data));
       });
   }
 
-  function deleteQak(_id) {
-    let myHeaders = {
-      Authorization: `Bearer ${localStorage.getItem("myQakToken")}`
+  function deleteQak(qak_id) {
+    let headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
-    return axios
-      .delete(baseUrl + _id, { headers: myHeaders })
-      .then((response) => {
-        getAllQaks();
-        return new Promise((resolve) => resolve(response.data));
-      });
+    return axios.delete(baseUrl + qak_id, { headers }).then((response) => {
+      getAllQaks();
+      return new Promise((resolve) => resolve(response.data));
+    });
   }
 
   return (
     <QakContext.Provider
       value={{
         qak,
-        allQaks,
-        getQak,
-        addQak,
+        getOneQak,
+        createQak,
         editQak,
-        deleteQak,
-        getAllUserWithQaks
+        deleteQak
       }}
     >
       {props.children}

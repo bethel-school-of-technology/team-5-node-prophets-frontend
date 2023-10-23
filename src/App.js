@@ -37,16 +37,17 @@ function App() {
               <Navigation user={user} />
 
               <Routes>
+                {/* <Route path="/" element={<Home />} index /> */}
                 <Route path="/" element={<Home />} index />
                 <Route path="/" element={<Search />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signout" element={<SignOut />} />
                 <Route path="/rssfeed" element={<RssFeed />} />
-                <Route path="/profile" element={<Profile />} />
                 <Route path="/qaks" element={<Qak />} />
                 <Route path="/qaks/new" element={<NewQak />} />
-                <Route path="/qaks/edit/id" element={<EditQak />} />
+                <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
+                <Route path="/profile/:id" element={<Profile />} />
               </Routes>
             </BrowserRouter>
           </UserProvider>

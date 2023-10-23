@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, Stack } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import "../styles/Navigation.css";
@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search";
 import SignIn from "./SignIn";
+import UserContext from "../contexts/UserContext";
 
 const Navigation = ({ user }) => {
   const [, setQuery] = useState("");
@@ -27,10 +28,10 @@ const Navigation = ({ user }) => {
     e.preventDefault();
   };
 
-  let { user_id } = useParams();
-
   // Function to toggle search visibility - Joe
   const toggleSearchModal = () => setSearchModalVisible(!searchModalVisible);
+
+  let { user_id } = useParams();
 
   return (
     <>
@@ -56,7 +57,11 @@ const Navigation = ({ user }) => {
 
                 {user && (
                   <React.Fragment>
-                    <Link to={"/profile"} className="nav-link" key={user_id}>
+                    <Link
+                      to={`/profile/${user.user_id}`}
+                      className="nav-link"
+                      key={user_id}
+                    >
                       Hello {user.fullname}!
                     </Link>
                     <Link to={"/signout"} className="nav-link">
