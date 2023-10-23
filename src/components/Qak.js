@@ -14,21 +14,29 @@ const Qak = () => {
         const filterQAKs = (qakData) => {
           const now = moment();
           if (filter === "today") {
-            return qakData.filter((q) => now.isSame(q.createdAt, "day"));
+            return qakData
+              .filter((q) => now.isSame(q.createdAt, "day"))
+              .sort((a, b) => b.createdAt - a.createdAt);
           } else if (filter === "yesterday") {
-            return qakData.filter((q) =>
-              now.clone().subtract(1, "day").isSame(q.createdAt, "day")
-            );
-          } else if (filter === "30") {
-            return qakData.filter(
-              (q) =>
-                now.diff(q.createdAt, "days") <= 30 &&
-                now.diff(q.createdAt, "days") >= 0
-            );
+            return qakData
+              .filter((q) =>
+                now.clone().subtract(1, "day").isSame(q.createdAt, "day")
+              )
+              .sort((a, b) => b.createdAt - a.createdAt);
+          } else if (filter === "1month") {
+            const oneMonthAgo = now.clone().subtract(1, "month");
+            return qakData
+              .filter((q) => q.createdAt.isSameOrAfter(oneMonthAgo))
+              .sort((a, b) => b.createdAt - a.createdAt);
           } else if (filter === "older") {
-            return qakData.filter((q) => now.diff(q.createdAt, "days") > 30);
+            const oneMonthAgo = now.clone().subtract(1, "month");
+            return qakData
+              .filter((q) => moment(q.createdAt).isBefore(oneMonthAgo))
+              .sort((a, b) => b.createdAt - a.createdAt);
           } else {
-            return qakData.filter((q) => now.diff(q.createdAt, "days") <= 7);
+            return qakData
+              .filter((q) => now.diff(q.createdAt, "days") <= 7)
+              .sort((a, b) => b.createdAt - a.createdAt);
           }
         };
 
@@ -77,20 +85,18 @@ const Qak = () => {
                               >
                                 <p>
                                   {q.updatedAt &&
-                                  moment
-                                    .parseZone(q.createdAt)
-                                    .format("MM/DD/YYYY") !==
-                                    moment
-                                      .parseZone(q.updatedAt)
-                                      .format("MM/DD/YYYY")
-                                    ? `Edited: ${moment
-                                        .parseZone(q.updatedAt)
-                                        .format("MM/DD/YYYY")}`
-                                    : `Created: ${moment
-                                        .parseZone(q.createdAt)
-                                        .format("MM/DD/YYYY")}`}
+                                  !moment(q.createdAt).isSame(
+                                    q.updatedAt,
+                                    "day"
+                                  )
+                                    ? `Edited: ${moment(q.updatedAt).format(
+                                        "MM/DD/YYYY"
+                                      )}`
+                                    : `Created: ${moment(q.createdAt).format(
+                                        "MM/DD/YYYY"
+                                      )}`}
                                 </p>
-                                <div style={{ marginLeft: "auto" }}>
+                                <p style={{ marginLeft: "auto" }}>
                                   <Link
                                     to={`/qaks/edit/${q.qak_id}`}
                                     style={{ marginRight: "10px" }}
@@ -98,7 +104,7 @@ const Qak = () => {
                                     Edit
                                   </Link>
                                   <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
-                                </div>
+                                </p>
                               </div>
                             </div>
                           </div>
@@ -106,15 +112,25 @@ const Qak = () => {
                           <hr style={{ margin: "10px 0" }} />
                         </Accordion.Header>
                         <Accordion.Body>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum.
+                          <div>
+                            <h5>Username</h5>
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit, sed do eiusmod tempor incididunt ut labore
+                              et dolore magna aliqua. Ut enim ad minim veniam,
+                              quis nostrud exercitation ullamco laboris nisi ut
+                              aliquip ex ea commodo consequat. Duis aute irure
+                              dolor in reprehenderit in voluptate velit esse
+                              cillum dolore eu fugiat nulla pariatur. Excepteur
+                              sint occaecat cupidatat non proident, sunt in
+                              culpa qui officia deserunt mollit anim id est
+                              laborum.
+                            </p>
+                            <p>
+                              Created: MM/DD/YYYY <span class="edit">Edit</span>{" "}
+                              <span class="delete">Delete</span>
+                            </p>
+                          </div>
                         </Accordion.Body>
                       </Accordion.Item>
                     </Accordion>

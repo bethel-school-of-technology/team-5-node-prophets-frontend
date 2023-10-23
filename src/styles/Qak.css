@@ -19,3 +19,10 @@
   padding: 15px;
   /* No need to set z-index here */
 }
+
+.edit,
+.delete {
+  margin-left: 20px;
+  text-decoration: underline;
+  color: blue;
+}
