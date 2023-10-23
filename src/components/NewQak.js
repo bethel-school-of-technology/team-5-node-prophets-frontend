@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
+import { Modal, Form, Button } from "react-bootstrap";
+
+import "../styles/SignIn.css";
 import { useNavigate, useParams } from "react-router-dom";
 import QakContext from "../contexts/QakContext";
-import { Stack } from "react-bootstrap";
 
-const NewQak = () => {
+const NewQak = ({ show, handleClose }) => {
   let params = useParams();
   let navigate = useNavigate();
 
@@ -26,6 +28,7 @@ const NewQak = () => {
     event.preventDefault();
     create(newQak)
       .then(() => {
+        handleClose();
         navigate("/qaks");
       })
       .catch((error) => {
@@ -34,24 +37,57 @@ const NewQak = () => {
       });
   }
 
-  console.log(newQak);
-
   return (
     <div>
-      <form className="newForm" onSubmit={handleSubmit} key={qak_id}>
-        <h3>Create Qak</h3>
-        <Stack gap={4} className="mx-auto">
-          <textarea
-            rows={4}
-            cols={50}
-            className="qakform"
-            name="qak"
-            value={qak}
-            onChange={(e) => setNewQak({ ...newQak, qak: e.target.value })}
-          />
-          <button type="submit">Submit</button>
-        </Stack>
-      </form>
+      <Modal show={show} onHide={handleClose} centered>
+        <div className="form-wrap">
+          <div className="form-case">
+            <div className="close-button">
+              {/* <CloseButton className="button-close" onClick={handleClose} /> */}
+            </div>
+            <Modal.Body>
+              <p className="register">
+                Not a member?{" "}
+                <a className="register-link" href="/signup">
+                  Register
+                </a>{" "}
+                it's free!
+              </p>
+
+              <div className="divider d-flex align-items-center my-4">
+                <p className="text-center mx-3 mb-0">
+                  Any Questions or Thoughts?
+                </p>
+              </div>
+
+              <Form onSubmit={handleSubmit} key={qak_id}>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    as={"textarea"}
+                    type="text"
+                    rows={6}
+                    cols={65}
+                    name="qak"
+                    value={qak}
+                    onChange={(e) =>
+                      setNewQak({ ...newQak, qak: e.target.value })
+                    }
+                  />
+                </Form.Group>
+
+                <Button
+                  className="mb-3 w-100"
+                  variant="primary "
+                  size="sm"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Form>
+            </Modal.Body>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

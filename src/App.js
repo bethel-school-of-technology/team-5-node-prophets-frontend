@@ -16,7 +16,6 @@ import Qak from "./components/Qak";
 import SignIn from "./components/SignIn";
 import NewQak from "./components/NewQak";
 import EditQak from "./components/EditQak";
-import Landing from "./components/Landing";
 
 function App() {
   const [user, setUser] = useState();

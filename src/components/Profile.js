@@ -3,7 +3,9 @@ import "../styles/Profile.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
+
 import moment from "moment";
+import NewQak from "./NewQak";
 
 const Profile = ({ user }) => {
   let params = useParams();
@@ -20,23 +22,18 @@ const Profile = ({ user }) => {
     fetchData();
   }, [getUserQaks, params.user_id]);
 
-  const [showModal, setShowModal] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const [displayedText, setDisplayedText] = useState(""); // New state variable
+  const [showSignInModal, setShowSignInModal] = useState(false);
 
-  const handleShowModal = () => {
-    setInputValue(""); // Clear the inputValue when the modal is shown
-    setDisplayedText(""); // Clear the displayedText when the modal is shown
-    setShowModal(true);
+  const openSignInModal = () => {
+    setShowSignInModal(true);
   };
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value); // Update input value
+  const closeSignInModal = () => {
+    setShowSignInModal(false);
   };
 
-  const handlePost = () => {
-    setDisplayedText(inputValue); // Store the entered text in displayedText
-    setShowModal(false); // Close the modal
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   function profileCard() {
@@ -66,20 +63,23 @@ const Profile = ({ user }) => {
                     src={profilePicture}
                     alt="avatar"
                     className="rounded-circle img-fluid"
-                    style={{ width: "150px" }}
+                    style={{ width: "150px", height: "150px" }}
                   />
                   <h5 className="my-3 text-muted">{username}</h5>
                   <h5 className="my-3 text-muted">{email}</h5>
 
                   <div className="d-flex justify-content-center mb-2">
-                    {/* Button to trigger the Bootstrap modal */}
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-lg"
-                      onClick={handleShowModal}
-                    >
-                      QAK
-                    </button>
+                    <div>
+                      <Button to={openSignInModal} onClick={openSignInModal}>
+                        New QAK
+                      </Button>
+
+                      <NewQak
+                        show={showSignInModal}
+                        handleClose={closeSignInModal}
+                        handleSubmit={handleSubmit}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -138,41 +138,6 @@ const Profile = ({ user }) => {
               </div>
             </div>
           </div>
-          {/* Bootstrap Modal */}
-          <Modal show={showModal} onHide={() => setShowModal(false)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Any Questions or Thoughts?</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form>
-                <Form.Group>
-                  <Form.Label>Enter Text:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Type something..."
-                    value={inputValue}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShowModal(false)}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={handlePost}>
-                Post
-              </Button>
-            </Modal.Footer>
-          </Modal>
-
-          {/* Display the entered text */}
-          {displayedText && (
-            <div className="mt-3">
-              <h5>User Name</h5>
-              <p>{displayedText}</p>
-            </div>
-          )}
           <div className="row"></div>
           <div className="col-8">Latest QAKS</div>
           <div className="col-4">Featured Articles</div>

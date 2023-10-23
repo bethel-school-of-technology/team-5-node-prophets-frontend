@@ -4,6 +4,7 @@ import QakContext from "../contexts/QakContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
+import NewQak from "./NewQak";
 
 const Qak = ({ user }) => {
   let params = useParams();
@@ -12,7 +13,7 @@ const Qak = ({ user }) => {
   let { deleteQak } = useContext(QakContext);
 
   function handleDelete(qak_id) {
-    if (params.user !== user) {
+    if (user !== user) {
       window.alert("You are not allowed to perform this operation");
       navigate("/qaks");
     } else {
@@ -32,6 +33,20 @@ const Qak = ({ user }) => {
   }
 
   const [filter, setFilter] = useState("7"); // Initialize the filter as "within 7 days"
+
+  const [showSignInModal, setShowSignInModal] = useState(false);
+
+  const openSignInModal = () => {
+    setShowSignInModal(true);
+  };
+
+  const closeSignInModal = () => {
+    setShowSignInModal(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <QakContext.Consumer>
@@ -93,7 +108,17 @@ const Qak = ({ user }) => {
               <br />
               <br />
               <h2>Questions Answers Knowledge</h2>
-              <Link to="/qaks/new">Create A Question or Share Knowledge</Link>
+              <div>
+                <Link to={openSignInModal} onClick={openSignInModal}>
+                  Create A Question or Share Knowledge
+                </Link>
+
+                <NewQak
+                  show={showSignInModal}
+                  handleClose={closeSignInModal}
+                  handleSubmit={handleSubmit}
+                />
+              </div>
 
               <div>
                 <select
@@ -152,7 +177,11 @@ const Qak = ({ user }) => {
                                   </Link>
                                   <Link
                                     to={"#"}
-                                    onClick={handleDelete.bind(this, q.qak_id)}
+                                    onClick={handleDelete.bind(
+                                      this,
+                                      q.qak_id,
+                                      q.user_id
+                                    )}
                                   >
                                     Delete
                                   </Link>
@@ -179,8 +208,9 @@ const Qak = ({ user }) => {
                               laborum.
                             </p>
                             <p>
-                              Created: MM/DD/YYYY <span class="edit">Edit</span>{" "}
-                              <span class="delete">Delete</span>
+                              Created: MM/DD/YYYY{" "}
+                              <span className="edit">Edit</span>{" "}
+                              <span className="delete">Delete</span>
                             </p>
                           </div>
                         </Accordion.Body>
