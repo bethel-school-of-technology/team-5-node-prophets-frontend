@@ -16,30 +16,49 @@ const Qak = () => {
           if (filter === "today") {
             return qakData
               .filter((q) => now.isSame(q.createdAt, "day"))
-              .sort((a, b) => b.createdAt - a.createdAt);
+              .sort(
+                (a, b) =>
+                  moment(b.createdAt || b.updatedAt).valueOf() -
+                  moment(a.createdAt || a.updatedAt).valueOf()
+              );
           } else if (filter === "yesterday") {
             return qakData
               .filter((q) =>
                 now.clone().subtract(1, "day").isSame(q.createdAt, "day")
               )
-              .sort((a, b) => b.createdAt - a.createdAt);
+              .sort(
+                (a, b) =>
+                  moment(b.createdAt || b.updatedAt).valueOf() -
+                  moment(a.createdAt || a.updatedAt).valueOf()
+              );
           } else if (filter === "1month") {
             const oneMonthAgo = now.clone().subtract(1, "month");
             return qakData
               .filter((q) => q.createdAt.isSameOrAfter(oneMonthAgo))
-              .sort((a, b) => b.createdAt - a.createdAt);
+              .sort(
+                (a, b) =>
+                  moment(b.createdAt || b.updatedAt).valueOf() -
+                  moment(a.createdAt || a.updatedAt).valueOf()
+              );
           } else if (filter === "older") {
             const oneMonthAgo = now.clone().subtract(1, "month");
             return qakData
               .filter((q) => moment(q.createdAt).isBefore(oneMonthAgo))
-              .sort((a, b) => b.createdAt - a.createdAt);
+              .sort(
+                (a, b) =>
+                  moment(b.createdAt || b.updatedAt).valueOf() -
+                  moment(a.createdAt || a.updatedAt).valueOf()
+              );
           } else {
             return qakData
               .filter((q) => now.diff(q.createdAt, "days") <= 7)
-              .sort((a, b) => b.createdAt - a.createdAt);
+              .sort(
+                (a, b) =>
+                  moment(b.createdAt || b.updatedAt).valueOf() -
+                  moment(a.createdAt || a.updatedAt).valueOf()
+              );
           }
         };
-
         const filteredQAKs = filterQAKs(qak);
 
         return (
