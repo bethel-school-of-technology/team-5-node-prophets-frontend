@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import QakContext from "../contexts/QakContext";
-import { Button, Container, Stack } from "react-bootstrap";
+import { Stack } from "react-bootstrap";
 import "../styles/EditQak.css";
 
 const EditQak = () => {
