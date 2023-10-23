@@ -12,23 +12,6 @@ const Qak = ({ user }) => {
   let { deleteQak } = useContext(QakContext);
 
   function handleDelete(qak_id) {
-    if (params.user_id !== user) {
-      return alert("You are not allowed to perform this operation").then(() => {
-        navigate("/qaks");
-      });
-    }
-    deleteQak(qak_id)
-      .then(() => {
-        navigate("/qaks");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("You need to sign in to perform this operation");
-        navigate("/signin");
-      });
-  }
-
-  function handleDelete(qak_id) {
     if (params.user !== user) {
       window.alert("You are not allowed to perform this operation");
       navigate("/qaks");

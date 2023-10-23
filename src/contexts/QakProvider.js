@@ -4,7 +4,6 @@ import QakContext from "./QakContext";
 
 export const QakProvider = (props) => {
   const [qak, setQak] = useState([]);
-  const [allQaks, setAllQaks] = useState([]);
   const baseUrl = "http://localhost:3000/api/qaks/";
 
   useEffect(() => {
@@ -32,16 +31,17 @@ export const QakProvider = (props) => {
   function getOneQak(qak_id) {
     return axios.get(baseUrl + qak_id).then((response) => {
       getAllQaks();
+      console.log(response.data);
       return new Promise((resolve) => resolve(response.data));
     });
   }
 
-  function editQak(qak, user_id) {
+  function editQak(qak) {
     let headers = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
     return axios
-      .put(baseUrl + qak.qak_id, qak, user_id, { headers })
+      .put(baseUrl + qak.qak_id, qak, { headers })
       .then((response) => {
         getAllQaks();
         return new Promise((resolve) => resolve(response.data));
@@ -62,7 +62,6 @@ export const QakProvider = (props) => {
     <QakContext.Provider
       value={{
         qak,
-        allQaks,
         getOneQak,
         createQak,
         editQak,

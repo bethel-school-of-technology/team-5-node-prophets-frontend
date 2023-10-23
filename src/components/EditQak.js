@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import QakContext from "../contexts/QakContext";
-import Form from "react-bootstrap/Form";
 import { Stack } from "react-bootstrap";
 
 const EditQak = ({ user }) => {
@@ -9,52 +8,46 @@ const EditQak = ({ user }) => {
   let navigate = useNavigate();
 
   let [qakEdit, setQakEdit] = useState({
-    user,
     qak_id: params.qak_id,
     qak: ""
   });
-
-  let { getOneQak, editOneQak } = useContext(QakContext);
+  console.log(qakEdit);
+  let { getOneQak, editQak } = useContext(QakContext);
 
   let { qak_id, qak } = qakEdit;
 
   useEffect(() => {
     if (qak_id === undefined) return;
     async function fetch() {
-      await getOneQak(qak_id).then((q) => setQakEdit(q));
+      await getOneQak(qak_id).then((qak) => setQakEdit(qak));
     }
     fetch();
   }, []);
 
   function handleChange(event) {
-    setQakEdit((prevValue) => {
-      return { ...prevValue, [event.target.name]: event.target.value };
-    });
+    const { name, value } = event.target;
+    setQakEdit((prevValue) => ({ ...prevValue, [name]: value }));
   }
 
-  function updateQak(user) {
-    return editOneQak(qakEdit);
+  function updateQak() {
+    return editQak(qakEdit);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (user === user.qak_id) {
-      updateQak(qakEdit)
-        .then(() => {
-          if (!qakEdit.ok) {
-            alert("Edit Succesful!");
-            navigate("/qaks");
-          }
-        })
-        .catch((error) => {
-          console.error("There was an error!", error);
-          alert(
-            "You need to be Signed In to perform this operation",
-            "Click OK to Sign In"
-          );
-          navigate("/signin");
-        });
-    }
+
+    updateQak(qakEdit)
+      .then(() => {
+        if (!qakEdit.ok) {
+          alert("Your Post has been updated!");
+          navigate("/qaks");
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+        alert("You need to be Signed In to perform this operation");
+        navigate("/signIn");
+      });
   }
 
   return (

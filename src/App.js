@@ -47,7 +47,7 @@ function App() {
                 <Route path="/rssfeed" element={<RssFeed />} />
                 <Route path="/qaks" element={<Qak />} />
                 <Route path="/qaks/new" element={<NewQak />} />
-                <Route path="/qaks/:id/edit" element={<EditQak />} />
+                <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
                 <Route path="/profile/:id" element={<Profile />} />
               </Routes>
             </BrowserRouter>
