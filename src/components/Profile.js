@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../styles/Profile.css";
-import { Modal, Button, Form } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
 import moment from "moment";
@@ -10,8 +9,6 @@ import NewQak from "./NewQak";
 const Profile = ({ user }) => {
   let params = useParams();
   const [loggedUser, setLoggedUser] = useState([]);
-
-  console.log(loggedUser);
 
   let { getUserQaks } = useContext(UserContext);
 
@@ -38,6 +35,7 @@ const Profile = ({ user }) => {
 
   function profileCard() {
     let {
+      user_id,
       username,
       fullname,
       email,
@@ -70,9 +68,14 @@ const Profile = ({ user }) => {
 
                   <div className="d-flex justify-content-center mb-2">
                     <div>
-                      <Button to={openSignInModal} onClick={openSignInModal}>
+                      <Link
+                        type="button"
+                        className="btn btn-primary btn-sm"
+                        to={openSignInModal}
+                        onClick={openSignInModal}
+                      >
                         New QAK
-                      </Button>
+                      </Link>
 
                       <NewQak
                         show={showSignInModal}
@@ -129,9 +132,13 @@ const Profile = ({ user }) => {
                   <hr />
                   <div className="row">
                     <div className="d-flex justify-content-center">
-                      <button type="button" className="btn btn-primary btn-lg">
+                      <Link
+                        type="button"
+                        className="btn btn-primary btn-sm"
+                        to={`/profile/${user_id}/edit`}
+                      >
                         Edit Profile
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
