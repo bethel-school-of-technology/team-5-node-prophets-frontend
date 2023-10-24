@@ -52,7 +52,7 @@ const Navigation = ({ user }) => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="justify-content-end flex-grow-1 pe-3 color-white">
                 <Link to="/" className="nav-link">
-                  Home
+                  HOME
                 </Link>
 
                 {user && (
@@ -62,28 +62,30 @@ const Navigation = ({ user }) => {
                       className="nav-link"
                       key={user_id}
                     >
-                      Hello {user.fullname}!
+                      <strong className="prof-name">
+                        HELLO {user.fullname}!
+                      </strong>
                     </Link>
+
                     <Link to={"/signout"} className="nav-link">
-                      SignOut
+                      SIGN OUT
                     </Link>
                   </React.Fragment>
                 )}
                 {!user && (
                   <React.Fragment>
                     <Link to="/signup" className="nav-link">
-                      Sign Up
+                      SIGN UP
                     </Link>
                     <Link
                       to={openSignInModal}
                       className="nav-link"
                       onClick={openSignInModal}
                     >
-                      Sign In
+                      SIGN IN
                     </Link>
                   </React.Fragment>
                 )}
-
                 <Link to="/rssfeed" className="nav-link">
                   RSS Feed
                 </Link>
