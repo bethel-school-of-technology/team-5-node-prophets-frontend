@@ -68,7 +68,7 @@ const EditProfile = () => {
       <div className="edit-prof-wrap">
         <div className="edit-prof-case">
           <div className="divider d-flex align-items-center my-4">
-            <p className="text-center mx-3 mb-0">Edit Profile</p>
+            <h4 className="form-title text-center mx-3 mb-0">Edit Profile</h4>
           </div>
           <Form onSubmit={handleSubmit}>
             <Row className="g-2">

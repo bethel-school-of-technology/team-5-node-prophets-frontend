@@ -1,12 +1,16 @@
 .signup-wrap {
-  border: solid 1px rgba(92, 87, 76, 0.136);
-  margin-top: 50px;
+  margin-top: 45px;
+  background-color: rgb(243, 245, 247);
   padding: 20px;
-  background-color: rgba(37, 67, 109, 0.412);
+  align-self: center;
+  border: solid 3px;
+  border-color: rgba(124, 124, 213, 0.69);
+  padding: 20px;
 }
 .signup-bg {
-  border: solid 1px rgba(92, 87, 76, 0.148);
-  padding: 20px;
-  background-color: rgba(210, 207, 203, 0.487);
+  background-color: rgb(243, 245, 247);
   border-radius: 10px;
+  border: solid 1px;
+  border-color: rgba(124, 124, 213, 0.72);
+  padding: 20px;
 }
