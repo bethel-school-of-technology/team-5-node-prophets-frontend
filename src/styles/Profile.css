@@ -1,8 +1,24 @@
 /* styles/Profile.css */
+.prof-wrap {
+  margin-top: 45px;
+  background-color: rgb(243, 245, 247);
+  padding: 20px;
+  align-self: center;
+  border: solid 3px;
+  border-color: rgba(124, 124, 213, 0.69);
+  padding: 20px;
+}
+.prof-case {
+  background-color: rgb(243, 245, 247);
+  border-radius: 10px;
+  border: solid 1px;
+  border-color: rgba(124, 124, 213, 0.72);
+  padding: 35px;
+}
+
 .profile-section {
   background-color: #d7c4c4;
   padding: 20px;
-  margin-top: 35px;
 }
 
 .profile-top {
