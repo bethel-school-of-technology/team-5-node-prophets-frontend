@@ -39,7 +39,7 @@ function App() {
               <Routes>
                 {/* <Route path="/" element={<Home />} index /> */}
                 <Route path="/" element={<Home />} index />
-                <Route path="/" element={<Search />} />
+                <Route path="/search" element={<Search />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signout" element={<SignOut />} />
@@ -48,6 +48,7 @@ function App() {
                 <Route path="/qaks/new" element={<NewQak />} />
                 <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
                 <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/profile/:userId" element={<Profile />} />
               </Routes>
             </BrowserRouter>
           </UserProvider>

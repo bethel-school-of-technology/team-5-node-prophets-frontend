@@ -152,7 +152,7 @@ const Qak = ({ user }) => {
                               <div
                                 style={{
                                   display: "flex",
-                                  alignItems: "center"
+                                  alignItems: "center",
                                 }}
                               >
                                 <p>

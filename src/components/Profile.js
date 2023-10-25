@@ -9,6 +9,8 @@ import NewQak from "./NewQak";
 
 const Profile = ({ user }) => {
   let params = useParams();
+  const { id } = useParams(); //error handling - Joe
+  console.log("Profile ID:", id); //error handling - Joe
   const [loggedUser, setLoggedUser] = useState([]);
 
   console.log(loggedUser);
@@ -45,7 +47,7 @@ const Profile = ({ user }) => {
       state,
       createdAt,
       profilePicture,
-      Qaks
+      Qaks,
     } = loggedUser;
 
     let qaksByUser = [];
