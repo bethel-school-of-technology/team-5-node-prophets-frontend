@@ -45,7 +45,7 @@ const Profile = ({ user }) => {
       state,
       createdAt,
       profilePicture,
-      Qaks,
+      Qaks
     } = loggedUser;
 
     let qaksByUser = [];
