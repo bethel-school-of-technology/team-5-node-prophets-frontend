@@ -137,7 +137,6 @@ const Qak = ({ user }) => {
               </div>
               <div className="content-below-top-panel">
                 {filteredQAKs.map((q) => {
-                  const isCreatorOfQak = user && user.id === q.user_id;
                   return (
                     <div key={q.qak_id} style={{ marginBottom: "15px" }}>
                       <Accordion defaultActiveKey={null}>
@@ -172,25 +171,22 @@ const Qak = ({ user }) => {
                                         )}`}
                                   </p>
                                   <p style={{ marginLeft: "auto" }}>
-                                    {isCreatorOfQak && (
-                                      <Link
-                                        to={`/qaks/edit/${q.qak_id}`}
-                                        key={q.qak_id}
-                                        style={{ marginRight: "10px" }}
-                                      >
-                                        Edit
-                                      </Link>
-                                    )}
-                                    {isCreatorOfQak && (
-                                      <span
-                                        onClick={() =>
-                                          handleDelete(q.qak_id, q.user_id)
-                                        }
-                                        key={q.qak_id}
-                                      >
-                                        Delete
-                                      </span>
-                                    )}
+                                    <Link
+                                      to={`/qaks/edit/${q.qak_id}`}
+                                      key={q.qak_id}
+                                      style={{ marginRight: "10px" }}
+                                    >
+                                      Edit
+                                    </Link>
+
+                                    <span
+                                      onClick={() =>
+                                        handleDelete(q.qak_id, q.user_id)
+                                      }
+                                      key={q.qak_id}
+                                    >
+                                      Delete
+                                    </span>
                                   </p>
                                 </div>
                               </div>
