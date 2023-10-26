@@ -1,25 +1,26 @@
 import React, { useContext, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
-import QakContext from "../contexts/QakContext";
+import QakReplyContext from "../contexts/QakReplyContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
-import "../styles/Qak.css";
-import NewQak from "./NewQak";
+import "../styles/QakReply.css";
+import NewQakReply from "./NewQakReply";
+import Qak from "./Qak";
 
-const Qak = ({ user }) => {
+const QakReply = ({ user }) => {
   let params = useParams();
   let navigate = useNavigate();
 
-  let { deleteQak } = useContext(QakContext);
+  let { deleteQakReply } = useContext(QakReplyContext);
 
-  function handleDelete(qak_id) {
+  function handleDelete(qakReply_id) {
     if (user !== user) {
       window.alert("You are not allowed to perform this operation");
       navigate("/qaks");
     } else {
       const confirmDelete = window.confirm("Are you sure you want to delete?");
       if (confirmDelete) {
-        deleteQak(qak_id)
+        deleteQakReply(qakReply_id)
           .then(() => {
             navigate("/qaks");
           })
@@ -49,96 +50,40 @@ const Qak = ({ user }) => {
   };
 
   return (
-    <QakContext.Consumer>
-      {({ qak }) => {
-        const filterQAKs = (qakData) => {
-          const now = moment();
-          if (filter === "today") {
-            return qakData
-              .filter((q) => now.isSame(q.createdAt, "day"))
-              .sort(
-                (a, b) =>
-                  moment(b.createdAt || b.updatedAt).valueOf() -
-                  moment(a.createdAt || a.updatedAt).valueOf()
-              );
-          } else if (filter === "yesterday") {
-            return qakData
-              .filter((q) =>
-                now.clone().subtract(1, "day").isSame(q.createdAt, "day")
-              )
-              .sort(
-                (a, b) =>
-                  moment(b.createdAt || b.updatedAt).valueOf() -
-                  moment(a.createdAt || a.updatedAt).valueOf()
-              );
-          } else if (filter === "1month") {
-            const oneMonthAgo = now.clone().subtract(1, "month");
-            return qakData
-              .filter((q) => q.createdAt.isSameOrAfter(oneMonthAgo))
-              .sort(
-                (a, b) =>
-                  moment(b.createdAt || b.updatedAt).valueOf() -
-                  moment(a.createdAt || a.updatedAt).valueOf()
-              );
-          } else if (filter === "older") {
-            const oneMonthAgo = now.clone().subtract(1, "month");
-            return qakData
-              .filter((q) => moment(q.createdAt).isBefore(oneMonthAgo))
-              .sort(
-                (a, b) =>
-                  moment(b.createdAt || b.updatedAt).valueOf() -
-                  moment(a.createdAt || a.updatedAt).valueOf()
-              );
-          } else {
-            return qakData
-              .filter((q) => now.diff(q.createdAt, "days") <= 7)
-              .sort(
-                (a, b) =>
-                  moment(b.createdAt || b.updatedAt).valueOf() -
-                  moment(a.createdAt || a.updatedAt).valueOf()
-              );
-          }
+    <QakReplyContext.Consumer>
+      {({ qakReply }) => {
+        const sortByNewestQAKReply = (qakReplyDate) => {
+          return qakReplyDate.sort((a, b) => {
+            // Sort by the newest created or updated timestamp
+            const aTimestamp = moment(b.createdAt || b.updatedAt).valueOf();
+            const bTimestamp = moment(a.createdAt || a.updatedAt).valueOf();
+            return bTimestamp - aTimestamp;
+          });
         };
-        const filteredQAKs = filterQAKs(qak);
+
+        const sortedQAKReply = sortByNewestQAKReply(qakReply);
 
         return (
           <div className="qak-wrap">
             <div className="qak-case">
               <div>
-                <div className="divider d-flex align-items-center my-4">
-                  <h4 className="form-title text-center mx-3 mb-0">
-                    Question and Answer Knowledge
-                  </h4>
-                </div>
+                <div className="divider d-flex align-items-center my-4"></div>
                 <div className="text-center">
                   <Link to={openSignInModal} onClick={openSignInModal}>
-                    Create A Question or Share Knowledge
+                    Give An Answer or Share Knowledge
                   </Link>
 
-                  <NewQak
+                  <NewQakReply
                     show={showSignInModal}
                     handleClose={closeSignInModal}
                     handleSubmit={handleSubmit}
                   />
                 </div>
-
-                <div className="text-center">
-                  <select
-                    value={filter}
-                    onChange={(e) => setFilter(e.target.value)}
-                  >
-                    <option value="today">Today</option>
-                    <option value="yesterday">Yesterday</option>
-                    <option value="7">Within 7 days</option>
-                    <option value="30">Within 30 days</option>
-                    <option value="older">Older</option>
-                  </select>
-                </div>
               </div>
               <div className="content-below-top-panel">
                 {filteredQAKs.map((q) => {
                   return (
-                    <div key={q.qak_id} style={{ marginBottom: "15px" }}>
+                    <div key={q.qakReply_id} style={{ marginBottom: "15px" }}>
                       <Accordion defaultActiveKey={null}>
                         <Accordion.Item>
                           <Accordion.Header>
@@ -150,7 +95,7 @@ const Qak = ({ user }) => {
                                   <h4>{q.User.username}</h4>
                                 </Link>
 
-                                <p>{q.qak}</p>
+                                <p>{q.qakReply}</p>
                                 <div
                                   style={{
                                     display: "flex",
@@ -172,7 +117,7 @@ const Qak = ({ user }) => {
                                   </p>
                                   <p style={{ marginLeft: "auto" }}>
                                     <Link
-                                      to={`/qaks/${q.qak_id}/edit`}
+                                      to={`/qakReply/${q.qakReply_id}/edit`}
                                       style={{ marginRight: "10px" }}
                                     >
                                       Edit
@@ -181,7 +126,7 @@ const Qak = ({ user }) => {
                                       to={"#"}
                                       onClick={handleDelete.bind(
                                         this,
-                                        q.qak_id,
+                                        q.qakReply_id,
                                         q.user_id
                                       )}
                                     >
@@ -194,11 +139,6 @@ const Qak = ({ user }) => {
                             {/* Add a line space here */}
                             <hr style={{ margin: "10px 0" }} />
                           </Accordion.Header>
-                          <Accordion.Body>
-                            <div>
-                              <p>TBD</p>
-                            </div>
-                          </Accordion.Body>
                         </Accordion.Item>
                       </Accordion>
                     </div>
@@ -209,8 +149,8 @@ const Qak = ({ user }) => {
           </div>
         );
       }}
-    </QakContext.Consumer>
+    </QakReplyContext.Consumer>
   );
 };
 
-export default Qak;
+export default QakReply;

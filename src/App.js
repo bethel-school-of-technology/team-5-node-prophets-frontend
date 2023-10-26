@@ -17,6 +17,7 @@ import SignIn from "./components/SignIn";
 import NewQak from "./components/NewQak";
 import EditQak from "./components/EditQak";
 import EditProfile from "./components/EditProfile";
+import { QakReplyProvider } from "./contexts/QakReplyProvider";
 
 function App() {
   const [user, setUser] = useState();
@@ -32,6 +33,7 @@ function App() {
   return (
     <div className="wrap backgroundColor">
       <QakProvider>
+      <QakReplyProvider>
         <SearchProvider>
           <UserProvider>
             <BrowserRouter>
@@ -53,6 +55,7 @@ function App() {
             </BrowserRouter>
           </UserProvider>
         </SearchProvider>
+        </QakReplyProvider>
       </QakProvider>
     </div>
   );
