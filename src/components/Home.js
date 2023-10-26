@@ -20,8 +20,8 @@ const Home = () => {
               <div className="video-border mb-3">
                 <ReactPlayer
                   className="player"
-                  playing="true"
-                  loop="true"
+                  playing={true}
+                  loop={true}
                   url={video}
                   controls
                   width="65%"

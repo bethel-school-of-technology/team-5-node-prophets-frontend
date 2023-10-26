@@ -35,8 +35,8 @@ const Navigation = ({ user }) => {
   return (
     <>
       <>
-        {[false, "sm", "md", "lg", "xl", "xxl"].map((expand) => (
-          <Navbar className="nav-bar" fixed="top" expand="lg">
+        {[false, "sm", "md", "lg", "xl", "xxl"].map((expand, index) => (
+          <Navbar className="nav-bar" fixed="top" expand="lg" key={index}>
             <div className="nav-wrap">
               <Navbar.Brand className="ms-4" href="/">
                 <div className="brand-logo d-flex align-items-center">
