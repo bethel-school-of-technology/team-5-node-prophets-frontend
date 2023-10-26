@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Accordion,
   Button,
@@ -62,7 +62,11 @@ const RssFeed = () => {
           <Container className="container" fluid>
             <div className="latest col-12 col-md-12 col-lg-9 pe-3">
               <Row xs={1} md={1} className="g-3">
-                <h3>Latest Content</h3>
+                <div className="divider d-flex align-items-center my-4">
+                  <h4 className="latest text-center mx-3 mb-0">
+                    Latest Content
+                  </h4>
+                </div>
                 {articles.slice(1, 6).map((item, idx) => (
                   <Col key={idx}>
                     <Card>
@@ -119,8 +123,12 @@ const RssFeed = () => {
             <div className="pop-feeds col-12 col-md-12 col-lg-3">
               <div>
                 {/* Side Bar Top (Popular Feeds) */}
+
                 <Row xs={1} md={1} className="g-3">
-                  <h3>Popular Feeds</h3>
+                  <div className="divider d-flex align-items-center my-4">
+                    <h4 className="text-center mx-3 mb-0">Popular Feeds</h4>
+                  </div>
+
                   <Col>
                     <Accordion defaultActiveKey="1" flush>
                       <Accordion.Item eventKey="1">
@@ -272,8 +280,8 @@ const RssFeed = () => {
                                   <ListGroup.Item>
                                     <img
                                       key={id}
-                                      alt="Avatar"
                                       className="tc-img"
+                                      alt="avatar"
                                       src={user.profilePicture}
                                     />
 
@@ -294,7 +302,7 @@ const RssFeed = () => {
         </div>
       </div>
       {/* Modal Action */}
-      <div className="modal">
+      <div>
         <Modal
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
@@ -302,57 +310,61 @@ const RssFeed = () => {
           show={modalShow}
           onHide={() => setModalShow(false)}
         >
-          <Modal.Header closeButton>
-            <Modal.Title className="text-primary">
-              You are about the leave the ETM website!
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p style={{ color: "dimgray" }}>
-              <u>Snippet:</u>
-            </p>
-            <Link
-              to={selectedArticle?.link}
-              className="mod-txt1"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <p style={{ color: "black" }}>
-                {selectedArticle?.contentSnippet}
-              </p>
-            </Link>
-          </Modal.Body>
-          <Modal.Footer>
-            <div className="mod-foot">
-              <p className="mod-txt2">
-                Author: {selectedArticle?.creator} | Published:{" "}
-                {moment
-                  .parseZone(selectedArticle?.pubDate)
-                  .local()
-                  .format("LLLL")}{" "}
-              </p>
-
-              <div>
-                <Button
-                  size="sm"
-                  variant="outline-primary"
-                  href={selectedArticle?.link}
+          <div className="modal-wrap">
+            <div className="modal-case">
+              <Modal.Header closeButton>
+                <Modal.Title className="text-danger">
+                  You are about the leave the ETM website!
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p style={{ color: "dimgray" }}>
+                  <u>Snippet:</u>
+                </p>
+                <Link
+                  to={selectedArticle?.link}
+                  className="mod-txt1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => setModalShow(false)}
                 >
-                  Go To Article
-                </Button>{" "}
-                <Button
-                  size="sm"
-                  variant="outline-secondary"
-                  onClick={() => setModalShow(false)}
-                >
-                  Cancel
-                </Button>
-              </div>
+                  <p style={{ color: "black" }}>
+                    {selectedArticle?.contentSnippet}
+                  </p>
+                </Link>
+              </Modal.Body>
+              <Modal.Footer>
+                <div className="mod-foot">
+                  <p className="mod-txt2">
+                    Author: {selectedArticle?.creator} | Published:{" "}
+                    {moment
+                      .parseZone(selectedArticle?.pubDate)
+                      .local()
+                      .format("LLLL")}{" "}
+                  </p>
+
+                  <div className="mt-4 me-4">
+                    <Button
+                      size="sm"
+                      variant="outline-primary"
+                      href={selectedArticle?.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setModalShow(false)}
+                    >
+                      Go To Article
+                    </Button>{" "}
+                    {/* <Button
+                      size="sm"
+                      variant="outline-secondary"
+                      onClick={() => setModalShow(false)}
+                    >
+                      Cancel
+                    </Button> */}
+                  </div>
+                </div>
+              </Modal.Footer>
             </div>
-          </Modal.Footer>
+          </div>
         </Modal>
       </div>
     </div>

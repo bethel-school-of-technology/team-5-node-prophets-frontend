@@ -16,6 +16,7 @@ import Qak from "./components/Qak";
 import SignIn from "./components/SignIn";
 import NewQak from "./components/NewQak";
 import EditQak from "./components/EditQak";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   const [user, setUser] = useState();
@@ -37,7 +38,6 @@ function App() {
               <Navigation user={user} />
 
               <Routes>
-                {/* <Route path="/" element={<Home />} index /> */}
                 <Route path="/" element={<Home />} index />
                 <Route path="/search" element={<Search />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -48,7 +48,7 @@ function App() {
                 <Route path="/qaks/new" element={<NewQak />} />
                 <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
                 <Route path="/profile/:id" element={<Profile />} />
-                <Route path="/profile/:userId" element={<Profile />} />
+                <Route path="/profile/:id/edit" element={<EditProfile />} />
               </Routes>
             </BrowserRouter>
           </UserProvider>

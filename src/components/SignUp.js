@@ -18,7 +18,7 @@ const SignUp = () => {
   const containerStyle = {
     backgroundImage: `url(${"https://webfoundation.org/docs/2017/03/March-12-Letter.jpg"})`,
     backgroundSize: "cover",
-    backgroundPosition: "center",
+    backgroundPosition: "center"
   };
 
   function handleSubmit(event) {
@@ -41,13 +41,18 @@ const SignUp = () => {
     <>
       <div className="signup-wrap">
         <div className="signup-bg">
+          <div className="divider d-flex align-items-center my-4">
+            <h4 className="form-title text-center mx-3 mb-0">
+              Sign Up for an Account
+            </h4>
+          </div>
           <Container style={containerStyle}>
             <Row>
               <Col className="signupimg" md={{ span: 7, offset: 3 }}>
                 <form onSubmit={handleSubmit}>
                   <br />
                   <br></br>
-                  <h1>Register</h1>
+
                   <br></br>
                   <span>Username </span>
                   <input
