@@ -36,7 +36,7 @@ export const QakProvider = (props) => {
     });
   }
 
-  function updateQak(qak, user_id) {
+  function editQak(qak, user_id) {
     let headers = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`,
     };
@@ -64,7 +64,7 @@ export const QakProvider = (props) => {
         qak,
         getOneQak,
         createQak,
-        updateQak,
+        editQak,
         deleteQak,
       }}
     >
