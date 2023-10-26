@@ -1,17 +1,18 @@
 .landing-wrap {
-  margin-top: 35px;
+  margin-top: 45px;
+  background-color: rgb(243, 245, 247);
   padding: 20px;
   align-self: center;
   border: solid 3px;
-  border-color: rgb(124, 124, 213);
+  border-color: rgba(124, 124, 213, 0.69);
   padding: 20px;
 }
 
 .landing-bg {
-  background-color: lightgray;
+  background-color: rgb(243, 245, 247);
   border-radius: 10px;
   border: solid 1px;
-  border-color: rgb(124, 124, 213);
+  border-color: rgba(124, 124, 213, 0.72);
 }
 h3 {
   text-align: center;
@@ -64,8 +65,13 @@ h3 {
 
 .team-card {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .footer {
