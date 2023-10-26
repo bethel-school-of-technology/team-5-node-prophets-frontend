@@ -12,8 +12,8 @@ const Qak = ({ user }) => {
 
   let { deleteQak } = useContext(QakContext);
 
-  function handleDelete(qak_id) {
-    if (user !== user) {
+  function handleDelete(qak_id, qak_creator_id) {
+    if (!user || user.id !== qak_creator_id) {
       window.alert("You are not allowed to perform this operation");
       navigate("/qaks");
     } else {
@@ -135,6 +135,7 @@ const Qak = ({ user }) => {
             </div>
             <div className="content-below-top-panel">
               {filteredQAKs.map((q) => {
+                const isCreatorOfQak = user && user.id === q.user_id;
                 return (
                   <div key={q.qak_id} style={{ marginBottom: "15px" }}>
                     <Accordion defaultActiveKey={null}>
@@ -152,7 +153,7 @@ const Qak = ({ user }) => {
                               <div
                                 style={{
                                   display: "flex",
-                                  alignItems: "center"
+                                  alignItems: "center",
                                 }}
                               >
                                 <p>
@@ -169,22 +170,25 @@ const Qak = ({ user }) => {
                                       )}`}
                                 </p>
                                 <p style={{ marginLeft: "auto" }}>
-                                  <Link
-                                    to={`/qaks/${q.qak_id}/edit`}
-                                    style={{ marginRight: "10px" }}
-                                  >
-                                    Edit
-                                  </Link>
-                                  <Link
-                                    to={"#"}
-                                    onClick={handleDelete.bind(
-                                      this,
-                                      q.qak_id,
-                                      q.user_id
-                                    )}
-                                  >
-                                    Delete
-                                  </Link>
+                                  {isCreatorOfQak && (
+                                    <Link
+                                      to={`/qaks/edit/${q.qak_id}`}
+                                      key={q.qak_id}
+                                      style={{ marginRight: "10px" }}
+                                    >
+                                      Edit
+                                    </Link>
+                                  )}
+                                  {isCreatorOfQak && (
+                                    <span
+                                      onClick={() =>
+                                        handleDelete(q.qak_id, q.user_id)
+                                      }
+                                      key={q.qak_id}
+                                    >
+                                      Delete
+                                    </span>
+                                  )}
                                 </p>
                               </div>
                             </div>
