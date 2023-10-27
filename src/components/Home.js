@@ -4,7 +4,7 @@ import video from "../videos/neuron_-_91633.mp4";
 import ReactPlayer from "react-player";
 import "../styles/Home.css";
 
-const Landing = () => {
+const Home = () => {
   return (
     <div className="landing-wrap">
       <div className="landing-bg">
@@ -131,69 +131,70 @@ const Landing = () => {
             <div className="text-center mb-4">
               <h3>Meet The Team</h3>
             </div>
-
-            <Row xs={1} md={5} className="g-5 mb-4">
-              <Col>
-                <Card style={{ width: "10rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
-                    alt="Music Theme"
-                  />
-                  <Card.Body className="text-center">
-                    <Card.Text>Carlito Pedida</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col>
-                <Card style={{ width: "10rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=884&q=80"
-                    alt="Third Shift Coffee"
-                  />
-                  <Card.Body className="text-center">
-                    <Card.Text>Emmanuel Mefor</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col>
-                <Card style={{ width: "10rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src="https://images.unsplash.com/photo-1579458342405-52d7d969e0d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=874&q=80"
-                    alt="Chain Breaker"
-                  />
-                  <Card.Body className="text-center">
-                    <Card.Text>Joe Lester</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col>
-                <Card style={{ width: "10rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src="https://images.unsplash.com/photo-1604931668626-ab49cb27d952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
-                    alt="Latin Scholar"
-                  />
-                  <Card.Body className="text-center">
-                    <Card.Text>Joseph Miloscia</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col>
-                <Card style={{ width: "10rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src="https://images.unsplash.com/photo-1619467416348-6a782839e95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                    alt="Traveler"
-                  />
-                  <Card.Body className="text-center">
-                    <Card.Text>Taminee Ficklin</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
+            <div className="justify-content-center">
+              <Row xs={1} md={5} className="g-5 mb-4">
+                <Col>
+                  <Card style={{ width: "10rem" }}>
+                    <Card.Img
+                      variant="top"
+                      src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+                      alt="Music Theme"
+                    />
+                    <Card.Body className="text-center">
+                      <Card.Text>Carlito Pedida</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card style={{ width: "10rem" }}>
+                    <Card.Img
+                      variant="top"
+                      src="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=884&q=80"
+                      alt="Third Shift Coffee"
+                    />
+                    <Card.Body className="text-center">
+                      <Card.Text>Emmanuel Mefor</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card style={{ width: "10rem" }}>
+                    <Card.Img
+                      variant="top"
+                      src="https://images.unsplash.com/photo-1579458342405-52d7d969e0d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=874&q=80"
+                      alt="Chain Breaker"
+                    />
+                    <Card.Body className="text-center">
+                      <Card.Text>Joe Lester</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card style={{ width: "10rem" }}>
+                    <Card.Img
+                      variant="top"
+                      src="https://images.unsplash.com/photo-1604931668626-ab49cb27d952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+                      alt="Latin Scholar"
+                    />
+                    <Card.Body className="text-center">
+                      <Card.Text>Joseph Miloscia</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card style={{ width: "10rem" }}>
+                    <Card.Img
+                      variant="top"
+                      src="https://images.unsplash.com/photo-1619467416348-6a782839e95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                      alt="Traveler"
+                    />
+                    <Card.Body className="text-center">
+                      <Card.Text>Taminee Ficklin</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            </div>
             <hr className="line" />
             <Row>
               <Col>
@@ -243,4 +244,4 @@ const Landing = () => {
     </div>
   );
 };
-export default Landing;
+export default Home;

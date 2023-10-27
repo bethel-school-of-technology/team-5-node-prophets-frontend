@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Accordion,
   Button,
@@ -272,8 +272,8 @@ const RssFeed = () => {
                                   <ListGroup.Item>
                                     <img
                                       key={id}
-                                      alt="Avatar"
                                       className="tc-img"
+                                      alt="avatar"
                                       src={user.profilePicture}
                                     />
 

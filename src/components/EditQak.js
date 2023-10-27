@@ -13,7 +13,6 @@ const EditQak = () => {
     qak: ""
   });
 
-  console.log(qakEdit);
   let { getOneQak, editQak } = useContext(QakContext);
 
   let { qak_id, qak } = qakEdit;
