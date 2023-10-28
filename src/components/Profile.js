@@ -1,6 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../styles/Profile.css";
-import { Link, useParams } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  Modal,
+  Button,
+  Form,
+  setShowModal,
+  handlePost,
+  handleInputChange,
+  showModal,
+  inputValue,
+  displayedText,
+} from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
 import moment from "moment";
