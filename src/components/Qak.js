@@ -1,12 +1,52 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
+import NewQak from "./NewQak";
 
-const Qak = () => {
+const Qak = ({ user }) => {
+  let params = useParams();
+  let navigate = useNavigate();
+
+  let { deleteQak } = useContext(QakContext);
+
+  function handleDelete(qak_id) {
+    if (user !== user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate("/qaks");
+    } else {
+      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      if (confirmDelete) {
+        deleteQak(qak_id)
+          .then(() => {
+            navigate("/qaks");
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate("/qaks");
+          });
+      }
+    }
+  }
+
   const [filter, setFilter] = useState("7"); // Initialize the filter as "within 7 days"
+
+  const [showSignInModal, setShowSignInModal] = useState(false);
+
+  const openSignInModal = () => {
+    setShowSignInModal(true);
+  };
+
+  const closeSignInModal = () => {
+    setShowSignInModal(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <QakContext.Consumer>
@@ -62,100 +102,125 @@ const Qak = () => {
         const filteredQAKs = filterQAKs(qak);
 
         return (
-          <div>
-            <div className="fixed-content">
-              <br />
-              <br />
-              <br />
-              <h2>Questions Answers Knowledge</h2>
-              <Link to="/qaks/new">Create A Question or Share Knowledge</Link>
-
+          <div className="qak-wrap">
+            <div className="qak-case">
               <div>
-                <select
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value)}
-                >
-                  <option value="today">Today</option>
-                  <option value="yesterday">Yesterday</option>
-                  <option value="7">Within 7 days</option>
-                  <option value="30">Within 30 days</option>
-                  <option value="older">Older</option>
-                </select>
+                <div className="divider d-flex align-items-center my-4">
+                  <h4 className="form-title text-center mx-3 mb-0">
+                    Question and Answer Knowledge
+                  </h4>
+                </div>
+                <div className="text-center">
+                  <Link to={openSignInModal} onClick={openSignInModal}>
+                    Create A Question or Share Knowledge
+                  </Link>
+
+                  <NewQak
+                    show={showSignInModal}
+                    handleClose={closeSignInModal}
+                    handleSubmit={handleSubmit}
+                  />
+                </div>
+
+                <div className="text-center">
+                  <select
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                  >
+                    <option value="today">Today</option>
+                    <option value="yesterday">Yesterday</option>
+                    <option value="7">Within 7 days</option>
+                    <option value="30">Within 30 days</option>
+                    <option value="older">Older</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div className="content-below-top-panel">
-              {filteredQAKs.map((q) => {
-                return (
-                  <div key={q.qak_id} style={{ marginBottom: "15px" }}>
-                    <Accordion defaultActiveKey={null}>
-                      <Accordion.Item>
-                        <Accordion.Header>
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <div>
-                              <h4>{q.User.username}</h4>
-                              <p>{q.qak}</p>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <p>
-                                  {q.updatedAt &&
-                                  !moment(q.createdAt).isSame(
-                                    q.updatedAt,
-                                    "day"
-                                  )
-                                    ? `Edited: ${moment(q.updatedAt).format(
-                                        "MM/DD/YYYY"
-                                      )}`
-                                    : `Created: ${moment(q.createdAt).format(
-                                        "MM/DD/YYYY"
-                                      )}`}
-                                </p>
-                                <p style={{ marginLeft: "auto" }}>
-                                  <Link
-                                    to={`/qaks/edit/${q.qak_id}`}
-                                    style={{ marginRight: "10px" }}
-                                  >
-                                    Edit
-                                  </Link>
-                                  <Link to={`/qaks/${q.qak_id}`}>Delete</Link>
-                                </p>
+              <div className="content-below-top-panel">
+                {filteredQAKs.map((q) => {
+                  return (
+                    <div key={q.qak_id} style={{ marginBottom: "15px" }}>
+                      <Accordion defaultActiveKey={null}>
+                        <Accordion.Item>
+                          <Accordion.Header>
+                            <div
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
+                              <div>
+                                <Link to={`/profile/${q.user_id}`}>
+                                  <h4>{q.User.username}</h4>
+                                </Link>
+                                <p>{q.qak}</p>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center"
+                                  }}
+                                >
+                                  <p>
+                                    {q.updatedAt &&
+                                    !moment(q.createdAt).isSame(
+                                      q.updatedAt,
+                                      "day"
+                                    )
+                                      ? `Edited: ${moment(q.updatedAt).format(
+                                          "MM/DD/YYYY"
+                                        )}`
+                                      : `Created: ${moment(q.createdAt).format(
+                                          "MM/DD/YYYY"
+                                        )}`}
+                                  </p>
+                                  <p style={{ marginLeft: "auto" }}>
+                                    <Link
+                                      to={`/qaks/${q.qak_id}/edit`}
+                                      style={{ marginRight: "10px" }}
+                                    >
+                                      Edit
+                                    </Link>
+                                    <Link
+                                      to={"#"}
+                                      onClick={handleDelete.bind(
+                                        this,
+                                        q.qak_id,
+                                        q.user_id
+                                      )}
+                                    >
+                                      Delete
+                                    </Link>
+                                  </p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          {/* Add a line space here */}
-                          <hr style={{ margin: "10px 0" }} />
-                        </Accordion.Header>
-                        <Accordion.Body>
-                          <div>
-                            <h5>Username</h5>
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua. Ut enim ad minim veniam,
-                              quis nostrud exercitation ullamco laboris nisi ut
-                              aliquip ex ea commodo consequat. Duis aute irure
-                              dolor in reprehenderit in voluptate velit esse
-                              cillum dolore eu fugiat nulla pariatur. Excepteur
-                              sint occaecat cupidatat non proident, sunt in
-                              culpa qui officia deserunt mollit anim id est
-                              laborum.
-                            </p>
-                            <p>
-                              Created: MM/DD/YYYY <span class="edit">Edit</span>{" "}
-                              <span class="delete">Delete</span>
-                            </p>
-                          </div>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                    </Accordion>
-                  </div>
-                );
-              })}
+                            {/* Add a line space here */}
+                            <hr style={{ margin: "10px 0" }} />
+                          </Accordion.Header>
+                          <Accordion.Body>
+                            <div>
+                              <h5>Username</h5>
+                              <p>
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut
+                                enim ad minim veniam, quis nostrud exercitation
+                                ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate velit esse cillum
+                                dolore eu fugiat nulla pariatur. Excepteur sint
+                                occaecat cupidatat non proident, sunt in culpa
+                                qui officia deserunt mollit anim id est laborum.
+                              </p>
+                              <p>
+                                Created: MM/DD/YYYY{" "}
+                                <span className="edit">Edit</span>{" "}
+                                <span className="delete">Delete</span>
+                              </p>
+                            </div>
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      </Accordion>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         );

@@ -1,60 +1,80 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import QakContext from "../contexts/QakContext";
-import Form from "react-bootstrap/Form";
+import { Stack } from "react-bootstrap";
+import "../styles/EditQak.css";
 
 const EditQak = () => {
-  const params = useParams();
-  const [id, setId] = useState(params.q.qak_id);
-  const [qak, setQak] = useState("");
+  let params = useParams();
+  let navigate = useNavigate();
 
-  const { getQAK, updateQAK } = useContext(QakContext);
-  const navigate = useNavigate();
+  let [qakEdit, setQakEdit] = useState({
+    qak_id: params.qak_id,
+    qak: ""
+  });
+
+  let { getOneQak, editQak } = useContext(QakContext);
+
+  let { qak_id, qak } = qakEdit;
 
   useEffect(() => {
-    if (id === undefined) return;
-
-    function fetchQAK() {
-      getQAK(id).then((newQAK) => setQak(newQAK.qak));
+    if (qak_id === undefined) return;
+    async function fetch() {
+      await getOneQak(qak_id).then((qak) => setQakEdit(qak));
     }
-
-    fetchQAK();
-  }, [id, getQAK]);
+    fetch();
+  }, []);
 
   function handleChange(event) {
-    setQak(event.target.value);
+    const { name, value } = event.target;
+    setQakEdit((prevValue) => ({ ...prevValue, [name]: value }));
+  }
+
+  function updateQak() {
+    return editQak(qakEdit);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    updateQAK({ id, qak })
+
+    updateQak(qakEdit)
       .then(() => {
+        if (!qakEdit.ok) {
+          alert("Your Post has been updated!");
+        }
         navigate("/qaks");
+        window.location.reload();
       })
       .catch((error) => {
-        console.log(error);
-        navigate("/signin");
+        console.error("There was an error!", error);
+        alert("You need to be Signed In to perform this operation");
+        navigate("/signIn");
       });
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h1>Update QAK</h1>
+    <div className="edit-wrap">
+      <div className="edit-case">
+        <form className="editForm" onSubmit={handleSubmit} key={qak_id}>
+          <div className="divider d-flex align-items-center my-4">
+            <h4 className="edit-label text-center mx-3 mb-0">Edit QAK</h4>
+          </div>
 
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>{qak}</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={20}
-          name="qak"
-          value={qak}
-          onChange={handleChange}
-        />
-        <br></br>
-        <br></br>
-        <button>Update QAK</button>
-      </Form.Group>
-    </Form>
+          <Stack gap={4} className="mx-auto">
+            <textarea
+              className="text-area"
+              rows={4}
+              cols={65}
+              type="text"
+              name="qak"
+              value={qak}
+              onChange={handleChange}
+            />
+            <button className="edit-submit primary">Finish Editing</button>
+          </Stack>
+        </form>
+      </div>
+    </div>
   );
 };
 

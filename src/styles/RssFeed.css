@@ -1,14 +1,19 @@
 .rss-wrap {
-  border: solid 1px rgba(92, 87, 76, 0.136);
-  margin-top: 50px;
+  margin-top: 45px;
   padding: 20px;
-  background-color: rgba(37, 67, 109, 0.412);
+  background-color: rgb(243, 245, 247);
   align-self: center;
+  background-color: rgb(243, 245, 247);
+
+  border: solid 3px;
+  border-color: rgba(124, 124, 213, 0.509);
+  padding: 20px;
 }
 .rss-bg {
-  border: solid 1px rgba(92, 87, 76, 0.148);
-  background-color: lightgray;
-  border-radius: 10px;
+  border: solid 1px;
+  border-radius: 7px;
+  border-color: rgba(124, 124, 213, 0.616);
+  padding: 20px;
 }
 .container {
   display: flex;
@@ -16,7 +21,7 @@
   flex-wrap: wrap;
 }
 .rss {
-  background-color: rgba(182, 202, 212, 0.071);
+  background-color: #d7c4c4cc;
   border-radius: 5px;
   padding: 20px;
   box-shadow: rgb(73, 85, 98);
@@ -69,7 +74,7 @@
   vertical-align: middle;
   margin: 2px;
   border: solid 0.5px;
-  border-color: rgb(74, 95, 112);
+  border-color: rgba(74, 95, 112, 0.956);
   border-radius: 50px;
   height: 50px;
   width: 50px;
@@ -86,4 +91,17 @@
 }
 .snippet {
   text-decoration: none;
+}
+.modal-wrap {
+  border: solid 3px;
+  border-color: rgb(124, 124, 213);
+  padding: 20px;
+}
+.modal-case {
+  border: solid 1px;
+  border-color: rgb(124, 124, 213);
+  padding: 20px;
+}
+.mod-title {
+  border-color: rgb(124, 124, 213);
 }

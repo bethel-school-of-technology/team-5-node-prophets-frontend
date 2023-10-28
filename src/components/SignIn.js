@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal, Form, Button, CloseButton } from "react-bootstrap";
+import { Modal, Form, Button, Col, Toast, Row } from "react-bootstrap";
 import UserContext from "../contexts/UserContext";
 
 import "../styles/SignIn.css";

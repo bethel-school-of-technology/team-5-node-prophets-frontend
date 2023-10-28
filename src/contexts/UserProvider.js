@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
 
-  const baseUrl = "http://localhost:3000/api/users";
+  const baseUrl = "http://localhost:3000/api/users/";
 
   useEffect(() => {
     async function fetchData() {
@@ -51,10 +51,40 @@ export const UserProvider = (props) => {
     });
   }
 
-  function getUserProfile(user_id) {
-    return axios.get(baseUrl + user_id).then((response) => {
+  function getOneProfile(user_id) {
+    let headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
+    };
+    return axios.get(baseUrl + user_id, { headers }).then((response) => {
+      getAllUsers();
+      console.log(response.data);
       return new Promise((resolve) => resolve(response.data));
     });
+  }
+
+  function getOneProfile(user, user_id) {
+    let headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
+    };
+    return axios.get(baseUrl + user_id, user, headers).then((response) => {
+      getAllUsers();
+      console.log(response.data);
+      return new Promise((resolve) => resolve(response.data));
+    });
+  }
+
+  function updateUserProfile(user) {
+    let headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
+    };
+
+    return axios
+      .put(baseUrl + user.user_id, user, { headers })
+      .then((response) => {
+        console.log(response.data);
+        getAllUsers();
+        return new Promise((resolve) => resolve(response.data));
+      });
   }
 
   function getUserQaks(user_id) {
@@ -75,8 +105,9 @@ export const UserProvider = (props) => {
         getAllUsers,
         createUser,
         signInUser,
-        getUserProfile,
-        getUserQaks
+        getOneProfile,
+        getUserQaks,
+        updateUserProfile
       }}
     >
       {props.children}

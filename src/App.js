@@ -16,6 +16,7 @@ import Qak from "./components/Qak";
 import SignIn from "./components/SignIn";
 import NewQak from "./components/NewQak";
 import EditQak from "./components/EditQak";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   const [user, setUser] = useState();
@@ -38,15 +39,16 @@ function App() {
 
               <Routes>
                 <Route path="/" element={<Home />} index />
-                <Route path="/" element={<Search />} />
+                <Route path="/search" element={<Search />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signout" element={<SignOut />} />
                 <Route path="/rssfeed" element={<RssFeed />} />
-                <Route path="/profile" element={<Profile />} />
                 <Route path="/qaks" element={<Qak />} />
                 <Route path="/qaks/new" element={<NewQak />} />
-                <Route path="/qaks/edit/id" element={<EditQak />} />
+                <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
+                <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/profile/:id/edit" element={<EditProfile />} />
               </Routes>
             </BrowserRouter>
           </UserProvider>
