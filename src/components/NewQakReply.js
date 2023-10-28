@@ -3,30 +3,30 @@ import { Modal, Form, Button } from "react-bootstrap";
 
 import "../styles/SignIn.css";
 import { useNavigate, useParams } from "react-router-dom";
-import QakContext from "../contexts/QakContext";
+import QakReplyContext from "../contexts/QakReplyContext";
 
-const NewQak = ({ show, handleClose }) => {
+const NewQakReply = ({ show, handleClose }) => {
   let params = useParams();
   let navigate = useNavigate();
 
-  let [newQak, setNewQak] = useState({
-    qak_id: params.qak_id,
-    qak: "",
+  let [newQakReply, setNewQakReply] = useState({
+    qakReply_id: params.qakReply_id,
+    qakReply: "",
   });
 
-  let { createQak } = useContext(QakContext);
+  let { createQakReply } = useContext(QakReplyContext);
 
-  let { qak_id, qak } = newQak;
+  let { qakReply_id, qakReply } = newQakReply;
 
   function create() {
-    if (qak_id === undefined) {
-      return createQak(newQak);
+    if (qakReply_id === undefined) {
+      return createQakReply(newQakReply);
     }
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    create(newQak)
+    create(newQakReply)
       .then(() => {
         handleClose();
         navigate("/qaks");
@@ -55,12 +55,10 @@ const NewQak = ({ show, handleClose }) => {
               </p>
 
               <div className="divider d-flex align-items-center my-4">
-                <p className="text-center mx-3 mb-0">
-                  Any Questions or Thoughts?
-                </p>
+                <p className="text-center mx-3 mb-0">Answer or Knowledge</p>
               </div>
 
-              <Form onSubmit={handleSubmit} key={qak_id}>
+              <Form onSubmit={handleSubmit} key={qakReply_id}>
                 <Form.Group className="mb-3">
                   <Form.Control
                     as={"textarea"}
@@ -68,9 +66,12 @@ const NewQak = ({ show, handleClose }) => {
                     rows={6}
                     cols={65}
                     name="qak"
-                    value={qak}
+                    value={qakReply}
                     onChange={(e) =>
-                      setNewQak({ ...newQak, qak: e.target.value })
+                      setNewQakReply({
+                        ...newQakReply,
+                        qakReply: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -92,4 +93,4 @@ const NewQak = ({ show, handleClose }) => {
   );
 };
 
-export default NewQak;
+export default NewQakReply;
