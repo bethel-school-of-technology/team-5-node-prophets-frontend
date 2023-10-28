@@ -130,17 +130,146 @@ const Profile = () => {
           </Modal.Footer>
         </Modal>
 
-        {/* Display the entered text */}
-        {displayedText && (
-          <div className="mt-3">
-            <h5>User Name</h5>
-            <p>{displayedText}</p>
-          </div>
-        )}
-        <div class="row"></div>
-        <div class="col-8">Latest QAKS</div>
+        <div className="row">
+          <div className="col-md-8">
+            <h3>Latest Qaks</h3>
+            <div className="card mb-4" style={{ height: "500px" }}>
+              <div className="card-body" style={{ fontSize: "16px" }}>
+                {/* Place your content for Latest Qaks here */}
 
-        <div className="col-4">Featured Articles</div>
+                {/* Display the entered text */}
+                {displayedText && (
+                  <div className="card border-primary p-2 ">
+                    <div className="mt-3">
+                      <h5>John-Smith 12656:</h5>
+                      <p>{displayedText}</p>
+                    </div>
+                  </div>
+                )}
+
+                <br />
+
+                <div className="card border-primary p-2 ">
+                  <p>
+                    <strong>John-Smith 12656:</strong>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </p>
+                </div>
+                <br />
+
+                <div className="card border-primary p-2 ">
+                  <p>
+                    <strong>John-Smith 12656:</strong>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </p>
+                </div>
+                <br />
+                <div className="card border-primary p-2 ">
+                  <p>
+                    <strong>John-Smith 12656:</strong>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-12 col-md-12 col-lg-4">
+            <h3>Featured Articles </h3>
+            <div className="row">
+              <div className="card">
+                <div className="card-body">
+                  {/* Place your content for Featured Article 1 here */}
+                  <h5> How to Work Smarter with generative AI </h5>
+                  <p>
+                    "Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque...
+                  </p>
+                  <hr />
+                  <h5> Practical (and Powerful) ways to use metaverse </h5>
+                  <p>
+                    "Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque...
+                  </p>
+                  <hr />
+                  <h5> What if we performed 1% better? </h5>
+                  <p>
+                    "Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-12 col-md-12 col-lg-4">
+            <h3>Your Followers</h3>
+
+            <div className="card mb-3">
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-md-4">
+                    <img
+                      src="https://placekitten.com/150/150" // Replace with the actual image URL for Follower 1
+                      alt="Follower 1"
+                      className="rounded-circle img-fluid"
+                    />
+                  </div>
+                  <div className="col-md-8">
+                    <p className="card-text"> Tom Gasper</p>
+                  </div>
+                </div>
+
+                <hr />
+
+                <div className="row">
+                  <div className="col-md-4">
+                    <img
+                      src="https://placekitten.com/150/150" // Replace with the actual image URL for Follower 2
+                      alt="Follower 2"
+                      className="rounded-circle img-fluid"
+                    />
+                  </div>
+                  <div className="col-md-8">
+                    <p className="card-text">Gasper Tom </p>
+                  </div>
+                </div>
+
+                {/* Add more followers here using the same structure */}
+
+                <hr />
+
+                <div className="row">
+                  <div className="col-md-4">
+                    <img
+                      src="https://placekitten.com/150/150" // Replace with the actual image URL for Follower 2
+                      alt="Follower 2"
+                      className="rounded-circle img-fluid"
+                    />
+                  </div>
+                  <div className="col-md-8">
+                    <p className="card-text">Jerry Gasper</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
