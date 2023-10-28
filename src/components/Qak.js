@@ -12,14 +12,14 @@ const Qak = ({ user }) => {
 
   let { deleteQak } = useContext(QakContext);
 
-  function handleDelete(qak_id) {
+  function handleDelete(qak_id, qakReply_id) {
     if (user !== user) {
       window.alert("You are not allowed to perform this operation");
       navigate("/qaks");
     } else {
       const confirmDelete = window.confirm("Are you sure you want to delete?");
       if (confirmDelete) {
-        deleteQak(qak_id)
+        deleteQak(qak_id, qakReply_id)
           .then(() => {
             navigate("/qaks");
           })
@@ -170,6 +170,7 @@ const Qak = ({ user }) => {
                                           "MM/DD/YYYY"
                                         )}`}
                                   </p>
+
                                   <p style={{ marginLeft: "auto" }}>
                                     <Link
                                       to={`/qaks/${q.qak_id}/edit`}
@@ -216,7 +217,46 @@ const Qak = ({ user }) => {
                                           <h4>{QakReplies.User.username}</h4>
                                         </Link>
                                         <p>{QakReplies.qakReply}</p>
-                                        {/* Add any other content for QAK replies such as edit and delete links here */}
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <p>
+                                            {QakReplies.updatedAt &&
+                                            !moment(
+                                              QakReplies.createdAt
+                                            ).isSame(
+                                              QakReplies.updatedAt,
+                                              "day"
+                                            )
+                                              ? `Edited: ${moment(
+                                                  QakReplies.updatedAt
+                                                ).format("MM/DD/YYYY")}`
+                                              : `Created: ${moment(
+                                                  QakReplies.createdAt
+                                                ).format("MM/DD/YYYY")}`}
+                                          </p>
+                                          <p style={{ marginLeft: "auto" }}>
+                                            <Link
+                                              to={`/qaks/${QakReplies.qakReply_id}/edit`}
+                                              style={{ marginRight: "10px" }}
+                                            >
+                                              Edit
+                                            </Link>
+                                            <Link
+                                              to={"#"}
+                                              onClick={handleDelete.bind(
+                                                this,
+                                                QakReplies.qakReply_id,
+                                                QakReplies.User.user_id
+                                              )}
+                                            >
+                                              Delete
+                                            </Link>
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
                                     {/* Add a line space here */}
