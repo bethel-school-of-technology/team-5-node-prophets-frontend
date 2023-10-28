@@ -48,7 +48,7 @@ const QakReply = ({ user }) => {
                     <div key={q.qakReply_id} style={{ marginBottom: "15px" }}>
                       <Accordion defaultActiveKey={null}>
                         <Accordion.Item>
-                          <Accordion.Header>
+                          <Accordion.Body>
                             <div
                               style={{ display: "flex", alignItems: "center" }}
                             >
@@ -100,7 +100,7 @@ const QakReply = ({ user }) => {
                             </div>
                             {/* Add a line space here */}
                             <hr style={{ margin: "10px 0" }} />
-                          </Accordion.Header>
+                          </Accordion.Body>
                         </Accordion.Item>
                       </Accordion>
                     </div>

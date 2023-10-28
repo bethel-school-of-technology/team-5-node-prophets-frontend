@@ -1,13 +1,12 @@
 import React, { useContext, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
-import QakReplyContext from "../contexts/QakReplyContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
 import NewQak from "./NewQak";
 
-const Qak = ({ user, qakReplies }) => {
+const Qak = ({ user }) => {
   let params = useParams();
   let navigate = useNavigate();
 
@@ -197,11 +196,11 @@ const Qak = ({ user, qakReplies }) => {
                           </Accordion.Header>
 
                           <Accordion.Body>
-                            {q.qakReplies && q.qakReplies.length > 0 && (
+                            {qak.qakReplies && qak.qakReplies.length > 0 ? (
                               <div>
-                                {q.qakReplies.map((qakReply) => (
+                                {qak.qakReplies.map((qakReply) => (
                                   <div
-                                    key={q.qakReplies.qakReply_id}
+                                    key={qakReply.qakReply_id}
                                     style={{ marginBottom: "15px" }}
                                   >
                                     <div
@@ -212,22 +211,22 @@ const Qak = ({ user, qakReplies }) => {
                                     >
                                       <div>
                                         <Link
-                                          to={`/profile/${q.qakReplies.User.user_id}`}
+                                          to={`/profile/${qakReply.User.user_id}`}
                                         >
-                                          <h4>{q.qakReplies.User.username}</h4>
+                                          <h4>{qakReply.User.username}</h4>
                                         </Link>
-                                        <p>{q.qakReplies.qakReply}</p>
-                                        {/* ... Other content for QAK replies such as edit and delete links ... */}
+                                        <p>{qakReply.qakReply}</p>
+                                        {/* Add any other content for QAK replies such as edit and delete links here */}
                                       </div>
                                     </div>
-                                    {/* Add a line space here */}
                                     {/* Add a line space here */}
                                     <hr style={{ margin: "10px 0" }} />
                                   </div>
                                 ))}
                               </div>
+                            ) : (
+                              <p>No replies available for this QAK.</p>
                             )}
-                            <p>No replies available for this QAK.</p>
                           </Accordion.Body>
                         </Accordion.Item>
                       </Accordion>
