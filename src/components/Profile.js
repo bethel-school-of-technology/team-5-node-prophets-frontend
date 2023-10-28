@@ -1,27 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+/* import React, { useContext, useEffect, useState } from "react";
 import "../styles/Profile.css";
-import {
-  Link,
-  useParams,
-  Modal,
-  Button,
-  Form,
-  setShowModal,
-  handlePost,
-  handleInputChange,
-  showModal,
-  inputValue,
-  displayedText,
-} from "react-router-dom";
+import { Link, useParams, inputValue, displayedText } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
 import moment from "moment";
 import NewQak from "./NewQak";
+import { Button, Form, Modal } from "react-bootstrap";
 
 const Profile = ({ user }) => {
   let params = useParams();
-  const { id } = useParams(); //error handling - Joe
-  console.log("Profile ID:", id); //error handling - Joe
+  const { id } = useParams();
+  console.log("Profile ID:", id);
   const [loggedUser, setLoggedUser] = useState([]);
 
   let { getUserQaks } = useContext(UserContext);
@@ -34,6 +23,10 @@ const Profile = ({ user }) => {
   }, [getUserQaks, params.user_id]);
 
   const [showSignInModal, setShowSignInModal] = useState(false);
+  const handlePost = () => {
+    setDisplayedText(inputValue); // Store the entered text in displayedText
+    setShowModal(false); // Close the modal
+  };
 
   const openSignInModal = () => {
     setShowSignInModal(true);
@@ -168,7 +161,6 @@ const Profile = ({ user }) => {
           </div>
         </div>
 
-        {/* Bootstrap Modal */}
         <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Any Questions or Thoughts?</Modal.Title>
@@ -196,11 +188,10 @@ const Profile = ({ user }) => {
           </Modal.Footer>
         </Modal>
 
-        {/* Display the entered text */}
         {displayedText && (
           <div className="mt-3">
             <h5>User Name</h5>
-            <p>{displayedText}</p>
+            {<p>{displayedText}</p>}
           </div>
         )}
         <div class="row"></div>
@@ -213,3 +204,4 @@ const Profile = ({ user }) => {
 };
 
 export default Profile;
+ */
