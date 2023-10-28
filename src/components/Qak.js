@@ -196,11 +196,11 @@ const Qak = ({ user }) => {
                           </Accordion.Header>
 
                           <Accordion.Body>
-                            {qak.qakReplies && qak.qakReplies.length > 0 ? (
+                            {q.QakReplies && q.QakReplies.length > 0 ? (
                               <div>
-                                {qak.qakReplies.map((qakReply) => (
+                                {q.QakReplies.map((qakReply) => (
                                   <div
-                                    key={qakReply.qakReply_id}
+                                    key={q.QakReplies.qakReply_id}
                                     style={{ marginBottom: "15px" }}
                                   >
                                     <div
@@ -210,12 +210,12 @@ const Qak = ({ user }) => {
                                       }}
                                     >
                                       <div>
-                                        <Link
-                                          to={`/profile/${qakReply.User.user_id}`}
+                                        {/* <Link
+                                          to={`/profile/${q.QakReplies.User.user_id}`}
                                         >
-                                          <h4>{qakReply.User.username}</h4>
-                                        </Link>
-                                        <p>{qakReply.qakReply}</p>
+                                          <h4>{q.QakReplies.User.username}</h4>
+                                        </Link> */}
+                                        <p>{q.QakReplies.qakReply}</p>
                                         {/* Add any other content for QAK replies such as edit and delete links here */}
                                       </div>
                                     </div>
