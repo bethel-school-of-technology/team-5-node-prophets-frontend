@@ -17,7 +17,6 @@ import SignIn from "./components/SignIn";
 import NewQak from "./components/NewQak";
 import EditQak from "./components/EditQak";
 import EditProfile from "./components/EditProfile";
-import NoProfile from "./components/NoProfile";
 
 function App() {
   const [user, setUser] = useState();
