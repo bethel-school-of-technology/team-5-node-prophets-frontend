@@ -50,7 +50,6 @@ function App() {
                 <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
                 <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/profile/:id/edit" element={<EditProfile />} />
-                <Route path="/profile" element={<NoProfile />} />
               </Routes>
             </BrowserRouter>
           </UserProvider>
