@@ -214,7 +214,7 @@ const Profile = ({ user }) => {
                 <div className="col-12 col-md-12 col-lg-4">
                   <div className="divider d-flex align-items-center my-4">
                     <h4 className="latest text-center mx-3 mb-0">
-                      <h4>Latest Tech News</h4>
+                      Latest Tech News
                     </h4>
                   </div>
 
