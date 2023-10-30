@@ -25,3 +25,25 @@
   display: flex;
   align-items: center;
 }
+.q-card {
+  padding: 25px;
+  display: flex;
+  background-color: #d7c4c42c;
+  flex-direction: column;
+  row-gap: 10px;
+}
+.q {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: rgba(124, 124, 213, 0.087);
+}
+.text-dec {
+  text-decoration: none;
+  color: rgb(74, 95, 112);
+}
+.text-hove:hover {
+  text-decoration: none;
+  color: rgb(87, 121, 255);
+}
