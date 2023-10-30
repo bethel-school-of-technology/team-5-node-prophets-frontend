@@ -48,6 +48,7 @@ function App() {
                 <Route path="/qaks/new" element={<NewQak />} />
                 <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
                 <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/profile/:id/edit" element={<EditProfile />} />
               </Routes>
             </BrowserRouter>
           </UserProvider>
