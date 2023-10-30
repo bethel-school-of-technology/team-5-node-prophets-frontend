@@ -108,7 +108,7 @@ const Qak = ({ user }) => {
               <div>
                 <div className="divider d-flex align-items-center my-4">
                   <h4 className="form-title text-center mx-3 mb-0">
-                    Question and Answer Knowledge
+                    Question Answer Knowledge
                   </h4>
                 </div>
                 <div className="text-center">
@@ -197,6 +197,11 @@ const Qak = ({ user }) => {
                           </Accordion.Header>
 
                           <Accordion.Body>
+                            <div className="text-center">
+                              <Link to={"#"}>
+                                Provide An Answer or Share Knowledge
+                              </Link>
+                            </div>
                             {q.QakReplies && q.QakReplies.length > 0 ? (
                               <div>
                                 {q.QakReplies.map((QakReplies) => (
@@ -240,21 +245,13 @@ const Qak = ({ user }) => {
                                           </p>
                                           <p style={{ marginLeft: "auto" }}>
                                             <Link
-                                              to={`/qaks/${QakReplies.qakReply_id}/edit`}
+                                              to={"#"}
+                                              // to={`/qakRelay/${QakReplies.qakReply_id}/edit`}
                                               style={{ marginRight: "10px" }}
                                             >
                                               Edit
                                             </Link>
-                                            <Link
-                                              to={"#"}
-                                              onClick={handleDelete.bind(
-                                                this,
-                                                QakReplies.qakReply_id,
-                                                QakReplies.User.user_id
-                                              )}
-                                            >
-                                              Delete
-                                            </Link>
+                                            <Link to={"#"}>Delete</Link>
                                           </p>
                                         </div>
                                       </div>

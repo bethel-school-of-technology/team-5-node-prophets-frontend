@@ -1,26 +1,45 @@
 import React, { useContext, useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
-
-import "../styles/SignIn.css";
 import { useNavigate, useParams } from "react-router-dom";
 import QakReplyContext from "../contexts/QakReplyContext";
+import QakContext from "../contexts/QakContext";
+import UserContext from "../contexts/UserContext";
 
-const NewQakReply = ({ show, handleClose }) => {
+const QakReplyForm = () => {
   let params = useParams();
   let navigate = useNavigate();
-
-  let [newQakReply, setNewQakReply] = useState({
-    qakReply_id: params.qakReply_id,
+  let [qakReply, setQakReply] = useState({
+    qak_id: params.qak_id,
+    user_id: params.user_id,
     qakReply: "",
   });
 
-  let { createQakReply } = useContext(QakReplyContext);
+  let { getOneQakReply, createQakReply, updateQakReply } =
+    useContext(QakReplyContext);
 
-  let { qakReply_id, qakReply } = newQakReply;
+  let { qak_id, user_id, qakReply } = qakReply;
 
-  function create() {
-    if (qakReply_id === undefined) {
-      return createQakReply(newQakReply);
+  useEffect(() => {
+    if (qakReply_id === undefined) return;
+    async function fetch() {
+      await getOneQakReply(qakReply_id).then((qakReply) =>
+        setQakReply(qakReply)
+      );
+    }
+    fetch();
+  }, [qakReply_id, getOneQakReply]);
+
+  function handleChange(event) {
+    setQakReply((preValue) => {
+      return { ...preValue, [event.target.name]: event.target.value };
+    });
+  }
+
+  function addOrUpdateQakReply() {
+    if (qayReply_id === undefined) {
+      return createQakReply(qakReply);
+    } else {
+      return updateQakReply(qakReply);
     }
   }
 
@@ -28,7 +47,7 @@ const NewQakReply = ({ show, handleClose }) => {
     event.preventDefault();
     create(newQakReply)
       .then(() => {
-        handleClose();
+        addOrUpdateQakReply();
         navigate("/qaks");
       })
       .catch((error) => {
@@ -55,24 +74,21 @@ const NewQakReply = ({ show, handleClose }) => {
               </p>
 
               <div className="divider d-flex align-items-center my-4">
-                <p className="text-center mx-3 mb-0">Answer or Knowledge</p>
+                <p className="text-center mx-3 mb-0">
+                  Provide Answer or Share Knowledge
+                </p>
               </div>
 
-              <Form onSubmit={handleSubmit} key={qakReply_id}>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Control
                     as={"textarea"}
                     type="text"
                     rows={6}
                     cols={65}
-                    name="qak"
+                    name="qakReply"
                     value={qakReply}
-                    onChange={(e) =>
-                      setNewQakReply({
-                        ...newQakReply,
-                        qakReply: e.target.value,
-                      })
-                    }
+                    onChange={handleChange}
                   />
                 </Form.Group>
 
@@ -93,4 +109,4 @@ const NewQakReply = ({ show, handleClose }) => {
   );
 };
 
-export default NewQakReply;
+export default QakReplyForm;
