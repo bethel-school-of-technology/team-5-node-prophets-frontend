@@ -2,13 +2,11 @@ import React, { useContext, useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import QakReplyContext from "../contexts/QakReplyContext";
-import QakContext from "../contexts/QakContext";
-import UserContext from "../contexts/UserContext";
 
 const QakReplyForm = () => {
   let params = useParams();
   let navigate = useNavigate();
-  let [qakReply, setQakReply] = useState({
+  let [pendingQakReply, setQakReply] = useState({
     qak_id: params.qak_id,
     user_id: params.user_id,
     qakReply: "",
@@ -17,13 +15,13 @@ const QakReplyForm = () => {
   let { getOneQakReply, createQakReply, updateQakReply } =
     useContext(QakReplyContext);
 
-  let { qak_id, user_id, qakReply } = qakReply;
+  let { qak_id, user_id, qakReply } = pendingQakReply;
 
   useEffect(() => {
     if (qakReply_id === undefined) return;
     async function fetch() {
-      await getOneQakReply(qakReply_id).then((qakReply) =>
-        setQakReply(qakReply)
+      await getOneQakReply(qakReply_id).then((pendingQakReply) =>
+        setQakReply(pendingQakReply)
       );
     }
     fetch();
@@ -37,17 +35,16 @@ const QakReplyForm = () => {
 
   function addOrUpdateQakReply() {
     if (qayReply_id === undefined) {
-      return createQakReply(qakReply);
+      return createQakReply(pendingQakReply);
     } else {
-      return updateQakReply(qakReply);
+      return updateQakReply(pendingQakReply);
     }
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    create(newQakReply)
-      .then(() => {
-        addOrUpdateQakReply();
+    addOrUpdateQakReply()
+      .then((pendingQakReply) => {
         navigate("/qaks");
       })
       .catch((error) => {

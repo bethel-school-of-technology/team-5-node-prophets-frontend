@@ -33,28 +33,33 @@ function App() {
   return (
     <div className="wrap backgroundColor">
       <QakProvider>
-      <QakReplyProvider>
-        <SearchProvider>
-          <UserProvider>
-            <BrowserRouter>
-              <Navigation user={user} />
+        <QakReplyProvider>
+          <SearchProvider>
+            <UserProvider>
+              <BrowserRouter>
+                <Navigation user={user} />
 
-              <Routes>
-                <Route path="/" element={<Home />} index />
-                <Route path="/search" element={<Search />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/signout" element={<SignOut />} />
-                <Route path="/rssfeed" element={<RssFeed />} />
-                <Route path="/qaks" element={<Qak />} />
-                <Route path="/qaks/new" element={<NewQak />} />
-                <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
-                <Route path="/profile/:id" element={<Profile />} />
-                <Route path="/profile/:id/edit" element={<EditProfile />} />
-              </Routes>
-            </BrowserRouter>
-          </UserProvider>
-        </SearchProvider>
+                <Routes>
+                  <Route path="/" element={<Home />} index />
+                  <Route path="/search" element={<Search />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/signin" element={<SignIn />} />
+                  <Route path="/signout" element={<SignOut />} />
+                  <Route path="/rssfeed" element={<RssFeed />} />
+                  <Route path="/qaks" element={<Qak />} />
+                  <Route path="/qaks/new" element={<NewQak />} />
+                  <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
+                  <Route
+                    path="/qakReply/:qakReply_id"
+                    element={<QakReplyForm />}
+                  />
+                  <Route path="/qakReply/" element={<QakReplyForm />} />
+                  <Route path="/profile/:id" element={<Profile />} />
+                  <Route path="/profile/:id/edit" element={<EditProfile />} />
+                </Routes>
+              </BrowserRouter>
+            </UserProvider>
+          </SearchProvider>
         </QakReplyProvider>
       </QakProvider>
     </div>

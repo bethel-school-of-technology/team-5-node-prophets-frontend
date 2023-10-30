@@ -198,7 +198,7 @@ const Qak = ({ user }) => {
 
                           <Accordion.Body>
                             <div className="text-center">
-                              <Link to={"#"}>
+                              <Link to={`/qakReply}`}>
                                 Provide An Answer or Share Knowledge
                               </Link>
                             </div>
@@ -245,8 +245,7 @@ const Qak = ({ user }) => {
                                           </p>
                                           <p style={{ marginLeft: "auto" }}>
                                             <Link
-                                              to={"#"}
-                                              // to={`/qakRelay/${QakReplies.qakReply_id}/edit`}
+                                              to={`/qakReply/${qakReply_id}`}
                                               style={{ marginRight: "10px" }}
                                             >
                                               Edit
