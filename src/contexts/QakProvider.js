@@ -66,6 +66,7 @@ export const QakProvider = (props) => {
         createQak,
         editQak,
         deleteQak,
+        getAllQaks,
       }}
     >
       {props.children}

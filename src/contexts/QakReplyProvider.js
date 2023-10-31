@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import QakContext from "./QakContext";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import QakReplyContext from "./QakReplyContext";
 
 export const QakReplyProvider = (props) => {
@@ -23,7 +23,15 @@ export const QakReplyProvider = (props) => {
       });
   }
 
-  function editQakReply(qakReply, user_id) {
+  function getOneQakReply(qakReply_id) {
+    return axios.get(baseUrl + qakReply_id).then((response) => {
+      getAllQaks();
+      console.log(response.data);
+      return new Promise((resolve) => resolve(response.data));
+    });
+  }
+
+  function updateQakReply(qakReply, user_id) {
     let headers = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`,
     };
@@ -54,7 +62,8 @@ export const QakReplyProvider = (props) => {
       value={{
         qakReply,
         createQakReply,
-        editQakReply,
+        getOneQakReply,
+        updateQakReply,
         deleteQakReply,
       }}
     >
