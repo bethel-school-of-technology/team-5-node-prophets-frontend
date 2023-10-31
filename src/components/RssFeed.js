@@ -314,7 +314,7 @@ const RssFeed = () => {
             <div className="modal-case">
               <Modal.Header closeButton>
                 <Modal.Title className="text-danger">
-                  You are about the leave the ETM website!
+                  You are about to leave the ETM website!
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>

@@ -7,30 +7,33 @@ const QakReplyForm = ({}) => {
   let params = useParams();
   let navigate = useNavigate();
   let [pendingQakReply, setQakReply] = useState({
-    qak_id: params.qak_id,
+    qakReply_id: params.qakReply_id,
+    qak_id: params.qakReply_id,
     qakReply: "",
   });
 
   let { getOneQakReply, createQakReply, updateQakReply } =
     useContext(QakReplyContext);
 
-  let { qak_id, user_id, qakReply } = pendingQakReply;
-  let qakReply_id = params.qakReply_id;
+  let { qak_id, qakReply_id, qakReply } = pendingQakReply;
 
   useEffect(() => {
     if (qakReply_id === undefined) return;
+
     async function fetch() {
       await getOneQakReply(qakReply_id).then((qakReply) =>
         setQakReply(qakReply)
       );
     }
+
     fetch();
-  }, [qakReply_id, getOneQakReply]);
+  }, []);
 
   function handleChange(event) {
-    setQakReply((preValue) => {
-      return { ...preValue, [event.target.name]: event.target.value };
-    });
+    setQakReply((prevValue) => ({
+      ...prevValue,
+      [event.target.name]: event.target.value,
+    }));
   }
 
   function addOrUpdateQakReply() {
@@ -45,11 +48,15 @@ const QakReplyForm = ({}) => {
     event.preventDefault();
     addOrUpdateQakReply(pendingQakReply)
       .then(() => {
+        if (!pendingQakReply.ok) {
+          alert("Your QAKReply is posted");
+        }
         navigate("/qaks");
       })
       .catch((error) => {
-        console.log(error);
-        navigate("/signin");
+        console.error("There was an error!", error);
+        alert("You need to be Signed In to perform this operation");
+        navigate("/signIn");
       });
   }
 
@@ -68,8 +75,7 @@ const QakReplyForm = ({}) => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Control
-                as={"textarea"}
-                type="text"
+                as="textarea"
                 rows={6}
                 cols={65}
                 name="qakReply"
@@ -80,7 +86,7 @@ const QakReplyForm = ({}) => {
 
             <Button
               className="mb-3 w-100"
-              variant="primary "
+              variant="primary"
               size="sm"
               type="submit"
             >

@@ -1,14 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import QakContext from "./QakContext";
-import axios from "axios";
-import { useState } from "react";
 import QakReplyContext from "./QakReplyContext";
+import axios from "axios";
 
 export const QakReplyProvider = (props) => {
   const [qakReply, setQakReply] = useState([]);
   const baseUrl = "http://localhost:3000/api/qakReply/";
 
-  let { getAllQaks } = useContext(QakContext);
+  let { getAllQaks, qak } = useContext(QakContext);
 
   function createQakReply(qakReply) {
     let myHeaders = {
@@ -31,10 +30,15 @@ export const QakReplyProvider = (props) => {
     });
   }
 
-  function updateQakReply(qakReply, qak_id, user_id) {
+  function updateQakReply(qakReply_id, qak_id, user_id) {
     let headers = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`,
     };
+    console.log("Data to be sent for updateQakReply:", {
+      qakReply,
+      qakReply_id,
+      user_id,
+    });
     return axios
       .put(
         baseUrl + qakReply.qakReply_id,
