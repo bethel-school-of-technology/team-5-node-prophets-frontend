@@ -5,7 +5,7 @@ import "../styles/SignIn.css";
 import { useNavigate, useParams } from "react-router-dom";
 import QakContext from "../contexts/QakContext";
 
-const NewQak = ({ show, handleClose }) => {
+const NewQak = ({ show, handleClose }, { user }) => {
   let params = useParams();
   let navigate = useNavigate();
 
@@ -28,12 +28,16 @@ const NewQak = ({ show, handleClose }) => {
     event.preventDefault();
     create(newQak)
       .then(() => {
+        if (!newQak.ok) {
+          alert("Your QAK is posted");
+        }
         handleClose();
-        navigate("/qaks");
+        navigate(window.location.reload());
       })
       .catch((error) => {
-        console.log(error);
-        navigate("/signin");
+        console.error("There was an error!", error);
+        alert("You need to be Signed In to perform this operation");
+        navigate("/signIn");
       });
   }
 
@@ -42,9 +46,7 @@ const NewQak = ({ show, handleClose }) => {
       <Modal show={show} onHide={handleClose} centered>
         <div className="form-wrap">
           <div className="form-case">
-            <div className="close-button">
-              {/* <CloseButton className="button-close" onClick={handleClose} /> */}
-            </div>
+            <div className="close-button"></div>
             <Modal.Body>
               <p className="register">
                 Not a member?{" "}
@@ -80,10 +82,20 @@ const NewQak = ({ show, handleClose }) => {
                   variant="primary "
                   size="sm"
                   type="submit"
+                  onClick={handleClose}
                 >
                   Submit
                 </Button>
               </Form>
+              <Button
+                className="w-100"
+                variant="secondary"
+                size="sm"
+                type="submit"
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
             </Modal.Body>
           </div>
         </div>

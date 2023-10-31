@@ -1,21 +1,13 @@
 import axios from "axios";
 import UserContext from "./UserContext";
-import { useEffect, useState } from "react";
 
 export const UserProvider = (props) => {
-  const [users, setUsers] = useState([]);
-
   const baseUrl = "http://localhost:3000/api/users/";
 
-  useEffect(() => {
-    async function fetchData() {
-      await getAllUsers();
-    }
-    fetchData();
-  }, []);
-
   function getAllUsers() {
-    return axios.get(baseUrl).then((response) => setUsers(response.data));
+    return axios.get(baseUrl).then((response) => {
+      return new Promise((resolve) => resolve(response.data));
+    });
   }
 
   function createUser(
@@ -62,17 +54,6 @@ export const UserProvider = (props) => {
     });
   }
 
-  function getOneProfile(user, user_id) {
-    let headers = {
-      Authorization: `Bearer ${localStorage.getItem("userToken")}`
-    };
-    return axios.get(baseUrl + user_id, user, headers).then((response) => {
-      getAllUsers();
-      console.log(response.data);
-      return new Promise((resolve) => resolve(response.data));
-    });
-  }
-
   function updateUserProfile(user) {
     let headers = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`
@@ -101,7 +82,6 @@ export const UserProvider = (props) => {
   return (
     <UserContext.Provider
       value={{
-        users,
         getAllUsers,
         createUser,
         signInUser,
