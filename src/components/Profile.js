@@ -41,8 +41,6 @@ const Profile = ({ user }) => {
 
     fetchRssFeeds();
   }, []);
-  const [modalShow, setModalShow] = useState(false);
-  const [selectedArticle, setSelectedArticle] = useState(null);
 
   let params = useParams();
   const [loggedUser, setLoggedUser] = useState([]);
@@ -53,6 +51,7 @@ const Profile = ({ user }) => {
     }
     fetchData();
   }, [getUserQaks, params.user_id]);
+
   const [showSignInModal, setShowSignInModal] = useState(false);
   const openSignInModal = () => {
     setShowSignInModal(true);
@@ -83,7 +82,7 @@ const Profile = ({ user }) => {
         <div className="prof-wrap">
           <div className="prof-case">
             <div className="profile-section">
-              <div className="row" key={user}>
+              <div className="row" key={params.user_id}>
                 <div className="profile-top">
                   <div className="col-12 col-md-12 col-lg-4">
                     <div className="card mb-4">
@@ -188,13 +187,13 @@ const Profile = ({ user }) => {
                     </h4>
                   </div>
 
-                  <div className="card mb-4" style={{ height: "500px" }}>
+                  <div className="card mb-4">
                     <div className="card-body" style={{ fontSize: "16px" }}>
                       {/* Place your content for Latest Qaks here */}
 
                       <br />
 
-                      <div className="q-card" key={user}>
+                      <div className="q-card mb-4" key={user}>
                         {Qaks?.map((q, idx) => {
                           return (
                             <div key={idx}>
@@ -225,7 +224,7 @@ const Profile = ({ user }) => {
                           {/* Place your content for Featured Article 1 here */}
                           <hr />
                           {articles.slice(1, 3).map((item, idx) => (
-                            <div>
+                            <div key={idx}>
                               <h5 className="text-hove">{item.title}</h5>
                               <p className="text-hove">{item.contentSnippet}</p>
                               <hr />
@@ -262,26 +261,6 @@ const Profile = ({ user }) => {
                       </Card.Body>
                     </div>
                   </Card>
-                  {/* <div className="col-12">
-                    <h3>Your Followers</h3>
-                    <div className="card mb-3">
-                      <div className="card-body">
-                        <div className="row">
-                          <div className="col-md-4">
-                            <img
-                              src="https://placekitten.com/150/150" // Replace with the actual image URL for Follower 1
-                              alt="Follower 1"
-                              className="rounded-circle img-fluid"
-                            />
-                          </div>
-                          <div className="col-md-8">
-                            <p className="card-text"> Tom Gasper</p>
-                          </div>
-                        </div>
-                        <hr />
-                      </div>
-                    </div>
-                  </div> */}
                 </div>
               </div>
             </div>

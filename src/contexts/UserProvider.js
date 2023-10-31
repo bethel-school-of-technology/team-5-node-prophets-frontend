@@ -1,6 +1,5 @@
 import axios from "axios";
 import UserContext from "./UserContext";
-import { useEffect, useState } from "react";
 
 export const UserProvider = (props) => {
   const baseUrl = "http://localhost:3000/api/users/";
@@ -49,17 +48,6 @@ export const UserProvider = (props) => {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
     return axios.get(baseUrl + user_id, { headers }).then((response) => {
-      getAllUsers();
-      console.log(response.data);
-      return new Promise((resolve) => resolve(response.data));
-    });
-  }
-
-  function getOneProfile(user, user_id) {
-    let headers = {
-      Authorization: `Bearer ${localStorage.getItem("userToken")}`
-    };
-    return axios.get(baseUrl + user_id, user, headers).then((response) => {
       getAllUsers();
       console.log(response.data);
       return new Promise((resolve) => resolve(response.data));

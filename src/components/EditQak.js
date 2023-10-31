@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import QakContext from "../contexts/QakContext";
-import { Stack } from "react-bootstrap";
+import { Button, Stack } from "react-bootstrap";
 import "../styles/EditQak.css";
 
 const EditQak = () => {
@@ -40,7 +40,7 @@ const EditQak = () => {
     updateQak(qakEdit)
       .then(() => {
         if (!qakEdit.ok) {
-          alert("Your Post has been updated!");
+          alert("Your QAK has been updated!");
         }
         navigate("/qaks");
         window.location.reload();
@@ -50,6 +50,10 @@ const EditQak = () => {
         alert("You need to be Signed In to perform this operation");
         navigate("/signIn");
       });
+  }
+  function handleCancel(event) {
+    event.preventDefault();
+    navigate("/qaks");
   }
 
   return (
@@ -70,7 +74,17 @@ const EditQak = () => {
               value={qak}
               onChange={handleChange}
             />
-            <button className="edit-submit primary">Finish Editing</button>
+            <Button className="edit-submit" variant="primary" size="sm">
+              Finish Editing
+            </Button>
+            <Button
+              onClick={handleCancel}
+              className="edit-cancel"
+              variant="secondary"
+              size="sm"
+            >
+              Cancel
+            </Button>
           </Stack>
         </form>
       </div>
