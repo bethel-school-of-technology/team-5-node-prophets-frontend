@@ -43,8 +43,8 @@ const QakReplyForm = ({}) => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    addOrUpdateQakReply()
-      .then((pendingQakReply) => {
+    addOrUpdateQakReply(pendingQakReply)
+      .then(() => {
         navigate("/qaks");
       })
       .catch((error) => {
@@ -55,8 +55,6 @@ const QakReplyForm = ({}) => {
 
   return (
     <div>
-      <h1>quak reply</h1>
-
       <div className="form-wrap">
         <div className="form-case">
           <div className="close-button"></div>

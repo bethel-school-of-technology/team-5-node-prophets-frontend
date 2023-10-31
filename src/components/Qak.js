@@ -5,21 +5,43 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
 import NewQak from "./NewQak";
+import QakReplyContext from "../contexts/QakReplyContext";
 
 const Qak = ({ user }) => {
   let params = useParams();
   let navigate = useNavigate();
 
   let { deleteQak } = useContext(QakContext);
+  let { deleteQakReply } = useContext(QakReplyContext);
 
-  function handleDelete(qak_id, qakReply_id) {
+  function handleDelete(qak_id) {
     if (user !== user) {
       window.alert("You are not allowed to perform this operation");
       navigate("/qaks");
     } else {
       const confirmDelete = window.confirm("Are you sure you want to delete?");
       if (confirmDelete) {
-        deleteQak(qak_id, qakReply_id)
+        deleteQak(qak_id)
+          .then(() => {
+            navigate("/qaks");
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate("/qaks");
+          });
+      }
+    }
+  }
+
+  function handleDeleteQakReply(qakReply_id) {
+    if (user !== user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate("/qaks");
+    } else {
+      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      if (confirmDelete) {
+        deleteQakReply(qakReply_id)
           .then(() => {
             navigate("/qaks");
           })
@@ -250,7 +272,16 @@ const Qak = ({ user }) => {
                                             >
                                               Edit
                                             </Link>
-                                            <Link to={"#"}>Delete</Link>
+                                            <Link
+                                              to={"#"}
+                                              onClick={handleDeleteQakReply.bind(
+                                                this,
+                                                QakReplies.qakReply_id,
+                                                QakReplies.User.user_id
+                                              )}
+                                            >
+                                              Delete
+                                            </Link>
                                           </p>
                                         </div>
                                       </div>

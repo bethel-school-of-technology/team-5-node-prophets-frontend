@@ -31,14 +31,14 @@ export const QakReplyProvider = (props) => {
     });
   }
 
-  function updateQakReply(qakReply, user_id) {
+  function updateQakReply(qakReply, qak_id, user_id) {
     let headers = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`,
     };
     return axios
       .put(
         baseUrl + qakReply.qakReply_id,
-        { ...qakReply, user_id },
+        { ...qakReply, qak_id, user_id },
         { headers }
       )
       .then((response) => {
