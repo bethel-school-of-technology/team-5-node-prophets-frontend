@@ -46,9 +46,7 @@ const NewQak = ({ show, handleClose }, { user }) => {
       <Modal show={show} onHide={handleClose} centered>
         <div className="form-wrap">
           <div className="form-case">
-            <div className="close-button">
-              {/* <CloseButton className="button-close" onClick={handleClose} /> */}
-            </div>
+            <div className="close-button"></div>
             <Modal.Body>
               <p className="register">
                 Not a member?{" "}
