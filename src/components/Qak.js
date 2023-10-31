@@ -1,19 +1,19 @@
 import React, { useContext, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
 import NewQak from "./NewQak";
 
 const Qak = ({ user }) => {
-  let params = useParams();
+  //let params = useParams();
   let navigate = useNavigate();
 
   let { deleteQak } = useContext(QakContext);
 
   function handleDelete(qak_id) {
-    if (user !== user) {
+    if (user) {
       window.alert("You are not allowed to perform this operation");
       navigate("/qaks");
     } else {
@@ -57,7 +57,7 @@ const Qak = ({ user }) => {
             return qakData
               .filter((q) => now.isSame(q.createdAt, "day"))
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );

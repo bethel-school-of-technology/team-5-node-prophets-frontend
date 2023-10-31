@@ -2,11 +2,11 @@
   font-family: "Prompt", sans-serif;
   font-size: x-large;
   font-weight: 600;
-  text-shadow: 5px 5px 5px #aaa;
+  text-shadow: 3px 3px 3px #aaa;
   color: rgba(90, 90, 178, 0.951);
 }
 .brand {
-  box-shadow: 5px 5px 5px #aaa;
+  box-shadow: 3px 3px 3px #aaa;
   border: solid 1px;
   border-color: rgba(75, 75, 150, 0.951);
   border-radius: 2px;

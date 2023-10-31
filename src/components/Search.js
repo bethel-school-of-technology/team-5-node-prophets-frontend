@@ -97,25 +97,38 @@ const Search = ({ show, handleClose }) => {
       setShowingResults(false);
     }
   }, [query, selectedCategory]);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   // Handling information when a search result is clicked
   const displayDetailedResults = (item) => {
-    if (selectedCategory === "Users") {
-      if (isLoggedIn) {
-        navigate(`/profile/${item.id}`);
-      } else {
-        setCurrentUser(item);
-        setShowUserModal(true);
-      }
-    } else if (selectedCategory === "Qaks") {
-      navigate(`/qaks/${item.qak_id}/edit`);
-    } else if (selectedCategory === "Articles" || selectedCategory === "All") {
-      // Open the full link for articles
-      if (item.link) {
-        window.open(item.link, "_blank");
-      } else {
-        console.error("No link available for this article:", item);
-      }
+    switch (selectedCategory) {
+      case "Users":
+        if (isLoggedIn) {
+          navigate(`/profile/${item.id}`);
+        } else {
+          setCurrentUser(item);
+          setShowUserModal(true);
+        }
+        break;
+      case "Qaks":
+        navigate(`/qaks/${item.qak_id}/edit`); // existing navigation to edit a QAK
+        break;
+      case "Articles":
+      case "All":
+        if (item.link) {
+          window.open(item.link, "_blank");
+        } else if (item.user_id) {
+          if (isLoggedIn) {
+            navigate(`/profile/${item.user_id}`);
+          } else {
+            setShowLoginModal(true); // Display login modal for unauthenticated users
+          }
+        } else {
+          console.error("No link or user_id available for this item:", item);
+        }
+        break;
+      default:
+        console.error("Unknown category:", selectedCategory);
     }
   };
 

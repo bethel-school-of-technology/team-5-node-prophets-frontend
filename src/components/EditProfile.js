@@ -4,7 +4,7 @@ import "../styles/EditProfile.css";
 import { useNavigate, useParams } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
-const EditProfile = () => {
+const EditProfile = ({ user }) => {
   let params = useParams();
   let navigate = useNavigate();
 
@@ -22,7 +22,6 @@ const EditProfile = () => {
   let { updateUserProfile, getUserQaks } = useContext(UserContext);
 
   let {
-    user,
     user_id,
     username,
     password,
@@ -55,12 +54,24 @@ const EditProfile = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    updateProfile(editProfile).then(() => {
-      if (!editProfile.ok) {
-        alert("Your Profile has been updated!");
-      }
-      navigate(`/profile/${user_id}edit`);
-    });
+    updateProfile(editProfile)
+      .then(() => {
+        if (!editProfile.ok) {
+          alert("Your Profile has been updated!");
+        }
+        navigate(`/profile/${user_id}`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+        alert("Profile edit unsuccesful");
+        navigate(`/profile/${user_id}`);
+      });
+  }
+
+  function handleCancel(event) {
+    event.preventDefault();
+    navigate(`/profile/${params.user_id}`);
   }
 
   return (
@@ -156,12 +167,22 @@ const EditProfile = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-            <div className="d-grid">
+            <div className="d-grid mb-2">
               <Button size="sm" variant="primary" type="submit">
                 Confirm Profile Update
               </Button>
             </div>
           </Form>
+          <div className="d-grid mt-3">
+            <Button
+              size="sm"
+              variant="secondary"
+              type="submit"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
       </div>
     </>
