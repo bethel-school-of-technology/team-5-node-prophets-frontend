@@ -5,7 +5,7 @@ import "../styles/SignIn.css";
 import { useNavigate, useParams } from "react-router-dom";
 import QakContext from "../contexts/QakContext";
 
-const NewQak = ({ show, handleClose }, { user }) => {
+const NewQak = ({ show, handleClose }) => {
   let params = useParams();
   let navigate = useNavigate();
 
