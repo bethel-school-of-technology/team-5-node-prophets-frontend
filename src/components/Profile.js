@@ -8,10 +8,20 @@ import NewQak from "./NewQak";
 import { Card, ListGroup } from "react-bootstrap";
 
 const Profile = ({ user }) => {
+  let params = useParams();
+  const [loggedUser, setLoggedUser] = useState([]);
   const [userReply, setUserReply] = useState([]);
 
-  //console.log(topCommenter);
   const baseUrl = "http://localhost:3000/api/users";
+
+  let { getUserQaks } = useContext(UserContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
+    }
+    fetchData();
+  }, [getUserQaks, params.user_id]);
 
   useEffect(() => {
     async function fetchData() {
@@ -41,16 +51,6 @@ const Profile = ({ user }) => {
 
     fetchRssFeeds();
   }, []);
-
-  let params = useParams();
-  const [loggedUser, setLoggedUser] = useState([]);
-  let { getUserQaks } = useContext(UserContext);
-  useEffect(() => {
-    async function fetchData() {
-      await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
-    }
-    fetchData();
-  }, [getUserQaks, params.user_id]);
 
   const [showSignInModal, setShowSignInModal] = useState(false);
   const openSignInModal = () => {
