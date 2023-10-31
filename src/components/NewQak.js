@@ -35,9 +35,9 @@ const NewQak = ({ show, handleClose }) => {
         navigate(window.location.reload());
       })
       .catch((error) => {
-        console.error("There was an error!", error);
+        console.error(error);
         alert("You need to be Signed In to perform this operation");
-        navigate("/signIn");
+        navigate("/qaks");
       });
   }
 

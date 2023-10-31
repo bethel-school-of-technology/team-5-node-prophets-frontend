@@ -95,7 +95,7 @@ const NoProfile = ({ user }) => {
             <br />
             <div>
               <div className="row">
-                <div className="col-md-8">
+                <div className="col-md-12">
                   <div className="divider d-flex align-items-center my-4">
                     <h4 className="latest text-center mx-3 mb-0">
                       {username}'s Qaks

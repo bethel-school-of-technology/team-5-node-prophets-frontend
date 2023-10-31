@@ -25,7 +25,7 @@ const Search = ({ show, handleClose }) => {
   const [localResults, setLocalResults] = useState({
     users: [],
     qaks: [],
-    articles: [],
+    articles: []
   });
 
   // Fetch search results based on the query and selected category
@@ -51,7 +51,7 @@ const Search = ({ show, handleClose }) => {
         const newLocalResults = {
           users: [],
           qaks: [],
-          articles: [],
+          articles: []
         };
 
         // Update localResults based on the selected category
