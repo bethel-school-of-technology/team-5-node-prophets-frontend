@@ -47,8 +47,8 @@ const EditQak = () => {
       })
       .catch((error) => {
         console.error("There was an error!", error);
-        alert("You need to be Signed In to perform this operation");
-        navigate("/signIn");
+        alert("Edit unsuccessful");
+        navigate("/qaks");
       });
   }
   function handleCancel(event) {
@@ -74,9 +74,14 @@ const EditQak = () => {
               value={qak}
               onChange={handleChange}
             />
-            <Button className="edit-submit" variant="primary" size="sm">
+            <button
+              className="edit-submit"
+              type="submit"
+              variant="primary"
+              size="sm"
+            >
               Finish Editing
-            </Button>
+            </button>
             <Button
               onClick={handleCancel}
               className="edit-cancel"

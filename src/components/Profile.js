@@ -194,7 +194,11 @@ const Profile = ({ user }) => {
                       <br />
 
                       <div className="q-card mb-4" key={user}>
-                        {Qaks?.map((q, idx) => {
+                        {Qaks?.sort(
+                          (a, b) =>
+                            moment(b.createdAt).valueOf() -
+                            moment(a.createdAt).valueOf()
+                        ).map((q, idx) => {
                           return (
                             <div key={idx}>
                               <div className="q">

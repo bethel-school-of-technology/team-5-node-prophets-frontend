@@ -82,6 +82,7 @@ const NewQak = ({ show, handleClose }, { user }) => {
                   variant="primary "
                   size="sm"
                   type="submit"
+                  onClick={handleClose}
                 >
                   Submit
                 </Button>
