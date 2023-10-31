@@ -54,14 +54,21 @@ const EditProfile = ({ user }) => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    updateProfile(editProfile).then(() => {
-      if (!editProfile.ok) {
-        alert("Your Profile has been updated!");
-      }
-      navigate(`/profile/${user_id}`);
-      window.location.reload();
-    });
+    updateProfile(editProfile)
+      .then(() => {
+        if (!editProfile.ok) {
+          alert("Your Profile has been updated!");
+        }
+        navigate(`/profile/${user_id}`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+        alert("Profile edit unsuccesful");
+        navigate(`/profile/${user_id}`);
+      });
   }
+
   function handleCancel(event) {
     event.preventDefault();
     navigate(`/profile/${params.user_id}`);

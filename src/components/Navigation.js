@@ -9,26 +9,9 @@ import SignIn from "./SignIn";
 import UserContext from "../contexts/UserContext";
 
 const Navigation = ({ user }) => {
-  let params = useParams();
   const [loggedUser, setLoggedUser] = useState([]);
 
   let { getUserQaks } = useContext(UserContext);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const result = await getUserQaks(params.user_id);
-  //       setLoggedUser(result);
-  //     } catch (error) {
-  //       if (error.response && error.response.status === 404) {
-  //         // Handle the 404 error, e.g., show a user-friendly message or redirect
-  //         console.error(null);
-  //       }
-  //     }
-  //   }
-
-  //   fetchData();
-  // });
 
   useEffect(() => {
     let isMounted = true;
@@ -51,15 +34,12 @@ const Navigation = ({ user }) => {
     fetchData();
 
     return () => {
-      // This cleanup function will be called when the component unmounts.
       isMounted = false;
     };
   }, []);
 
   const [, setQuery] = useState("");
   const [searchModalVisible, setSearchModalVisible] = useState(false);
-
-  // Add state for search visibility MODAL - Joe
 
   const [showSignInModal, setShowSignInModal] = useState(false);
 
