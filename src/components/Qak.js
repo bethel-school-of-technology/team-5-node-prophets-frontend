@@ -14,18 +14,20 @@ const Qak = ({ user }) => {
 
   function handleDelete(qak_id) {
     if (user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate("/qaks");
+    } else {
       const confirmDelete = window.confirm("Are you sure you want to delete?");
       if (confirmDelete) {
-        deleteQak(qak_id).then(() => {
-          navigate("/qaks");
-        });
-      } else {
-        window.alert("You are not allowed to perform this operation");
-        navigate("/qaks").catch((error) => {
-          console.log(error);
-          window.alert("You need to sign in to perform this operation");
-          navigate("/qaks");
-        });
+        deleteQak(qak_id)
+          .then(() => {
+            navigate("/qaks");
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate("/qaks");
+          });
       }
     }
   }
@@ -144,7 +146,7 @@ const Qak = ({ user }) => {
                               style={{ display: "flex", alignItems: "center" }}
                             >
                               <div>
-                                {user && q.User.username ? (
+                                {user ? (
                                   <Link to={`/profile/${q.user_id}`}>
                                     <h4>{q.User.username}</h4>
                                   </Link>

@@ -21,8 +21,16 @@ const NoProfile = ({ user }) => {
   }, [getOneUserQak, params.user_id]);
 
   function profileCard() {
-    const { username, fullname, city, state, createdAt, profilePicture, Qaks } =
-      noLoggedUser;
+    const {
+      username,
+      email,
+      fullname,
+      city,
+      state,
+      createdAt,
+      profilePicture,
+      Qaks
+    } = noLoggedUser;
 
     return (
       <div>
@@ -41,6 +49,7 @@ const NoProfile = ({ user }) => {
                           style={{ width: "150px", height: "150px" }}
                         />
                         <h5 className="my-3 text-muted">{username}</h5>
+                        <h5 className="my-3 text-muted">{email}</h5>
                       </div>
                     </div>
                   </div>
