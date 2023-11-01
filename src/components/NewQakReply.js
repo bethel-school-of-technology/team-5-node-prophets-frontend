@@ -3,18 +3,19 @@ import { Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import QakReplyContext from "../contexts/QakReplyContext";
 
-const NewQakReply = (props) => {
+const NewQakReply = ({}) => {
   let params = useParams();
   let navigate = useNavigate();
 
   let [newQakReply, setNewQakReply] = useState({
-    qakReply_id: params.qakReply_id,
+    qak_id: params.qak_id,
     qakReply: "",
   });
 
   let { createQakReply } = useContext(QakReplyContext);
 
-  let { qakReply_id, qakReply } = newQakReply;
+  let { qak_id, user_id, qakReply } = newQakReply;
+  let qakReply_id = params.qakReply_id;
 
   function create() {
     if (qakReply_id === undefined) {
@@ -62,7 +63,7 @@ const NewQakReply = (props) => {
             </p>
           </div>
 
-          <Form onSubmit={handleSubmit} key={qakReply_id}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Control
                 as="textarea"
