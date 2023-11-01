@@ -15,24 +15,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const RssFeed = () => {
-  const [topCommenter, setTopCommenter] = useState([]);
-
-  //console.log(topCommenter);
-  const baseUrl = "http://localhost:3000/api/users";
-
-  useEffect(() => {
-    async function fetchData() {
-      await getAllUsers();
-    }
-    fetchData();
-  }, []);
-
-  function getAllUsers() {
-    return axios
-      .get(baseUrl)
-      .then((response) => setTopCommenter(response.data));
-  }
-
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -353,13 +335,6 @@ const RssFeed = () => {
                     >
                       Go To Article
                     </Button>{" "}
-                    {/* <Button
-                      size="sm"
-                      variant="outline-secondary"
-                      onClick={() => setModalShow(false)}
-                    >
-                      Cancel
-                    </Button> */}
                   </div>
                 </div>
               </Modal.Footer>

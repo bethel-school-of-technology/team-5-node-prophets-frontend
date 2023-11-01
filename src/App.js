@@ -3,25 +3,25 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
-import Profile from "./components/Profile";
+import SignIn from "./components/SignIn";
+import SignOut from "./components/SignOut";
 import RssFeed from "./components/RssFeed";
 import Search from "./components/Search";
+import Qak from "./components/Qak";
+import NewQak from "./components/NewQak";
+import EditQak from "./components/EditQak";
+import EditUserQak from "./components/EditUserQak";
+import Profile from "./components/Profile";
+import NoProfile from "./components/NoProfile";
+import EditProfile from "./components/EditProfile";
+import NewQakReply from "./components/NewQakReply";
+import EditQakReply from "./components/EditQakReply";
 import { UserProvider } from "./contexts/UserProvider";
 import { SearchProvider } from "./contexts/SearchContext";
 import { QakProvider } from "./contexts/QakProvider";
-import jwtDecode from "jwt-decode";
-import SignOut from "./components/SignOut";
-import Qak from "./components/Qak";
-import SignIn from "./components/SignIn";
-import NewQak from "./components/NewQak";
-import EditQak from "./components/EditQak";
-import EditProfile from "./components/EditProfile";
 import { QakReplyProvider } from "./contexts/QakReplyProvider";
-import NewQakReply from "./components/NewQakReply";
-import EditQakReply from "./components/EditQakReply";
-import NoProfile from "./components/NoProfile";
+import jwtDecode from "jwt-decode";
 import "./styles/App.css";
-import EditUserQak from "./components/EditUserQak";
 
 function App() {
   const [user, setUser] = useState();
@@ -42,7 +42,6 @@ function App() {
             <UserProvider>
               <BrowserRouter>
                 <Navigation user={user} />
-
                 <Routes>
                   <Route path="/" element={<Home />} index />
                   <Route path="/search" element={<Search />} />
@@ -57,7 +56,6 @@ function App() {
                     path="/userqak/:qak_id/edit"
                     element={<EditUserQak />}
                   />
-
                   <Route
                     path="/qakReply/edit/:qakReply_id"
                     element={<EditQakReply />}

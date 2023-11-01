@@ -17,6 +17,23 @@ export const QakProvider = (props) => {
     return axios.get(baseUrl).then((response) => setQak(response.data));
   }
 
+  function getAllUserQaks() {
+    return axios.get(baseUrl).then((response) => {
+      return new Promise((resolve) => resolve(response.data));
+    });
+  }
+
+  function getUserQaks(user_id) {
+    const url = "http://localhost:3000/api/qaks/user/";
+    let headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`
+    };
+
+    return axios.get(url + user_id, { headers }).then((response) => {
+      return new Promise((resolve) => resolve(response.data));
+    });
+  }
+
   function createQak(qak) {
     let myHeaders = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`
@@ -63,10 +80,12 @@ export const QakProvider = (props) => {
       value={{
         qak,
         getOneQak,
+        getUserQaks,
         createQak,
         editQak,
         deleteQak,
-        getAllQaks
+        getAllQaks,
+        getAllUserQaks
       }}
     >
       {props.children}

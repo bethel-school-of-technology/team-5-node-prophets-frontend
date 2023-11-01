@@ -5,7 +5,7 @@ import UserContext from "../contexts/UserContext";
 import { FaArrowLeft } from "react-icons/fa";
 import "../styles/NoProfile.css";
 
-const NoProfile = ({ user }) => {
+const NoProfile = () => {
   const params = useParams();
   let navigate = useNavigate();
   const [noLoggedUser, setNoLoggedUser] = useState([]);

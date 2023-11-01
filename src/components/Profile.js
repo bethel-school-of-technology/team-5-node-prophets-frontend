@@ -13,13 +13,20 @@ const Profile = ({ user }) => {
   let params = useParams();
   let navigate = useNavigate();
   const [loggedUser, setLoggedUser] = useState([]);
-  const [userReply, setUserReply] = useState([]);
+  const [userConnect, setUserConnect] = useState([]);
 
   const baseUrl = "http://localhost:3000/api/users";
 
   let { getUserQaks } = useContext(UserContext);
 
   let { deleteQak } = useContext(QakContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      await getAllUsers();
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -36,7 +43,7 @@ const Profile = ({ user }) => {
   }, []);
 
   function getAllUsers() {
-    return axios.get(baseUrl).then((response) => setUserReply(response.data));
+    return axios.get(baseUrl).then((response) => setUserConnect(response.data));
   }
 
   const [articles, setArticles] = useState([]);
@@ -98,11 +105,12 @@ const Profile = ({ user }) => {
       state,
       createdAt,
       profilePicture,
-      Qaks
+      Qaks,
+      QakReplies,
+      User
     } = loggedUser;
     let qaksByUser = [];
     qaksByUser.push({ Qaks });
-    console.log(qaksByUser[0]);
     return (
       <div>
         <div className="prof-wrap">
@@ -223,11 +231,10 @@ const Profile = ({ user }) => {
                           (a, b) =>
                             moment(b.createdAt).valueOf() -
                             moment(a.createdAt).valueOf()
-                        ).map((q) => {
-                          console.log(Qaks);
+                        ).map((q, i) => {
                           return (
-                            <>
-                              <div key={q.qak_id}>
+                            <div key={i}>
+                              <div className="qaklist mb-3" key={q.qak_id}>
                                 <div className="q">
                                   <div>
                                     <h4>{username}</h4>
@@ -259,61 +266,33 @@ const Profile = ({ user }) => {
                               <div>
                                 {q.QakReplies && q.QakReplies.length > 0 ? (
                                   <div>
-                                    {q.QakReplies.map((QakReplies) => (
-                                      <div
-                                        key={QakReplies.qakReply_id}
-                                        style={{ marginBottom: "15px" }}
-                                      >
+                                    {q.QakReplies.map(
+                                      (QakReplies, qakReply_id) => (
                                         <div
-                                          style={{
-                                            display: "flex",
-                                            alignItems: "center"
-                                          }}
+                                          key={qakReply_id}
+                                          style={{ marginBottom: "15px" }}
                                         >
-                                          <div>
-                                            {/* <Link
-                                              to={`/noprofile/${QakReplies.user_id}`}
-                                            >
-                                              <h4>
-                                                {QakReplies.User.username}
-                                              </h4>
-                                            </Link> */}
-                                            <p>{QakReplies.user_id}</p>
-                                            <p>{QakReplies.qakReply}</p>
-                                            <div
-                                              style={{
-                                                display: "flex",
-                                                alignItems: "center"
-                                              }}
-                                            >
-                                              <p>
-                                                {QakReplies.updatedAt &&
-                                                !moment(
-                                                  QakReplies.createdAt
-                                                ).isSame(
-                                                  QakReplies.updatedAt,
-                                                  "day"
-                                                )
-                                                  ? `Edited: ${moment(
-                                                      QakReplies.updatedAt
-                                                    ).format("MM/DD/YYYY")}`
-                                                  : `Created: ${moment(
-                                                      QakReplies.createdAt
-                                                    ).format("MM/DD/YYYY")}`}
-                                              </p>
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              alignItems: "center"
+                                            }}
+                                          >
+                                            <div>
+                                              <p>{QakReplies.qakReply}</p>
                                             </div>
                                           </div>
+                                          {/* Add a line space here */}
+                                          <hr style={{ margin: "10px 0" }} />
                                         </div>
-                                        {/* Add a line space here */}
-                                        <hr style={{ margin: "10px 0" }} />
-                                      </div>
-                                    ))}
+                                      )
+                                    )}
                                   </div>
                                 ) : (
                                   <p>No replies available for this QAK.</p>
                                 )}
                               </div>
-                            </>
+                            </div>
                           );
                         })}
                       </div>
@@ -350,7 +329,7 @@ const Profile = ({ user }) => {
                     </Card.Header>
                     <div className="col-12">
                       <Card.Body className="commenter-list">
-                        {userReply.slice(1, 6).map((user, id) => (
+                        {userConnect.slice(1, 6).map((user, id) => (
                           <ListGroup key={id}>
                             <div className="top-com">
                               <Link
@@ -386,13 +365,3 @@ const Profile = ({ user }) => {
   return profileCard();
 };
 export default Profile;
-
-// {user ? (
-//   <Link to={`/profile/${q.User.user_id}`}>
-//     <h4>{q.User.username}</h4>
-//   </Link>
-// ) : (
-//   <Link to={`/noprofile/${q.user_id}`}>
-//     <h4>{q.User.username}</h4>
-//   </Link>
-// )}
