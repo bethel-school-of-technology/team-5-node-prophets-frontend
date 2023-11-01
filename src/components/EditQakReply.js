@@ -7,29 +7,26 @@ const EditQakReply = () => {
   let params = useParams();
   let navigate = useNavigate();
 
-  let [qakReplyEdit, setQakReplyEdit] = useState({
-    qakReply_id: params.qakReply_id,
-    qakReply: "",
-  });
+  let [qakReplyEdit, setQakReplyEdit] = useState({});
 
   let { getOneQakReply, updateQakReply } = useContext(QakReplyContext);
 
-  let { qakReply_id, qakReply } = qakReplyEdit;
+  let { qakRelay_id, qak_id, qakReply } = qakReplyEdit;
+  let qakReply_id = params.qakReply_id;
 
   useEffect(() => {
     if (qakReply_id === undefined) return;
 
     async function fetch() {
-      await getOneQakReply(qakReply_id).then((qakReply) =>
-        setQakReplyEdit(qakReply)
-      );
+      const qakReply = await getOneQakReply(qakReply_id);
+      setQakReplyEdit(qakReply);
     }
     fetch();
-  }, [{ getOneQakReply, qakReply_id }]);
+  }, [qakReply_id]);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setQakReplyEdit((prevValue) => ({ ...prevValue, [name]: value }));
+    setQakReplyEdit((prevValue) => ({ ...prevValue, qakReply: value }));
   }
 
   function update() {
@@ -42,10 +39,9 @@ const EditQakReply = () => {
     update(qakReplyEdit)
       .then(() => {
         if (!qakReplyEdit.ok) {
-          alert("Your QAK Reply has been posted!");
+          alert("Your QAK Reply has been updated and posted!");
         }
         navigate("/qaks");
-        window.location.reload();
       })
       .catch((error) => {
         console.error("There was an error!", error);
