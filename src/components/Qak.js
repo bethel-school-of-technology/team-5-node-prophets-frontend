@@ -146,12 +146,12 @@ const Qak = ({ user }) => {
                               style={{ display: "flex", alignItems: "center" }}
                             >
                               <div>
-                                {user ? (
-                                  <Link to={`/profile/${q.user_id}`}>
+                                {!user ? (
+                                  <Link to={`/noprofile/${q.user_id}`}>
                                     <h4>{q.User.username}</h4>
                                   </Link>
                                 ) : (
-                                  <Link to={`/noprofile/${q.user_id}`}>
+                                  <Link to={`/profile/${user.q.user_id}`}>
                                     <h4>{q.User.username}</h4>
                                   </Link>
                                 )}

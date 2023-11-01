@@ -7,6 +7,7 @@ import moment from "moment";
 import NewQak from "./NewQak";
 import { Card, ListGroup } from "react-bootstrap";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
+import QakContext from "../contexts/QakContext";
 
 const Profile = ({ user }) => {
   let params = useParams();
@@ -16,7 +17,9 @@ const Profile = ({ user }) => {
 
   const baseUrl = "http://localhost:3000/api/users";
 
-  let { getUserQaks, deleteQak } = useContext(UserContext);
+  let { getUserQaks } = useContext(UserContext);
+
+  let { deleteQak } = useContext(QakContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -67,18 +70,20 @@ const Profile = ({ user }) => {
 
   function handleDelete(qak_id) {
     if (user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate(window.location);
+    } else {
       const confirmDelete = window.confirm("Are you sure you want to delete?");
       if (confirmDelete) {
-        deleteQak(qak_id).then(() => {
-          navigate("/qaks");
-        });
-      } else {
-        window.alert("You are not allowed to perform this operation");
-        navigate("/qaks").catch((error) => {
-          console.log(error);
-          window.alert("You need to sign in to perform this operation");
-          navigate("/qaks");
-        });
+        deleteQak(qak_id)
+          .then(() => {
+            navigate(window.location.reload());
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate(window.location);
+          });
       }
     }
   }
@@ -199,6 +204,7 @@ const Profile = ({ user }) => {
               </div>
             </div>
             <br />
+
             <div>
               <div className="row">
                 <div className="col-md-8">
@@ -228,17 +234,22 @@ const Profile = ({ user }) => {
                                 </div>
                                 <p>{q.qak}</p>
                                 <div className="d-flex justify-content-end">
-                                  <Link className="pe-3">
-                                    <FaRegEdit size={"23px"} color="purple" />
+                                  <Link
+                                    to={`/userqak/${q.qak_id}/edit`}
+                                    className="pe-3"
+                                  >
+                                    <FaRegEdit
+                                      className="editicon"
+                                      size={"23px"}
+                                    />
                                   </Link>
                                   <Link
                                     to={"#"}
-                                    onClick={handleDelete.bind(this, q.qak)}
+                                    onClick={handleDelete.bind(this, q.qak_id)}
                                   >
                                     <FaTrashAlt
                                       className="trash"
                                       size={"20px"}
-                                      color="green"
                                     />
                                   </Link>
                                 </div>
@@ -283,7 +294,10 @@ const Profile = ({ user }) => {
                         {userReply.slice(1, 6).map((user, id) => (
                           <ListGroup key={id}>
                             <div className="top-com">
-                              <Link to="/profile" className="top-com-link">
+                              <Link
+                                to={`/noprofile/${user.user_id}`}
+                                className="top-com-link"
+                              >
                                 <ListGroup.Item>
                                   <img
                                     key={id}

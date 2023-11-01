@@ -47,9 +47,10 @@
   text-decoration: none;
   color: rgb(87, 121, 255);
 }
-.editicon {
+.arrow {
   color: rgb(110, 119, 187);
 }
-.trash {
+.backtext {
+  text-decoration: none;
   color: rgba(114, 76, 239, 0.897);
 }
