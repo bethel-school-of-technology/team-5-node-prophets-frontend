@@ -1,54 +1,34 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import QakReplyContext from "../contexts/QakReplyContext";
+import QakContext from "../contexts/QakContext";
 
-const QakReplyForm = ({}) => {
+const NewQakReply = (props) => {
   let params = useParams();
   let navigate = useNavigate();
-  let [pendingQakReply, setQakReply] = useState({
+
+  let [newQakReply, setNewQakReply] = useState({
     qakReply_id: params.qakReply_id,
-    qak_id: params.qakReply_id,
+    qak_id: params.qak_id,
+    user_id: params.user_id,
     qakReply: "",
   });
 
-  let { getOneQakReply, createQakReply, updateQakReply } =
-    useContext(QakReplyContext);
+  let { createQakReply } = useContext(QakReplyContext);
 
-  let { qak_id, qakReply_id, qakReply } = pendingQakReply;
+  let { qak_id, user_id, qakReply } = newQakReply;
 
-  useEffect(() => {
-    if (qakReply_id === undefined) return;
-
-    async function fetch() {
-      await getOneQakReply(qakReply_id).then((qakReply) =>
-        setQakReply(qakReply)
-      );
-    }
-
-    fetch();
-  }, []);
-
-  function handleChange(event) {
-    setQakReply((prevValue) => ({
-      ...prevValue,
-      [event.target.name]: event.target.value,
-    }));
-  }
-
-  function addOrUpdateQakReply() {
+  function create() {
     if (qakReply_id === undefined) {
-      return createQakReply(pendingQakReply);
-    } else {
-      return updateQakReply(pendingQakReply);
+      return createQakReply(newQakReply);
     }
   }
-
   function handleSubmit(event) {
     event.preventDefault();
-    addOrUpdateQakReply(pendingQakReply)
+    create(newQakReply)
       .then(() => {
-        if (!pendingQakReply.ok) {
+        if (!newQakReply.ok) {
           alert("Your QAKReply is posted");
         }
         navigate("/qaks");
@@ -65,6 +45,13 @@ const QakReplyForm = ({}) => {
       <div className="form-wrap">
         <div className="form-case">
           <div className="close-button"></div>
+          <p className="register">
+            Not a member?{" "}
+            <a className="register-link" href="/signup">
+              Register
+            </a>{" "}
+            It's free!
+          </p>
 
           <div className="divider d-flex align-items-center my-4">
             <p className="text-center mx-3 mb-0">
@@ -72,7 +59,7 @@ const QakReplyForm = ({}) => {
             </p>
           </div>
 
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} key={qakReply_id}>
             <Form.Group className="mb-3">
               <Form.Control
                 as="textarea"
@@ -80,7 +67,9 @@ const QakReplyForm = ({}) => {
                 cols={65}
                 name="qakReply"
                 value={qakReply}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setNewQakReply({ ...newQakReply, qakReply: e.target.value })
+                }
               />
             </Form.Group>
 
@@ -99,4 +88,4 @@ const QakReplyForm = ({}) => {
   );
 };
 
-export default QakReplyForm;
+export default NewQakReply;

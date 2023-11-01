@@ -30,19 +30,14 @@ export const QakReplyProvider = (props) => {
     });
   }
 
-  function updateQakReply(qakReply_id, qak_id, user_id) {
+  function updateQakReply(qakReply, qakReply_id, qak_id, user_id) {
     let headers = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`,
     };
-    console.log("Data to be sent for updateQakReply:", {
-      qakReply,
-      qakReply_id,
-      user_id,
-    });
     return axios
       .put(
         baseUrl + qakReply.qakReply_id,
-        { ...qakReply, qak_id, user_id },
+        { ...qakReply, qakReply_id, qak_id, user_id },
         { headers }
       )
       .then((response) => {

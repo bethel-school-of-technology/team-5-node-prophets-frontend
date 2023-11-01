@@ -18,7 +18,8 @@ import NewQak from "./components/NewQak";
 import EditQak from "./components/EditQak";
 import EditProfile from "./components/EditProfile";
 import { QakReplyProvider } from "./contexts/QakReplyProvider";
-import QakReplyForm from "./components/QakReplyForm";
+import NewQakReply from "./components/NewQakReply";
+import EditQakReply from "./components/EditQakReply";
 
 function App() {
   const [user, setUser] = useState();
@@ -52,11 +53,11 @@ function App() {
                   <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
                   <Route
                     path="/qakReply/edit/:qakReply_id"
-                    element={<QakReplyForm />}
+                    element={<EditQakReply />}
                   />
                   <Route
                     path="/qakReply/new/:qak_id"
-                    element={<QakReplyForm />}
+                    element={<NewQakReply />}
                   />
                   <Route path="/profile/:id" element={<Profile />} />
                   <Route path="/profile/:id/edit" element={<EditProfile />} />
