@@ -13,7 +13,6 @@ const Profile = ({ user }) => {
   let navigate = useNavigate();
   const [loggedUser, setLoggedUser] = useState([]);
   const [userReply, setUserReply] = useState([]);
-  console.log(userReply);
 
   const baseUrl = "http://localhost:3000/api/users";
 
