@@ -5,12 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import "../styles/Qak.css";
 import NewQak from "./NewQak";
+import QakReplyContext from "../contexts/QakReplyContext";
 
 const Qak = ({ user }) => {
-  //let params = useParams();
   let navigate = useNavigate();
 
   let { deleteQak } = useContext(QakContext);
+  let { deleteQakReply } = useContext(QakReplyContext);
 
   function handleDelete(qak_id) {
     if (user) {
@@ -20,6 +21,26 @@ const Qak = ({ user }) => {
       const confirmDelete = window.confirm("Are you sure you want to delete?");
       if (confirmDelete) {
         deleteQak(qak_id)
+          .then(() => {
+            navigate("/qaks");
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate("/qaks");
+          });
+      }
+    }
+  }
+
+  function handleDeleteQakReply(qakReply_id) {
+    if (user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate("/qaks");
+    } else {
+      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      if (confirmDelete) {
+        deleteQakReply(qakReply_id)
           .then(() => {
             navigate("/qaks");
           })
@@ -99,6 +120,7 @@ const Qak = ({ user }) => {
               );
           }
         };
+
         const filteredQAKs = filterQAKs(qak);
 
         return (
@@ -107,7 +129,7 @@ const Qak = ({ user }) => {
               <div>
                 <div className="divider d-flex align-items-center my-4">
                   <h4 className="form-title text-center mx-3 mb-0">
-                    Question and Answer Knowledge
+                    Question Answer Knowledge
                   </h4>
                 </div>
                 <div className="text-center">
@@ -159,7 +181,7 @@ const Qak = ({ user }) => {
                                 <div
                                   style={{
                                     display: "flex",
-                                    alignItems: "center"
+                                    alignItems: "center",
                                   }}
                                 >
                                   <p>
@@ -175,6 +197,7 @@ const Qak = ({ user }) => {
                                           "MM/DD/YYYY"
                                         )}`}
                                   </p>
+
                                   <p style={{ marginLeft: "auto" }}>
                                     <Link
                                       to={`/qaks/${q.qak_id}/edit`}
@@ -199,27 +222,83 @@ const Qak = ({ user }) => {
                             {/* Add a line space here */}
                             <hr style={{ margin: "10px 0" }} />
                           </Accordion.Header>
+
                           <Accordion.Body>
-                            <div>
-                              <h5>Username</h5>
-                              <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa
-                                qui officia deserunt mollit anim id est laborum.
-                              </p>
-                              <p>
-                                Created: MM/DD/YYYY{" "}
-                                <span className="edit">Edit</span>{" "}
-                                <span className="delete">Delete</span>
-                              </p>
+                            <div className="text-center">
+                              <Link to={`/qakReply/new/${q.qak_id}`}>
+                                Provide An Answer or Share Knowledge
+                              </Link>
                             </div>
+                            {q.QakReplies && q.QakReplies.length > 0 ? (
+                              <div>
+                                {q.QakReplies.map((QakReplies) => (
+                                  <div
+                                    key={QakReplies.qakReply_id}
+                                    style={{ marginBottom: "15px" }}
+                                  >
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <div>
+                                        <Link
+                                          to={`/profile/${QakReplies.User.user_id}`}
+                                        >
+                                          <h4>{QakReplies.User.username}</h4>
+                                        </Link>
+                                        <p>{QakReplies.qakReply}</p>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <p>
+                                            {QakReplies.updatedAt &&
+                                            !moment(
+                                              QakReplies.createdAt
+                                            ).isSame(
+                                              QakReplies.updatedAt,
+                                              "day"
+                                            )
+                                              ? `Edited: ${moment(
+                                                  QakReplies.updatedAt
+                                                ).format("MM/DD/YYYY")}`
+                                              : `Created: ${moment(
+                                                  QakReplies.createdAt
+                                                ).format("MM/DD/YYYY")}`}
+                                          </p>
+                                          <p style={{ marginLeft: "auto" }}>
+                                            <Link
+                                              to={`/qakReply/edit/${QakReplies.qakReply_id}`}
+                                              style={{ marginRight: "10px" }}
+                                            >
+                                              Edit
+                                            </Link>
+                                            <Link
+                                              to={"#"}
+                                              onClick={handleDeleteQakReply.bind(
+                                                this,
+                                                QakReplies.qakReply_id,
+                                                QakReplies.User.user_id
+                                              )}
+                                            >
+                                              Delete
+                                            </Link>
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {/* Add a line space here */}
+                                    <hr style={{ margin: "10px 0" }} />
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <p>No replies available for this QAK.</p>
+                            )}
                           </Accordion.Body>
                         </Accordion.Item>
                       </Accordion>
