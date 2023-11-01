@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import QakReplyContext from "../contexts/QakReplyContext";
-import QakContext from "../contexts/QakContext";
 
 const NewQakReply = (props) => {
   let params = useParams();
@@ -10,34 +9,38 @@ const NewQakReply = (props) => {
 
   let [newQakReply, setNewQakReply] = useState({
     qakReply_id: params.qakReply_id,
-    qak_id: params.qak_id,
-    user_id: params.user_id,
     qakReply: "",
   });
 
   let { createQakReply } = useContext(QakReplyContext);
 
-  let { qak_id, user_id, qakReply } = newQakReply;
+  let { qakReply_id, qakReply } = newQakReply;
 
   function create() {
     if (qakReply_id === undefined) {
       return createQakReply(newQakReply);
     }
   }
+
   function handleSubmit(event) {
     event.preventDefault();
     create(newQakReply)
       .then(() => {
         if (!newQakReply.ok) {
-          alert("Your QAKReply is posted");
+          alert("Your QAK Reply is posted");
         }
         navigate("/qaks");
       })
       .catch((error) => {
         console.error("There was an error!", error);
         alert("You need to be Signed In to perform this operation");
-        navigate("/signIn");
+        navigate("/qaks");
       });
+  }
+
+  function handleCancel(event) {
+    event.preventDefault();
+    navigate("/qaks");
   }
 
   return (
@@ -80,6 +83,14 @@ const NewQakReply = (props) => {
               type="submit"
             >
               Submit
+            </Button>
+            <Button
+              onClick={handleCancel}
+              className="edit-cancel"
+              variant="secondary"
+              size="sm"
+            >
+              Cancel
             </Button>
           </Form>
         </div>

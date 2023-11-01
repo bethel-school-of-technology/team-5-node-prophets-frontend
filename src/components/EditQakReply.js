@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import QakReplyContext from "../contexts/QakReplyContext";
-import QakContext from "../contexts/QakContext";
 
 const EditQakReply = () => {
   let params = useParams();
@@ -10,13 +9,12 @@ const EditQakReply = () => {
 
   let [qakReplyEdit, setQakReplyEdit] = useState({
     qakReply_id: params.qakReply_id,
-    qak_id: params.qak_id,
     qakReply: "",
   });
 
   let { getOneQakReply, updateQakReply } = useContext(QakReplyContext);
 
-  let { qak_id, user_id, qakReply } = qakReplyEdit;
+  let { qakReply_id, qakReply } = qakReplyEdit;
 
   useEffect(() => {
     if (qakReply_id === undefined) return;
@@ -27,7 +25,7 @@ const EditQakReply = () => {
       );
     }
     fetch();
-  }, []);
+  }, [{ getOneQakReply, qakReply_id }]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -40,18 +38,24 @@ const EditQakReply = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
+
     update(qakReplyEdit)
       .then(() => {
         if (!qakReplyEdit.ok) {
-          alert("Your QAKReply is posted");
+          alert("Your QAK Reply has been posted!");
         }
         navigate("/qaks");
+        window.location.reload();
       })
       .catch((error) => {
         console.error("There was an error!", error);
-        alert("You need to be Signed In to perform this operation");
-        navigate("/signIn");
+        alert("Edit unsuccessful");
+        navigate("/qaks");
       });
+  }
+  function handleCancel(event) {
+    event.preventDefault();
+    navigate("/qaks");
   }
 
   return (
@@ -62,7 +66,7 @@ const EditQakReply = () => {
 
           <div className="divider d-flex align-items-center my-4">
             <p className="text-center mx-3 mb-0">
-              Provide Answer or Share Knowledge
+              Edit QAK Answer or Knowledge
             </p>
           </div>
 
@@ -85,7 +89,15 @@ const EditQakReply = () => {
               size="sm"
               type="submit"
             >
-              Submit Update
+              Finish Editing
+            </Button>
+            <Button
+              onClick={handleCancel}
+              className="edit-cancel"
+              variant="secondary"
+              size="sm"
+            >
+              Cancel
             </Button>
           </Form>
         </div>
