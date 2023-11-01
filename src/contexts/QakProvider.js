@@ -48,16 +48,14 @@ export const QakProvider = (props) => {
       });
   }
 
-  function deleteQak(qak_id, user_id) {
+  function deleteQak(qak_id) {
     let headers = {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`
     };
-    return axios
-      .delete(baseUrl + qak_id, user_id, { headers })
-      .then((response) => {
-        getAllQaks();
-        return new Promise((resolve) => resolve(response.data));
-      });
+    return axios.delete(baseUrl + qak_id, { headers }).then((response) => {
+      getAllQaks();
+      return new Promise((resolve) => resolve(response.data));
+    });
   }
 
   return (

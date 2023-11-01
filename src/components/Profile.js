@@ -77,7 +77,7 @@ const Profile = ({ user }) => {
       if (confirmDelete) {
         deleteQak(qak_id)
           .then(() => {
-            navigate(`/profile${user.user_id}`);
+            navigate(window.location.reload());
           })
           .catch((error) => {
             console.log(error);
@@ -242,7 +242,10 @@ const Profile = ({ user }) => {
                                     </Link>
                                     <Link
                                       to={"#"}
-                                      onClick={handleDelete.bind(this, q.qak)}
+                                      onClick={handleDelete.bind(
+                                        this,
+                                        q.qak_id
+                                      )}
                                     >
                                       <FaTrashAlt
                                         className="trash"
@@ -297,26 +300,6 @@ const Profile = ({ user }) => {
                                                   : `Created: ${moment(
                                                       QakReplies.createdAt
                                                     ).format("MM/DD/YYYY")}`}
-                                              </p>
-                                              <p style={{ marginLeft: "auto" }}>
-                                                <Link
-                                                  to={`/qakReply/edit/${QakReplies.qakReply_id}`}
-                                                  style={{
-                                                    marginRight: "10px"
-                                                  }}
-                                                >
-                                                  Edit
-                                                </Link>
-                                                {/* <Link
-                                                  to={"#"}
-                                                  onClick={handleDeleteQakReply.bind(
-                                                    this,
-                                                    QakReplies.qakReply_id,
-                                                    QakReplies.User.user_id
-                                                  )}
-                                                >
-                                                  Delete
-                                                </Link> */}
                                               </p>
                                             </div>
                                           </div>
