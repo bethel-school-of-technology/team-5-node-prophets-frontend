@@ -5,7 +5,7 @@ import "../styles/SignIn.css";
 import { useNavigate, useParams } from "react-router-dom";
 import QakContext from "../contexts/QakContext";
 
-const NewQak = ({ show, handleClose }, { user }) => {
+const NewQak = ({ show, handleClose }) => {
   let params = useParams();
   let navigate = useNavigate();
 
@@ -35,9 +35,9 @@ const NewQak = ({ show, handleClose }, { user }) => {
         navigate(window.location.reload());
       })
       .catch((error) => {
-        console.error("There was an error!", error);
+        console.error(error);
         alert("You need to be Signed In to perform this operation");
-        navigate("/signIn");
+        navigate("/qaks");
       });
   }
 
