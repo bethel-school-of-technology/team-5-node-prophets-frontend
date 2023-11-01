@@ -269,23 +269,23 @@ const RssFeed = () => {
                     {/* Side Bar Bottom (Top Commenters) */}
                     <Card>
                       <Card.Header>
-                        <strong>Top Commenters</strong>
+                        <strong>Top RSS Creators</strong>
                       </Card.Header>
                       <div className="col-12">
                         <Card.Body className="commenter-list">
-                          {topCommenter.slice(1, 6).map((user, id) => (
+                          {articles.slice(4, 10).map((item, id) => (
                             <ListGroup key={id}>
                               <div className="top-com">
-                                <Link to="/profile" className="top-com-link">
-                                  <ListGroup.Item>
-                                    <img
-                                      key={id}
-                                      className="tc-img"
-                                      alt="avatar"
-                                      src={user.profilePicture}
-                                    />
-
-                                    {user.fullname}
+                                <Link to="#" className="top-com-link">
+                                  <ListGroup.Item
+                                    key={id}
+                                    className="accordlink"
+                                    onClick={() => {
+                                      setSelectedArticle(item);
+                                      setModalShow(true);
+                                    }}
+                                  >
+                                    {item.creator}
                                   </ListGroup.Item>
                                 </Link>
                               </div>

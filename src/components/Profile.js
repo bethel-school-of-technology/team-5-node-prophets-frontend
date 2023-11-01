@@ -7,19 +7,17 @@ import moment from "moment";
 import NewQak from "./NewQak";
 import { Card, ListGroup } from "react-bootstrap";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
-import QakContext from "../contexts/QakContext";
 
 const Profile = ({ user }) => {
   let params = useParams();
   let navigate = useNavigate();
   const [loggedUser, setLoggedUser] = useState([]);
   const [userReply, setUserReply] = useState([]);
+  console.log(userReply);
 
   const baseUrl = "http://localhost:3000/api/users";
 
-  let { getUserQaks } = useContext(UserContext);
-
-  let { deleteQak } = useContext(QakContext);
+  let { getUserQaks, deleteQak } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -71,13 +69,13 @@ const Profile = ({ user }) => {
   function handleDelete(qak_id) {
     if (user) {
       window.alert("You are not allowed to perform this operation");
-      navigate(window.location);
+      navigate("/qaks");
     } else {
       const confirmDelete = window.confirm("Are you sure you want to delete?");
       if (confirmDelete) {
         deleteQak(qak_id)
           .then(() => {
-            navigate(window.location.reload());
+            navigate(window.location);
           })
           .catch((error) => {
             console.log(error);
@@ -115,7 +113,7 @@ const Profile = ({ user }) => {
                       <div className="card-body text-center">
                         <img
                           src={profilePicture}
-                          alt="avatar"
+                          alt=""
                           className="rounded-circle img-fluid"
                           style={{ width: "150px", height: "150px" }}
                         />
@@ -204,7 +202,6 @@ const Profile = ({ user }) => {
               </div>
             </div>
             <br />
-
             <div>
               <div className="row">
                 <div className="col-md-8">
@@ -219,42 +216,123 @@ const Profile = ({ user }) => {
                       {/* Place your content for Latest Qaks here */}
 
                       <br />
-
                       <div className="q-card mb-4" key={user}>
                         {Qaks?.sort(
                           (a, b) =>
                             moment(b.createdAt).valueOf() -
                             moment(a.createdAt).valueOf()
                         ).map((q) => {
+                          console.log(Qaks);
                           return (
-                            <div key={q.qak_id}>
-                              <div className="q">
-                                <div>
-                                  <h4>{username}</h4>
-                                </div>
-                                <p>{q.qak}</p>
-                                <div className="d-flex justify-content-end">
-                                  <Link
-                                    to={`/userqak/${q.qak_id}/edit`}
-                                    className="pe-3"
-                                  >
-                                    <FaRegEdit
-                                      className="editicon"
-                                      size={"23px"}
-                                    />
-                                  </Link>
-                                  <Link
-                                    to={"#"}
-                                    onClick={handleDelete.bind(this, q.qak_id)}
-                                  >
-                                    <FaTrashAlt
-                                      className="trash"
-                                      size={"20px"}
-                                    />
-                                  </Link>
+                            <>
+                              <div key={q.qak_id}>
+                                <div className="q">
+                                  <div>
+                                    <h4>{username}</h4>
+                                  </div>
+                                  <p>{q.qak}</p>
+                                  <div className="d-flex justify-content-end">
+                                    <Link
+                                      to={`/userqak/${q.qak_id}/edit`}
+                                      className="pe-3"
+                                    >
+                                      <FaRegEdit size={"23px"} color="purple" />
+                                    </Link>
+                                    <Link
+                                      to={"#"}
+                                      onClick={handleDelete.bind(
+                                        this,
+                                        q.qak,
+                                        q.user_id
+                                      )}
+                                    >
+                                      <FaTrashAlt
+                                        className="trash"
+                                        size={"20px"}
+                                        color="green"
+                                      />
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
+                              <div>
+                                {q.QakReplies && q.QakReplies.length > 0 ? (
+                                  <div>
+                                    {q.QakReplies.map((QakReplies) => (
+                                      <div
+                                        key={QakReplies.qakReply_id}
+                                        style={{ marginBottom: "15px" }}
+                                      >
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            alignItems: "center"
+                                          }}
+                                        >
+                                          <div>
+                                            {/* <Link
+                                              to={`/noprofile/${QakReplies.user_id}`}
+                                            >
+                                              <h4>
+                                                {QakReplies.User.username}
+                                              </h4>
+                                            </Link> */}
+                                            <p>{QakReplies.user_id}</p>
+                                            <p>{QakReplies.qakReply}</p>
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                alignItems: "center"
+                                              }}
+                                            >
+                                              <p>
+                                                {QakReplies.updatedAt &&
+                                                !moment(
+                                                  QakReplies.createdAt
+                                                ).isSame(
+                                                  QakReplies.updatedAt,
+                                                  "day"
+                                                )
+                                                  ? `Edited: ${moment(
+                                                      QakReplies.updatedAt
+                                                    ).format("MM/DD/YYYY")}`
+                                                  : `Created: ${moment(
+                                                      QakReplies.createdAt
+                                                    ).format("MM/DD/YYYY")}`}
+                                              </p>
+                                              <p style={{ marginLeft: "auto" }}>
+                                                <Link
+                                                  to={`/qakReply/edit/${QakReplies.qakReply_id}`}
+                                                  style={{
+                                                    marginRight: "10px"
+                                                  }}
+                                                >
+                                                  Edit
+                                                </Link>
+                                                {/* <Link
+                                                  to={"#"}
+                                                  onClick={handleDeleteQakReply.bind(
+                                                    this,
+                                                    QakReplies.qakReply_id,
+                                                    QakReplies.User.user_id
+                                                  )}
+                                                >
+                                                  Delete
+                                                </Link> */}
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        {/* Add a line space here */}
+                                        <hr style={{ margin: "10px 0" }} />
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <p>No replies available for this QAK.</p>
+                                )}
+                              </div>
+                            </>
                           );
                         })}
                       </div>

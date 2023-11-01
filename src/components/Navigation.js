@@ -113,7 +113,7 @@ const Navigation = ({ user }) => {
                                 <img
                                   src={profilePicture}
                                   className="img-border rounded-circle"
-                                  alt="avatar"
+                                  alt=""
                                   height={35}
                                   width={35}
                                 />

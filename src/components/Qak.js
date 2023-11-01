@@ -173,7 +173,7 @@ const Qak = ({ user }) => {
                                     <h4>{q.User.username}</h4>
                                   </Link>
                                 ) : (
-                                  <Link to={`/profile/${user.q.user_id}`}>
+                                  <Link to={`/profile/${user.user_id}`}>
                                     <h4>{q.User.username}</h4>
                                   </Link>
                                 )}
@@ -181,7 +181,7 @@ const Qak = ({ user }) => {
                                 <div
                                   style={{
                                     display: "flex",
-                                    alignItems: "center",
+                                    alignItems: "center"
                                   }}
                                 >
                                   <p>
@@ -239,12 +239,12 @@ const Qak = ({ user }) => {
                                     <div
                                       style={{
                                         display: "flex",
-                                        alignItems: "center",
+                                        alignItems: "center"
                                       }}
                                     >
                                       <div>
                                         <Link
-                                          to={`/profile/${QakReplies.User.user_id}`}
+                                          to={`/noprofile/${QakReplies.User.user_id}`}
                                         >
                                           <h4>{QakReplies.User.username}</h4>
                                         </Link>
@@ -252,7 +252,7 @@ const Qak = ({ user }) => {
                                         <div
                                           style={{
                                             display: "flex",
-                                            alignItems: "center",
+                                            alignItems: "center"
                                           }}
                                         >
                                           <p>

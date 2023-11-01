@@ -9,7 +9,6 @@ import Search from "./components/Search";
 import { UserProvider } from "./contexts/UserProvider";
 import { SearchProvider } from "./contexts/SearchContext";
 import { QakProvider } from "./contexts/QakProvider";
-import "./styles/App.css";
 import jwtDecode from "jwt-decode";
 import SignOut from "./components/SignOut";
 import Qak from "./components/Qak";
@@ -21,6 +20,7 @@ import { QakReplyProvider } from "./contexts/QakReplyProvider";
 import NewQakReply from "./components/NewQakReply";
 import EditQakReply from "./components/EditQakReply";
 import NoProfile from "./components/NoProfile";
+import "./styles/App.css";
 import EditUserQak from "./components/EditUserQak";
 
 function App() {
@@ -56,6 +56,15 @@ function App() {
                   <Route
                     path="/userqak/:qak_id/edit"
                     element={<EditUserQak />}
+                  />
+
+                  <Route
+                    path="/qakReply/edit/:qakReply_id"
+                    element={<EditQakReply />}
+                  />
+                  <Route
+                    path="/qakReply/new/:qak_id"
+                    element={<NewQakReply />}
                   />
                   <Route path="/profile/:id" element={<Profile />} />
                   <Route path="/profile/:id/edit" element={<EditProfile />} />
