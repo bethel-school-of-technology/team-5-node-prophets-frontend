@@ -7,6 +7,7 @@ import moment from "moment";
 import NewQak from "./NewQak";
 import { Card, ListGroup } from "react-bootstrap";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
+import QakContext from "../contexts/QakContext";
 
 const Profile = ({ user }) => {
   let params = useParams();
@@ -16,7 +17,9 @@ const Profile = ({ user }) => {
 
   const baseUrl = "http://localhost:3000/api/users";
 
-  let { getUserQaks, deleteQak } = useContext(UserContext);
+  let { getUserQaks } = useContext(UserContext);
+
+  let { deleteQak } = useContext(QakContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -74,7 +77,7 @@ const Profile = ({ user }) => {
       if (confirmDelete) {
         deleteQak(qak_id)
           .then(() => {
-            navigate(window.location);
+            navigate(`/profile${user.user_id}`);
           })
           .catch((error) => {
             console.log(error);
@@ -239,11 +242,7 @@ const Profile = ({ user }) => {
                                     </Link>
                                     <Link
                                       to={"#"}
-                                      onClick={handleDelete.bind(
-                                        this,
-                                        q.qak,
-                                        q.user_id
-                                      )}
+                                      onClick={handleDelete.bind(this, q.qak)}
                                     >
                                       <FaTrashAlt
                                         className="trash"
