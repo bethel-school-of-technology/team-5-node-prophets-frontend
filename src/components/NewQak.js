@@ -11,7 +11,7 @@ const NewQak = ({ show, handleClose }) => {
 
   let [newQak, setNewQak] = useState({
     qak_id: params.qak_id,
-    qak: ""
+    qak: "",
   });
 
   let { createQak } = useContext(QakContext);
@@ -53,7 +53,7 @@ const NewQak = ({ show, handleClose }) => {
                 <a className="register-link" href="/signup">
                   Register
                 </a>{" "}
-                it's free!
+                It's free!
               </p>
 
               <div className="divider d-flex align-items-center my-4">
