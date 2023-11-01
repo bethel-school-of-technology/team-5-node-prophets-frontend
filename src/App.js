@@ -20,6 +20,7 @@ import EditProfile from "./components/EditProfile";
 import { QakReplyProvider } from "./contexts/QakReplyProvider";
 import NewQakReply from "./components/NewQakReply";
 import EditQakReply from "./components/EditQakReply";
+import NoProfile from "./components/NoProfile";
 
 function App() {
   const [user, setUser] = useState();
@@ -61,6 +62,7 @@ function App() {
                   />
                   <Route path="/profile/:id" element={<Profile />} />
                   <Route path="/profile/:id/edit" element={<EditProfile />} />
+                  <Route path="/noprofile/:user_id" element={<NoProfile />} />
                 </Routes>
               </BrowserRouter>
             </UserProvider>

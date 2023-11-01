@@ -1,17 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/Profile.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import moment from "moment";
 import NewQak from "./NewQak";
 import { Card, ListGroup } from "react-bootstrap";
+import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 
 const Profile = ({ user }) => {
+  let params = useParams();
+  let navigate = useNavigate();
+  const [loggedUser, setLoggedUser] = useState([]);
   const [userReply, setUserReply] = useState([]);
 
-  //console.log(topCommenter);
   const baseUrl = "http://localhost:3000/api/users";
+
+  let { getUserQaks, deleteQak } = useContext(UserContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
+    }
+    fetchData();
+  }, [getUserQaks, params.user_id]);
 
   useEffect(() => {
     async function fetchData() {
@@ -42,16 +54,6 @@ const Profile = ({ user }) => {
     fetchRssFeeds();
   }, []);
 
-  let params = useParams();
-  const [loggedUser, setLoggedUser] = useState([]);
-  let { getUserQaks } = useContext(UserContext);
-  useEffect(() => {
-    async function fetchData() {
-      await getUserQaks(params.user_id).then((result) => setLoggedUser(result));
-    }
-    fetchData();
-  }, [getUserQaks, params.user_id]);
-
   const [showSignInModal, setShowSignInModal] = useState(false);
   const openSignInModal = () => {
     setShowSignInModal(true);
@@ -62,6 +64,25 @@ const Profile = ({ user }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  function handleDelete(qak_id) {
+    if (user) {
+      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      if (confirmDelete) {
+        deleteQak(qak_id).then(() => {
+          navigate("/qaks");
+        });
+      } else {
+        window.alert("You are not allowed to perform this operation");
+        navigate("/qaks").catch((error) => {
+          console.log(error);
+          window.alert("You need to sign in to perform this operation");
+          navigate("/qaks");
+        });
+      }
+    }
+  }
+
   function profileCard() {
     let {
       user_id,
@@ -198,14 +219,29 @@ const Profile = ({ user }) => {
                           (a, b) =>
                             moment(b.createdAt).valueOf() -
                             moment(a.createdAt).valueOf()
-                        ).map((q, idx) => {
+                        ).map((q) => {
                           return (
-                            <div key={idx}>
+                            <div key={q.qak_id}>
                               <div className="q">
                                 <div>
                                   <h4>{username}</h4>
                                 </div>
                                 <p>{q.qak}</p>
+                                <div className="d-flex justify-content-end">
+                                  <Link className="pe-3">
+                                    <FaRegEdit size={"23px"} color="purple" />
+                                  </Link>
+                                  <Link
+                                    to={"#"}
+                                    onClick={handleDelete.bind(this, q.qak)}
+                                  >
+                                    <FaTrashAlt
+                                      className="trash"
+                                      size={"20px"}
+                                      color="green"
+                                    />
+                                  </Link>
+                                </div>
                               </div>
                             </div>
                           );
@@ -277,3 +313,13 @@ const Profile = ({ user }) => {
   return profileCard();
 };
 export default Profile;
+
+// {user ? (
+//   <Link to={`/profile/${q.User.user_id}`}>
+//     <h4>{q.User.username}</h4>
+//   </Link>
+// ) : (
+//   <Link to={`/noprofile/${q.user_id}`}>
+//     <h4>{q.User.username}</h4>
+//   </Link>
+// )}

@@ -79,6 +79,14 @@ export const UserProvider = (props) => {
     });
   }
 
+  function getOneUserQak(user_id) {
+    const url = "http://localhost:3000/api/users/oneqak/";
+
+    return axios.get(url + user_id).then((response) => {
+      return new Promise((resolve) => resolve(response.data));
+    });
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -86,6 +94,7 @@ export const UserProvider = (props) => {
         createUser,
         signInUser,
         getOneProfile,
+        getOneUserQak,
         getUserQaks,
         updateUserProfile
       }}
