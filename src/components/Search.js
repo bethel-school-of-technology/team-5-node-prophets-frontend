@@ -105,11 +105,11 @@ const Search = ({ show, handleClose }) => {
         console.error("Unknown category:", selectedCategory);
     }
 
-    // Close the modal when a result is clicked
+    // Close the search modal when a result is clicked
     handleClose();
   };
 
-  // Handle input change with debouncing
+  // Handle input change with debouncing, so it only updates after a slight pause
   const handleInputChange = (e) => {
     const newQuery = e.target.value;
     setQuery(newQuery);
