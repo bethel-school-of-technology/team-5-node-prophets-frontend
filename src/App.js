@@ -17,6 +17,9 @@ import SignIn from "./components/SignIn";
 import NewQak from "./components/NewQak";
 import EditQak from "./components/EditQak";
 import EditProfile from "./components/EditProfile";
+import { QakReplyProvider } from "./contexts/QakReplyProvider";
+import NewQakReply from "./components/NewQakReply";
+import EditQakReply from "./components/EditQakReply";
 import NoProfile from "./components/NoProfile";
 
 function App() {
@@ -33,28 +36,38 @@ function App() {
   return (
     <div className="wrap backgroundColor">
       <QakProvider>
-        <SearchProvider>
-          <UserProvider>
-            <BrowserRouter>
-              <Navigation user={user} />
+        <QakReplyProvider>
+          <SearchProvider>
+            <UserProvider>
+              <BrowserRouter>
+                <Navigation user={user} />
 
-              <Routes>
-                <Route path="/" element={<Home />} index />
-                <Route path="/search" element={<Search />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/signout" element={<SignOut />} />
-                <Route path="/rssfeed" element={<RssFeed />} />
-                <Route path="/qaks" element={<Qak />} />
-                <Route path="/qaks/new" element={<NewQak />} />
-                <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
-                <Route path="/profile/:id" element={<Profile />} />
-                <Route path="/profile/:id/edit" element={<EditProfile />} />
-                <Route path="/noprofile/:user_id" element={<NoProfile />} />
-              </Routes>
-            </BrowserRouter>
-          </UserProvider>
-        </SearchProvider>
+                <Routes>
+                  <Route path="/" element={<Home />} index />
+                  <Route path="/search" element={<Search />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/signin" element={<SignIn />} />
+                  <Route path="/signout" element={<SignOut />} />
+                  <Route path="/rssfeed" element={<RssFeed />} />
+                  <Route path="/qaks" element={<Qak />} />
+                  <Route path="/qaks/new" element={<NewQak />} />
+                  <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
+                  <Route
+                    path="/qakReply/edit/:qakReply_id"
+                    element={<EditQakReply />}
+                  />
+                  <Route
+                    path="/qakReply/new/:qak_id"
+                    element={<NewQakReply />}
+                  />
+                  <Route path="/profile/:id" element={<Profile />} />
+                  <Route path="/profile/:id/edit" element={<EditProfile />} />
+                  <Route path="/noprofile/:user_id" element={<NoProfile />} />
+                </Routes>
+              </BrowserRouter>
+            </UserProvider>
+          </SearchProvider>
+        </QakReplyProvider>
       </QakProvider>
     </div>
   );
