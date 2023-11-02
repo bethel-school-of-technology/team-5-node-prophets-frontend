@@ -318,7 +318,10 @@ const Qak = ({ user }) => {
                                               to={`/qakReply/edit/${QakReplies.qakReply_id}`}
                                               style={{ marginRight: "10px" }}
                                             >
-                                              Edit
+                                              <FaRegEdit
+                                                size={"23px"}
+                                                color="purple"
+                                              />
                                             </Link>
                                             <Link
                                               to={"#"}
@@ -328,7 +331,11 @@ const Qak = ({ user }) => {
                                                 QakReplies.User.user_id
                                               )}
                                             >
-                                              Delete
+                                              <FaTrashAlt
+                                                className="trash"
+                                                size={"20px"}
+                                                color="green"
+                                              />
                                             </Link>
                                           </p>
                                         </div>
