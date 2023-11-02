@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import QakContext from "../contexts/QakContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,15 +6,45 @@ import moment from "moment";
 import "../styles/Qak.css";
 import NewQak from "./NewQak";
 import QakReplyContext from "../contexts/QakReplyContext";
+import UserContext from "../contexts/UserContext";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 
 const Qak = ({ user }) => {
   let navigate = useNavigate();
+  const [loggedUser, setLoggedUser] = useState([]);
 
   let { deleteQak } = useContext(QakContext);
   let { deleteQakReply } = useContext(QakReplyContext);
+  let { getUserQaks } = useContext(UserContext);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchData() {
+      try {
+        const result = await getUserQaks();
+        if (isMounted) {
+          setLoggedUser(result);
+        }
+      } catch (error) {
+        if (isMounted) {
+          if (error.response && error.response.status === 404) {
+            console.clear();
+          }
+        }
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   function handleDelete(qak_id) {
+    console.log(user);
+
     if (user) {
       window.alert("You are not allowed to perform this operation");
       navigate("/qaks");
@@ -169,12 +199,13 @@ const Qak = ({ user }) => {
                               style={{ display: "flex", alignItems: "center" }}
                             >
                               <div>
-                                {!user ? (
-                                  <Link to={`/noprofile/${q.user_id}`}>
+                                {loggedUser &&
+                                q.user_id == loggedUser.user_id ? (
+                                  <Link to={`/profile/${q.user_id}`}>
                                     <h4>{q.User.username}</h4>
                                   </Link>
                                 ) : (
-                                  <Link to={`/profile/${user.user_id}`}>
+                                  <Link to={`/noprofile/${q.user_id}`}>
                                     <h4>{q.User.username}</h4>
                                   </Link>
                                 )}
@@ -198,29 +229,36 @@ const Qak = ({ user }) => {
                                           "MM/DD/YYYY"
                                         )}`}
                                   </p>
-
-                                  <p style={{ marginLeft: "auto" }}>
-                                    <Link
-                                      to={`/qaks/${q.qak_id}/edit`}
-                                      style={{ marginRight: "10px" }}
-                                    >
-                                      <FaRegEdit size={"23px"} color="purple" />
-                                    </Link>
-                                    <Link
-                                      to={"#"}
-                                      onClick={handleDelete.bind(
-                                        this,
-                                        q.qak_id,
-                                        q.user_id
-                                      )}
-                                    >
-                                      <FaTrashAlt
-                                        className="trash"
-                                        size={"20px"}
-                                        color="green"
-                                      />
-                                    </Link>
-                                  </p>
+                                  {loggedUser &&
+                                  q.user_id == loggedUser.user_id ? (
+                                    <p style={{ marginLeft: "auto" }}>
+                                      <Link
+                                        to={`/qaks/${q.qak_id}/edit`}
+                                        style={{ marginRight: "10px" }}
+                                      >
+                                        <FaRegEdit
+                                          size={"23px"}
+                                          color="purple"
+                                        />
+                                      </Link>
+                                      <Link
+                                        to={"#"}
+                                        onClick={handleDelete.bind(
+                                          this,
+                                          q.qak_id,
+                                          q.user_id
+                                        )}
+                                      >
+                                        <FaTrashAlt
+                                          className="trash"
+                                          size={"20px"}
+                                          color="green"
+                                        />
+                                      </Link>
+                                    </p>
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -280,10 +318,7 @@ const Qak = ({ user }) => {
                                               to={`/qakReply/edit/${QakReplies.qakReply_id}`}
                                               style={{ marginRight: "10px" }}
                                             >
-                                              <FaRegEdit
-                                                size={"23px"}
-                                                color="purple"
-                                              />
+                                              Edit
                                             </Link>
                                             <Link
                                               to={"#"}
@@ -293,11 +328,7 @@ const Qak = ({ user }) => {
                                                 QakReplies.User.user_id
                                               )}
                                             >
-                                              <FaTrashAlt
-                                                className="trash"
-                                                size={"20px"}
-                                                color="green"
-                                              />
+                                              Delete
                                             </Link>
                                           </p>
                                         </div>

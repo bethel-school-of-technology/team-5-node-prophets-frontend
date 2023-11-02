@@ -49,7 +49,7 @@ function App() {
                   <Route path="/signin" element={<SignIn />} />
                   <Route path="/signout" element={<SignOut />} />
                   <Route path="/rssfeed" element={<RssFeed />} />
-                  <Route path="/qaks" element={<Qak />} />
+                  <Route user={user} path="/qaks" element={<Qak />} />
                   <Route path="/qaks/new" element={<NewQak />} />
                   <Route path="/qaks/:qak_id/edit" element={<EditQak />} />
                   <Route
