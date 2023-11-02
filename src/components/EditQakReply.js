@@ -45,7 +45,7 @@ const EditQakReply = () => {
       })
       .catch((error) => {
         console.error("There was an error!", error);
-        alert("Edit unsuccessful");
+        alert("You are not authorized to perform this action!");
         navigate("/qaks");
       });
   }

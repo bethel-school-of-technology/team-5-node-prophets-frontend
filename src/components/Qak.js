@@ -9,7 +9,7 @@ import QakReplyContext from "../contexts/QakReplyContext";
 import UserContext from "../contexts/UserContext";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 
-const Qak = ({ user }) => {
+const Qak = () => {
   let navigate = useNavigate();
   const [loggedUser, setLoggedUser] = useState([]);
 
@@ -43,44 +43,32 @@ const Qak = ({ user }) => {
   }, []);
 
   function handleDelete(qak_id) {
-    console.log(user);
-
-    if (user) {
-      window.alert("You are not allowed to perform this operation");
-      navigate("/qaks");
-    } else {
-      const confirmDelete = window.confirm("Are you sure you want to delete?");
-      if (confirmDelete) {
-        deleteQak(qak_id)
-          .then(() => {
-            navigate("/qaks");
-          })
-          .catch((error) => {
-            console.log(error);
-            window.alert("You need to sign in to perform this operation");
-            navigate("/qaks");
-          });
-      }
+    const confirmDelete = window.confirm("Are you sure you want to delete?");
+    if (confirmDelete) {
+      deleteQak(qak_id)
+        .then(() => {
+          navigate("/qaks");
+        })
+        .catch((error) => {
+          console.log(error);
+          window.alert("You need to sign in to perform this operation");
+          navigate("/qaks");
+        });
     }
   }
 
   function handleDeleteQakReply(qakReply_id) {
-    if (user) {
-      window.alert("You are not allowed to perform this operation");
-      navigate("/qaks");
-    } else {
-      const confirmDelete = window.confirm("Are you sure you want to delete?");
-      if (confirmDelete) {
-        deleteQakReply(qakReply_id)
-          .then(() => {
-            navigate("/qaks");
-          })
-          .catch((error) => {
-            console.log(error);
-            window.alert("You need to sign in to perform this operation");
-            navigate("/qaks");
-          });
-      }
+    const confirmDelete = window.confirm("Are you sure you want to delete?");
+    if (confirmDelete) {
+      deleteQakReply(qakReply_id)
+        .then(() => {
+          navigate("/qaks");
+        })
+        .catch((error) => {
+          console.log(error);
+          window.alert("You need to sign in to perform this operation");
+          navigate("/qaks");
+        });
     }
   }
 
