@@ -38,7 +38,7 @@ const RssFeed = () => {
 
   return (
     <div className="rss-wrap">
-      <div className="rss-bg">
+      <div>
         <div className="rss">
           {/* Main RSS Feed */}
           <Container className="container" fluid>

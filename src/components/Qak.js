@@ -157,7 +157,7 @@ const Qak = ({ user }) => {
         return (
           <div className="qak-wrap">
             <div className="qak-case">
-              <div>
+              <div className="rss">
                 <div className="divider d-flex align-items-center my-4">
                   <h4 className="form-title text-center mx-3 mb-0">
                     Question Answer Knowledge

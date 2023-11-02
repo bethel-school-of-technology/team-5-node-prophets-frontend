@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import moment from "moment";
 import NewQak from "./NewQak";
-import { Card, ListGroup } from "react-bootstrap";
+import { Card, Col, ListGroup, Row } from "react-bootstrap";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 import QakContext from "../contexts/QakContext";
 
@@ -114,87 +114,77 @@ const Profile = ({ user }) => {
     return (
       <div>
         <div className="prof-wrap">
-          <div className="prof-case">
+          <div>
             <div className="profile-section">
-              <div className="row" key={params.user_id}>
-                <div className="profile-top">
-                  <div className="col-12 col-md-12 col-lg-4">
-                    <div className="card mb-4">
-                      <div className="card-body text-center">
-                        <img
-                          src={profilePicture}
-                          alt=""
-                          className="rounded-circle img-fluid"
-                          style={{ width: "150px", height: "150px" }}
-                        />
-                        <h5 className="my-3 text-muted">{username}</h5>
-                        <h5 className="my-3 text-muted">{email}</h5>
-
-                        <div className="d-flex justify-content-center mb-2">
-                          <div>
-                            <Link
-                              type="button"
-                              className="btn btn-primary btn-sm"
-                              to={openSignInModal}
-                              onClick={openSignInModal}
-                            >
-                              New QAK
-                            </Link>
-
-                            <NewQak
-                              show={showSignInModal}
-                              handleClose={closeSignInModal}
-                              handleSubmit={handleSubmit}
+              <div>
+                <div>
+                  <Row className="d-flex align-items-center m-auto">
+                    <Col
+                      className="col-sm-12 col-md-12 col-lg-4"
+                      key={params.user_id}
+                    >
+                      <div>
+                        <Card className="p-3">
+                          <Card.Body className="text-center">
+                            <img
+                              src={profilePicture}
+                              alt=""
+                              className="rounded-circle img-fluid"
+                              style={{ width: "150px", height: "150px" }}
                             />
-                          </div>
-                        </div>
+                            <Card.Title>{username}</Card.Title>
+                            <Card.Title>{email}</Card.Title>
+                            <div>
+                              <Link
+                                type="button"
+                                className="btn btn-primary btn-sm"
+                                to={openSignInModal}
+                                onClick={openSignInModal}
+                              >
+                                New QAK
+                              </Link>
+
+                              <NewQak
+                                show={showSignInModal}
+                                handleClose={closeSignInModal}
+                                handleSubmit={handleSubmit}
+                              />
+                            </div>
+                          </Card.Body>
+                        </Card>
                       </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-8">
-                    <div className="card mb-4 m-5">
-                      <div className="card-body">
-                        <div className="row">
-                          <div className="col-sm-3">
-                            <p className="mb-0">Full Name</p>
-                          </div>
-                          <div className="col-sm-9">
-                            <p className="text-muted mb-0">{fullname}</p>
-                          </div>
-                        </div>
-                        <hr />
-                        <div className="row">
-                          <div className="col-sm-3">
-                            <p className="mb-0">City</p>
-                          </div>
-                          <div className="col-sm-9">
-                            <p className="text-muted mb-0">{city}</p>
-                          </div>
-                        </div>
-                        <hr />
-                        <div className="row">
-                          <div className="col-sm-3">
-                            <p className="mb-0">State</p>
-                          </div>
-                          <div className="col-sm-9">
-                            <p className="text-muted mb-0">{state}</p>
-                          </div>
-                        </div>
-
-                        <hr />
-
-                        <div className="row">
-                          <div className="col-sm-3">
-                            <p className="mb-0">Member Since:</p>
-                          </div>
-                          <div className="col-sm-9">
-                            <p className="text-muted mb-0">
-                              {moment.parseZone(createdAt).local().format("LL")}
-                            </p>
-                          </div>
-                        </div>
-                        <hr />
-                        <div className="row">
+                    </Col>
+                    <Col className="col-sm-12 col-md-12 col-lg-8 ">
+                      <Card>
+                        <Card.Body>
+                          <ListGroup variant="flush">
+                            <ListGroup.Item>
+                              <div className="bio">
+                                <strong>Full Name:</strong> <p>{fullname}</p>
+                              </div>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                              <div className="bio">
+                                <strong>City:</strong> <p>{city}</p>
+                              </div>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                              <div className="bio">
+                                <strong>State:</strong> <p>{state}</p>
+                              </div>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                              <div className="bio">
+                                <strong>Member Since:</strong>{" "}
+                                <p>
+                                  {moment
+                                    .parseZone(createdAt)
+                                    .local()
+                                    .format("LL")}
+                                </p>
+                              </div>
+                            </ListGroup.Item>
+                          </ListGroup>
                           <div className="d-flex justify-content-center">
                             <Link
                               type="button"
@@ -204,10 +194,10 @@ const Profile = ({ user }) => {
                               Edit Profile
                             </Link>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </Row>
                 </div>
               </div>
             </div>
