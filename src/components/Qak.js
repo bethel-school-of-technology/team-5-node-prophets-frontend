@@ -9,7 +9,7 @@ import QakReplyContext from "../contexts/QakReplyContext";
 import UserContext from "../contexts/UserContext";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 
-const Qak = ({ user }) => {
+const Qak = () => {
   let navigate = useNavigate();
   const [loggedUser, setLoggedUser] = useState([]);
 
@@ -43,44 +43,32 @@ const Qak = ({ user }) => {
   }, []);
 
   function handleDelete(qak_id) {
-    console.log(user);
-
-    if (user) {
-      window.alert("You are not allowed to perform this operation");
-      navigate("/qaks");
-    } else {
-      const confirmDelete = window.confirm("Are you sure you want to delete?");
-      if (confirmDelete) {
-        deleteQak(qak_id)
-          .then(() => {
-            navigate("/qaks");
-          })
-          .catch((error) => {
-            console.log(error);
-            window.alert("You need to sign in to perform this operation");
-            navigate("/qaks");
-          });
-      }
+    const confirmDelete = window.confirm("Are you sure you want to delete?");
+    if (confirmDelete) {
+      deleteQak(qak_id)
+        .then(() => {
+          navigate("/qaks");
+        })
+        .catch((error) => {
+          console.log(error);
+          window.alert("You need to sign in to perform this operation");
+          navigate("/qaks");
+        });
     }
   }
 
   function handleDeleteQakReply(qakReply_id) {
-    if (user) {
-      window.alert("You are not allowed to perform this operation");
-      navigate("/qaks");
-    } else {
-      const confirmDelete = window.confirm("Are you sure you want to delete?");
-      if (confirmDelete) {
-        deleteQakReply(qakReply_id)
-          .then(() => {
-            navigate("/qaks");
-          })
-          .catch((error) => {
-            console.log(error);
-            window.alert("You need to sign in to perform this operation");
-            navigate("/qaks");
-          });
-      }
+    const confirmDelete = window.confirm("Are you sure you want to delete?");
+    if (confirmDelete) {
+      deleteQakReply(qakReply_id)
+        .then(() => {
+          navigate("/qaks");
+        })
+        .catch((error) => {
+          console.log(error);
+          window.alert("You need to sign in to perform this operation");
+          navigate("/qaks");
+        });
     }
   }
 
@@ -316,34 +304,41 @@ const Qak = ({ user }) => {
                                                   QakReplies.createdAt
                                                 ).format("MM/DD/YYYY")}`}
                                           </p>
-                                          <p style={{ marginLeft: "auto" }}>
-                                            <div className="d-flex justify-content-end">
-                                              <Link
-                                                className="ms-3"
-                                                to={`/qakReply/edit/${QakReplies.qakReply_id}`}
-                                                style={{ marginRight: "10px" }}
-                                              >
-                                                <FaRegEdit
-                                                  size={"23px"}
-                                                  color="purple"
-                                                />
-                                              </Link>
-                                              <Link
-                                                to={"#"}
-                                                onClick={handleDeleteQakReply.bind(
-                                                  this,
-                                                  QakReplies.qakReply_id,
-                                                  QakReplies.User.user_id
-                                                )}
-                                              >
-                                                <FaTrashAlt
-                                                  className="trash"
-                                                  size={"20px"}
-                                                  color="green"
-                                                />
-                                              </Link>
-                                            </div>
-                                          </p>
+                                          {loggedUser &&
+                                          q.user_id == loggedUser.user_id ? (
+                                            <p style={{ marginLeft: "auto" }}>
+                                              <div className="d-flex justify-content-end">
+                                                <Link
+                                                  className="ms-3"
+                                                  to={`/qakReply/edit/${QakReplies.qakReply_id}`}
+                                                  style={{
+                                                    marginRight: "10px"
+                                                  }}
+                                                >
+                                                  <FaRegEdit
+                                                    size={"23px"}
+                                                    color="purple"
+                                                  />
+                                                </Link>
+                                                <Link
+                                                  to={"#"}
+                                                  onClick={handleDeleteQakReply.bind(
+                                                    this,
+                                                    QakReplies.qakReply_id,
+                                                    QakReplies.User.user_id
+                                                  )}
+                                                >
+                                                  <FaTrashAlt
+                                                    className="trash"
+                                                    size={"20px"}
+                                                    color="green"
+                                                  />
+                                                </Link>
+                                              </div>
+                                            </p>
+                                          ) : (
+                                            <></>
+                                          )}
                                         </div>
                                       </div>
                                     </div>
