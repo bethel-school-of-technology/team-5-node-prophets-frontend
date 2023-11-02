@@ -44,6 +44,8 @@
 
 .edit,
 .delete {
+  display: flex;
+  justify-content: end;
   margin-left: 20px;
   text-decoration: underline;
   color: blue;

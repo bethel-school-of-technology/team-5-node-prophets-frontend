@@ -55,7 +55,6 @@ const Navigation = ({ user }) => {
     e.preventDefault();
   };
 
-  // Function to toggle search visibility - Joe
   const toggleSearchModal = () => setSearchModalVisible(!searchModalVisible);
 
   let { user_id } = useParams();
@@ -113,7 +112,7 @@ const Navigation = ({ user }) => {
                                 <img
                                   src={profilePicture}
                                   className="img-border rounded-circle"
-                                  alt="avatar"
+                                  alt=""
                                   height={35}
                                   width={35}
                                 />
@@ -151,8 +150,7 @@ const Navigation = ({ user }) => {
                         <Link to="/qaks" className="nav-link">
                           <strong>QAK</strong>
                         </Link>
-                        {/* Search icon - Joe */}
-                        {/* <div className="nav-search-icon"> */}
+
                         <Link className="nav-link">
                           <FontAwesomeIcon
                             className="search-tool"
@@ -161,8 +159,6 @@ const Navigation = ({ user }) => {
                             size="xl"
                           />
                         </Link>
-
-                        {/* </div> */}
                       </Nav>
                     </Offcanvas.Body>
                   </Navbar.Offcanvas>
@@ -171,7 +167,6 @@ const Navigation = ({ user }) => {
             </Navbar>
           ))}
 
-          {/* Floating search bar - Joe */}
           <Search
             show={searchModalVisible}
             handleClose={toggleSearchModal}

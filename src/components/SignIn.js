@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal, Form, Button, Col, Toast, Row } from "react-bootstrap";
+import { Modal, Form, Button } from "react-bootstrap";
 import UserContext from "../contexts/UserContext";
 
 import "../styles/SignIn.css";
@@ -60,9 +60,6 @@ const SignIn = ({ show, handleClose }) => {
       <Modal show={show} onHide={handleClose} centered>
         <div className="form-wrap">
           <div className="form-case">
-            <div className="close-button">
-              {/* <CloseButton className="button-close" onClick={handleClose} /> */}
-            </div>
             <Modal.Body>
               <p className="register">
                 Not a member?{" "}

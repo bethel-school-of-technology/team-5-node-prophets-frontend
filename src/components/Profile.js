@@ -7,16 +7,26 @@ import moment from "moment";
 import NewQak from "./NewQak";
 import { Card, ListGroup } from "react-bootstrap";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
+import QakContext from "../contexts/QakContext";
 
 const Profile = ({ user }) => {
   let params = useParams();
   let navigate = useNavigate();
   const [loggedUser, setLoggedUser] = useState([]);
-  const [userReply, setUserReply] = useState([]);
+  const [userConnect, setUserConnect] = useState([]);
 
   const baseUrl = "http://localhost:3000/api/users";
 
-  let { getUserQaks, deleteQak } = useContext(UserContext);
+  let { getUserQaks } = useContext(UserContext);
+
+  let { deleteQak } = useContext(QakContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      await getAllUsers();
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -33,7 +43,7 @@ const Profile = ({ user }) => {
   }, []);
 
   function getAllUsers() {
-    return axios.get(baseUrl).then((response) => setUserReply(response.data));
+    return axios.get(baseUrl).then((response) => setUserConnect(response.data));
   }
 
   const [articles, setArticles] = useState([]);
@@ -67,18 +77,20 @@ const Profile = ({ user }) => {
 
   function handleDelete(qak_id) {
     if (user) {
+      window.alert("You are not allowed to perform this operation");
+      navigate("/qaks");
+    } else {
       const confirmDelete = window.confirm("Are you sure you want to delete?");
       if (confirmDelete) {
-        deleteQak(qak_id).then(() => {
-          navigate("/qaks");
-        });
-      } else {
-        window.alert("You are not allowed to perform this operation");
-        navigate("/qaks").catch((error) => {
-          console.log(error);
-          window.alert("You need to sign in to perform this operation");
-          navigate("/qaks");
-        });
+        deleteQak(qak_id)
+          .then(() => {
+            navigate(window.location.reload());
+          })
+          .catch((error) => {
+            console.log(error);
+            window.alert("You need to sign in to perform this operation");
+            navigate(window.location);
+          });
       }
     }
   }
@@ -93,11 +105,12 @@ const Profile = ({ user }) => {
       state,
       createdAt,
       profilePicture,
-      Qaks
+      Qaks,
+      QakReplies,
+      User
     } = loggedUser;
     let qaksByUser = [];
     qaksByUser.push({ Qaks });
-    console.log(qaksByUser[0]);
     return (
       <div>
         <div className="prof-wrap">
@@ -110,7 +123,7 @@ const Profile = ({ user }) => {
                       <div className="card-body text-center">
                         <img
                           src={profilePicture}
-                          alt="avatar"
+                          alt=""
                           className="rounded-circle img-fluid"
                           style={{ width: "150px", height: "150px" }}
                         />
@@ -213,34 +226,41 @@ const Profile = ({ user }) => {
                       {/* Place your content for Latest Qaks here */}
 
                       <br />
-
                       <div className="q-card mb-4" key={user}>
                         {Qaks?.sort(
                           (a, b) =>
                             moment(b.createdAt).valueOf() -
                             moment(a.createdAt).valueOf()
-                        ).map((q) => {
+                        ).map((q, i) => {
                           return (
-                            <div key={q.qak_id}>
-                              <div className="q">
-                                <div>
-                                  <h4>{username}</h4>
-                                </div>
-                                <p>{q.qak}</p>
-                                <div className="d-flex justify-content-end">
-                                  <Link className="pe-3">
-                                    <FaRegEdit size={"23px"} color="purple" />
-                                  </Link>
-                                  <Link
-                                    to={"#"}
-                                    onClick={handleDelete.bind(this, q.qak)}
-                                  >
-                                    <FaTrashAlt
-                                      className="trash"
-                                      size={"20px"}
-                                      color="green"
-                                    />
-                                  </Link>
+                            <div key={i}>
+                              <div className="qaklist mb-3" key={q.qak_id}>
+                                <div className="q">
+                                  <div>
+                                    <h4>{username}</h4>
+                                  </div>
+                                  <p>{q.qak}</p>
+                                  <div className="d-flex justify-content-end">
+                                    <Link
+                                      to={`/userqak/${q.qak_id}/edit`}
+                                      className="pe-3"
+                                    >
+                                      <FaRegEdit size={"23px"} color="purple" />
+                                    </Link>
+                                    <Link
+                                      to={"#"}
+                                      onClick={handleDelete.bind(
+                                        this,
+                                        q.qak_id
+                                      )}
+                                    >
+                                      <FaTrashAlt
+                                        className="trash"
+                                        size={"20px"}
+                                        color="green"
+                                      />
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -280,10 +300,13 @@ const Profile = ({ user }) => {
                     </Card.Header>
                     <div className="col-12">
                       <Card.Body className="commenter-list">
-                        {userReply.slice(1, 6).map((user, id) => (
+                        {userConnect.slice(1, 6).map((user, id) => (
                           <ListGroup key={id}>
                             <div className="top-com">
-                              <Link to="/profile" className="top-com-link">
+                              <Link
+                                to={`/noprofile/${user.user_id}`}
+                                className="top-com-link"
+                              >
                                 <ListGroup.Item>
                                   <img
                                     key={id}
@@ -313,13 +336,3 @@ const Profile = ({ user }) => {
   return profileCard();
 };
 export default Profile;
-
-// {user ? (
-//   <Link to={`/profile/${q.User.user_id}`}>
-//     <h4>{q.User.username}</h4>
-//   </Link>
-// ) : (
-//   <Link to={`/noprofile/${q.user_id}`}>
-//     <h4>{q.User.username}</h4>
-//   </Link>
-// )}

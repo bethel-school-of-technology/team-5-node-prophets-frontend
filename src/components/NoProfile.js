@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import UserContext from "../contexts/UserContext";
+import { FaArrowLeft } from "react-icons/fa";
+import "../styles/NoProfile.css";
 
-const NoProfile = ({ user }) => {
+const NoProfile = () => {
   const params = useParams();
+  let navigate = useNavigate();
   const [noLoggedUser, setNoLoggedUser] = useState([]);
   console.log(noLoggedUser);
 
@@ -102,6 +104,18 @@ const NoProfile = ({ user }) => {
               </div>
             </div>
             <br />
+
+            <Link
+              className="backtext"
+              variant="link"
+              onClick={() => navigate(-1)}
+            >
+              <div className="d-flex justify-content-start">
+                <FaArrowLeft className="arrow" size={"25px"} />
+                <h5 className="arrow ps-2">Go Back</h5>
+              </div>
+            </Link>
+
             <div>
               <div className="row">
                 <div className="col-md-12">
