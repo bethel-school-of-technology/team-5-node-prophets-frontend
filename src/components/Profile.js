@@ -263,35 +263,6 @@ const Profile = ({ user }) => {
                                   </div>
                                 </div>
                               </div>
-                              <div>
-                                {q.QakReplies && q.QakReplies.length > 0 ? (
-                                  <div>
-                                    {q.QakReplies.map(
-                                      (QakReplies, qakReply_id) => (
-                                        <div
-                                          key={qakReply_id}
-                                          style={{ marginBottom: "15px" }}
-                                        >
-                                          <div
-                                            style={{
-                                              display: "flex",
-                                              alignItems: "center"
-                                            }}
-                                          >
-                                            <div>
-                                              <p>{QakReplies.qakReply}</p>
-                                            </div>
-                                          </div>
-                                          {/* Add a line space here */}
-                                          <hr style={{ margin: "10px 0" }} />
-                                        </div>
-                                      )
-                                    )}
-                                  </div>
-                                ) : (
-                                  <p>No replies available for this QAK.</p>
-                                )}
-                              </div>
                             </div>
                           );
                         })}
