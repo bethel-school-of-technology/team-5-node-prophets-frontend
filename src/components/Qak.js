@@ -7,6 +7,7 @@ import "../styles/Qak.css";
 import NewQak from "./NewQak";
 import QakReplyContext from "../contexts/QakReplyContext";
 import UserContext from "../contexts/UserContext";
+import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 
 const Qak = ({ user }) => {
   let navigate = useNavigate();
@@ -198,15 +199,16 @@ const Qak = ({ user }) => {
                               style={{ display: "flex", alignItems: "center" }}
                             >
                               <div>
-                                {/* {!user ? ( */}
-                                <Link to={`/noprofile/${q.user_id}`}>
-                                  <h4>{q.User.username}</h4>
-                                </Link>
-                                {/* ) : (
-                                  <Link to={`/profile/${user.user_id}`}>
+                                {loggedUser &&
+                                q.user_id == loggedUser.user_id ? (
+                                  <Link to={`/profile/${q.user_id}`}>
                                     <h4>{q.User.username}</h4>
                                   </Link>
-                                 )} */}
+                                ) : (
+                                  <Link to={`/noprofile/${q.user_id}`}>
+                                    <h4>{q.User.username}</h4>
+                                  </Link>
+                                )}
                                 <p>{q.qak}</p>
                                 <div
                                   style={{
@@ -234,7 +236,10 @@ const Qak = ({ user }) => {
                                         to={`/qaks/${q.qak_id}/edit`}
                                         style={{ marginRight: "10px" }}
                                       >
-                                        Edit
+                                        <FaRegEdit
+                                          size={"23px"}
+                                          color="purple"
+                                        />
                                       </Link>
                                       <Link
                                         to={"#"}
@@ -244,7 +249,11 @@ const Qak = ({ user }) => {
                                           q.user_id
                                         )}
                                       >
-                                        Delete
+                                        <FaTrashAlt
+                                          className="trash"
+                                          size={"20px"}
+                                          color="green"
+                                        />
                                       </Link>
                                     </p>
                                   ) : (
@@ -312,7 +321,10 @@ const Qak = ({ user }) => {
                                                 to={`/qakReply/edit/${QakReplies.qakReply_id}`}
                                                 style={{ marginRight: "10px" }}
                                               >
-                                                Edit
+                                                <FaRegEdit
+                                                  size={"23px"}
+                                                  color="purple"
+                                                />
                                               </Link>
                                               <Link
                                                 to={"#"}
@@ -322,7 +334,11 @@ const Qak = ({ user }) => {
                                                   QakReplies.User.user_id
                                                 )}
                                               >
-                                                Delete
+                                                <FaTrashAlt
+                                                  className="trash"
+                                                  size={"20px"}
+                                                  color="green"
+                                                />
                                               </Link>
                                             </p>
                                           ) : (
