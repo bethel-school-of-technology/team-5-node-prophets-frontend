@@ -233,6 +233,7 @@ const Qak = ({ user }) => {
                                   q.user_id == loggedUser.user_id ? (
                                     <p style={{ marginLeft: "auto" }}>
                                       <Link
+                                        className="ms-3"
                                         to={`/qaks/${q.qak_id}/edit`}
                                         style={{ marginRight: "10px" }}
                                       >
