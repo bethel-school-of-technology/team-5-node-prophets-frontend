@@ -157,7 +157,7 @@ const Qak = ({ user }) => {
         return (
           <div className="qak-wrap">
             <div className="qak-case">
-              <div className="rss">
+              <div>
                 <div className="divider d-flex align-items-center my-4">
                   <h4 className="form-title text-center mx-3 mb-0">
                     Question Answer Knowledge
@@ -232,30 +232,32 @@ const Qak = ({ user }) => {
                                   {loggedUser &&
                                   q.user_id == loggedUser.user_id ? (
                                     <p style={{ marginLeft: "auto" }}>
-                                      <Link
-                                        className="ms-3"
-                                        to={`/qaks/${q.qak_id}/edit`}
-                                        style={{ marginRight: "10px" }}
-                                      >
-                                        <FaRegEdit
-                                          size={"23px"}
-                                          color="purple"
-                                        />
-                                      </Link>
-                                      <Link
-                                        to={"#"}
-                                        onClick={handleDelete.bind(
-                                          this,
-                                          q.qak_id,
-                                          q.user_id
-                                        )}
-                                      >
-                                        <FaTrashAlt
-                                          className="trash"
-                                          size={"20px"}
-                                          color="green"
-                                        />
-                                      </Link>
+                                      <div className="d-flex justify-content-end">
+                                        <Link
+                                          className="ms-3"
+                                          to={`/qaks/${q.qak_id}/edit`}
+                                          style={{ marginRight: "10px" }}
+                                        >
+                                          <FaRegEdit
+                                            size={"23px"}
+                                            color="purple"
+                                          />
+                                        </Link>
+                                        <Link
+                                          to={"#"}
+                                          onClick={handleDelete.bind(
+                                            this,
+                                            q.qak_id,
+                                            q.user_id
+                                          )}
+                                        >
+                                          <FaTrashAlt
+                                            className="trash"
+                                            size={"20px"}
+                                            color="green"
+                                          />
+                                        </Link>
+                                      </div>
                                     </p>
                                   ) : (
                                     <></>
@@ -315,30 +317,32 @@ const Qak = ({ user }) => {
                                                 ).format("MM/DD/YYYY")}`}
                                           </p>
                                           <p style={{ marginLeft: "auto" }}>
-                                            <Link
-                                              className="ms-3"
-                                              to={`/qakReply/edit/${QakReplies.qakReply_id}`}
-                                              style={{ marginRight: "10px" }}
-                                            >
-                                              <FaRegEdit
-                                                size={"23px"}
-                                                color="purple"
-                                              />
-                                            </Link>
-                                            <Link
-                                              to={"#"}
-                                              onClick={handleDeleteQakReply.bind(
-                                                this,
-                                                QakReplies.qakReply_id,
-                                                QakReplies.User.user_id
-                                              )}
-                                            >
-                                              <FaTrashAlt
-                                                className="trash"
-                                                size={"20px"}
-                                                color="green"
-                                              />
-                                            </Link>
+                                            <div className="d-flex justify-content-end">
+                                              <Link
+                                                className="ms-3"
+                                                to={`/qakReply/edit/${QakReplies.qakReply_id}`}
+                                                style={{ marginRight: "10px" }}
+                                              >
+                                                <FaRegEdit
+                                                  size={"23px"}
+                                                  color="purple"
+                                                />
+                                              </Link>
+                                              <Link
+                                                to={"#"}
+                                                onClick={handleDeleteQakReply.bind(
+                                                  this,
+                                                  QakReplies.qakReply_id,
+                                                  QakReplies.User.user_id
+                                                )}
+                                              >
+                                                <FaTrashAlt
+                                                  className="trash"
+                                                  size={"20px"}
+                                                  color="green"
+                                                />
+                                              </Link>
+                                            </div>
                                           </p>
                                         </div>
                                       </div>

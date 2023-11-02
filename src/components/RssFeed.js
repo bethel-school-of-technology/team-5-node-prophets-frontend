@@ -38,11 +38,11 @@ const RssFeed = () => {
 
   return (
     <div className="rss-wrap">
-      <div>
+      <div className="rss-bg">
         <div className="rss">
           {/* Main RSS Feed */}
           <Container className="container" fluid>
-            <div className="latest col-12 col-md-12 col-lg-9 pe-3">
+            <div className="latest col-12 col-md-12 col-lg-9 pe-2">
               <Row xs={1} md={1} className="g-3">
                 <div className="divider d-flex align-items-center my-4">
                   <h4 className="latest text-center mx-3 mb-0">

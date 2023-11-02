@@ -114,17 +114,17 @@ const Profile = ({ user }) => {
     return (
       <div>
         <div className="prof-wrap">
-          <div>
+          <div className="prof-case">
             <div className="profile-section">
               <div>
                 <div>
-                  <Row className="d-flex align-items-center m-auto">
+                  <Row>
                     <Col
                       className="col-sm-12 col-md-12 col-lg-4"
                       key={params.user_id}
                     >
                       <div>
-                        <Card className="p-3">
+                        <Card className="p-2">
                           <Card.Body className="text-center">
                             <img
                               src={profilePicture}
@@ -204,7 +204,7 @@ const Profile = ({ user }) => {
             <br />
             <div>
               <div className="row">
-                <div className="col-md-8">
+                <div className="col-sm-12 col-md-12 col-lg-8">
                   <div className="divider d-flex align-items-center my-4">
                     <h4 className="latest text-center mx-3 mb-0">
                       {username}'s Qaks
