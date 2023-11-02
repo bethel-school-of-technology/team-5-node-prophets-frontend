@@ -316,34 +316,41 @@ const Qak = ({ user }) => {
                                                   QakReplies.createdAt
                                                 ).format("MM/DD/YYYY")}`}
                                           </p>
-                                          <p style={{ marginLeft: "auto" }}>
-                                            <div className="d-flex justify-content-end">
-                                              <Link
-                                                className="ms-3"
-                                                to={`/qakReply/edit/${QakReplies.qakReply_id}`}
-                                                style={{ marginRight: "10px" }}
-                                              >
-                                                <FaRegEdit
-                                                  size={"23px"}
-                                                  color="purple"
-                                                />
-                                              </Link>
-                                              <Link
-                                                to={"#"}
-                                                onClick={handleDeleteQakReply.bind(
-                                                  this,
-                                                  QakReplies.qakReply_id,
-                                                  QakReplies.User.user_id
-                                                )}
-                                              >
-                                                <FaTrashAlt
-                                                  className="trash"
-                                                  size={"20px"}
-                                                  color="green"
-                                                />
-                                              </Link>
-                                            </div>
-                                          </p>
+                                          {loggedUser &&
+                                          q.user_id == loggedUser.user_id ? (
+                                            <p style={{ marginLeft: "auto" }}>
+                                              <div className="d-flex justify-content-end">
+                                                <Link
+                                                  className="ms-3"
+                                                  to={`/qakReply/edit/${QakReplies.qakReply_id}`}
+                                                  style={{
+                                                    marginRight: "10px"
+                                                  }}
+                                                >
+                                                  <FaRegEdit
+                                                    size={"23px"}
+                                                    color="purple"
+                                                  />
+                                                </Link>
+                                                <Link
+                                                  to={"#"}
+                                                  onClick={handleDeleteQakReply.bind(
+                                                    this,
+                                                    QakReplies.qakReply_id,
+                                                    QakReplies.User.user_id
+                                                  )}
+                                                >
+                                                  <FaTrashAlt
+                                                    className="trash"
+                                                    size={"20px"}
+                                                    color="green"
+                                                  />
+                                                </Link>
+                                              </div>
+                                            </p>
+                                          ) : (
+                                            <></>
+                                          )}
                                         </div>
                                       </div>
                                     </div>

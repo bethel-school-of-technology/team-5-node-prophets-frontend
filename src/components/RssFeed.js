@@ -12,7 +12,6 @@ import {
 import "../styles/RssFeed.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const RssFeed = () => {
   const [articles, setArticles] = useState([]);
