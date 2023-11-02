@@ -316,6 +316,7 @@ const Qak = ({ user }) => {
                                           </p>
                                           <p style={{ marginLeft: "auto" }}>
                                             <Link
+                                              className="ms-3"
                                               to={`/qakReply/edit/${QakReplies.qakReply_id}`}
                                               style={{ marginRight: "10px" }}
                                             >
