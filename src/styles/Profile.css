@@ -53,3 +53,10 @@
 .trash {
   color: rgba(114, 76, 239, 0.897);
 }
+
+.bio {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  justify-content: center;
+}
