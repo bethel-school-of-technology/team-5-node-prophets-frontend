@@ -107,7 +107,7 @@ const Qak = () => {
                 now.clone().subtract(1, "day").isSame(q.createdAt, "day")
               )
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );
@@ -116,7 +116,7 @@ const Qak = () => {
             return qakData
               .filter((q) => q.createdAt.isSameOrAfter(oneMonthAgo))
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );
@@ -125,7 +125,7 @@ const Qak = () => {
             return qakData
               .filter((q) => moment(q.createdAt).isBefore(oneMonthAgo))
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );
@@ -133,7 +133,7 @@ const Qak = () => {
             return qakData
               .filter((q) => now.diff(q.createdAt, "days") <= 7)
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );
@@ -201,7 +201,7 @@ const Qak = () => {
                                 <div
                                   style={{
                                     display: "flex",
-                                    alignItems: "center"
+                                    alignItems: "center",
                                   }}
                                 >
                                   <p>
@@ -273,7 +273,7 @@ const Qak = () => {
                                     <div
                                       style={{
                                         display: "flex",
-                                        alignItems: "center"
+                                        alignItems: "center",
                                       }}
                                     >
                                       <div>
@@ -286,7 +286,7 @@ const Qak = () => {
                                         <div
                                           style={{
                                             display: "flex",
-                                            alignItems: "center"
+                                            alignItems: "center",
                                           }}
                                         >
                                           <p>
@@ -305,14 +305,15 @@ const Qak = () => {
                                                 ).format("MM/DD/YYYY")}`}
                                           </p>
                                           {loggedUser &&
-                                          q.user_id == loggedUser.user_id ? (
+                                          QakReplies.User.user_id ==
+                                            loggedUser.user_id ? (
                                             <p style={{ marginLeft: "auto" }}>
                                               <div className="d-flex justify-content-end">
                                                 <Link
                                                   className="ms-3"
                                                   to={`/qakReply/edit/${QakReplies.qakReply_id}`}
                                                   style={{
-                                                    marginRight: "10px"
+                                                    marginRight: "10px",
                                                   }}
                                                 >
                                                   <FaRegEdit
