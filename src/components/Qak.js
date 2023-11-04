@@ -107,7 +107,7 @@ const Qak = () => {
                 now.clone().subtract(1, "day").isSame(q.createdAt, "day")
               )
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );
@@ -116,7 +116,7 @@ const Qak = () => {
             return qakData
               .filter((q) => q.createdAt.isSameOrAfter(oneMonthAgo))
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );
@@ -125,7 +125,7 @@ const Qak = () => {
             return qakData
               .filter((q) => moment(q.createdAt).isBefore(oneMonthAgo))
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );
@@ -133,7 +133,7 @@ const Qak = () => {
             return qakData
               .filter((q) => now.diff(q.createdAt, "days") <= 7)
               .sort(
-                (a, b) =>
+                (b, a) =>
                   moment(b.createdAt || b.updatedAt).valueOf() -
                   moment(a.createdAt || a.updatedAt).valueOf()
               );
