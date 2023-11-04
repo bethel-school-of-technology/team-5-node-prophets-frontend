@@ -201,7 +201,7 @@ const Qak = () => {
                                 <div
                                   style={{
                                     display: "flex",
-                                    alignItems: "center"
+                                    alignItems: "center",
                                   }}
                                 >
                                   <p>
@@ -273,7 +273,7 @@ const Qak = () => {
                                     <div
                                       style={{
                                         display: "flex",
-                                        alignItems: "center"
+                                        alignItems: "center",
                                       }}
                                     >
                                       <div>
@@ -286,7 +286,7 @@ const Qak = () => {
                                         <div
                                           style={{
                                             display: "flex",
-                                            alignItems: "center"
+                                            alignItems: "center",
                                           }}
                                         >
                                           <p>
@@ -305,14 +305,15 @@ const Qak = () => {
                                                 ).format("MM/DD/YYYY")}`}
                                           </p>
                                           {loggedUser &&
-                                          q.user_id == loggedUser.user_id ? (
+                                          QakReplies.User.user_id ==
+                                            loggedUser.user_id ? (
                                             <p style={{ marginLeft: "auto" }}>
                                               <div className="d-flex justify-content-end">
                                                 <Link
                                                   className="ms-3"
                                                   to={`/qakReply/edit/${QakReplies.qakReply_id}`}
                                                   style={{
-                                                    marginRight: "10px"
+                                                    marginRight: "10px",
                                                   }}
                                                 >
                                                   <FaRegEdit
