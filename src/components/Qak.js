@@ -305,7 +305,8 @@ const Qak = () => {
                                                 ).format("MM/DD/YYYY")}`}
                                           </p>
                                           {loggedUser &&
-                                          q.user_id == loggedUser.user_id ? (
+                                          QakReplies.User.user_id ==
+                                            loggedUser.user_id ? (
                                             <p style={{ marginLeft: "auto" }}>
                                               <div className="d-flex justify-content-end">
                                                 <Link
