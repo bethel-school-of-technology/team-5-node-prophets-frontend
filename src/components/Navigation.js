@@ -60,7 +60,7 @@ const Navigation = ({ user }) => {
   let { user_id } = useParams();
 
   function avatar() {
-    let { profilePicture } = loggedUser;
+    let { fullname, profilePicture } = loggedUser;
 
     return (
       <>
@@ -120,7 +120,7 @@ const Navigation = ({ user }) => {
                               <span>
                                 {" "}
                                 <strong className="prof-name">
-                                  HELLO {user.fullname}!
+                                  HELLO {fullname}!
                                 </strong>
                               </span>
                             </Link>

@@ -10,7 +10,6 @@ const NoProfile = () => {
   const params = useParams();
   let navigate = useNavigate();
   const [noLoggedUser, setNoLoggedUser] = useState([]);
-  console.log(noLoggedUser);
 
   let { getOneUserQak } = useContext(UserContext);
 
