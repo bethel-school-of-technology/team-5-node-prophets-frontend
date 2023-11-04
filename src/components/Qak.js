@@ -201,7 +201,7 @@ const Qak = () => {
                                 <div
                                   style={{
                                     display: "flex",
-                                    alignItems: "center",
+                                    alignItems: "center"
                                   }}
                                 >
                                   <p>
@@ -219,8 +219,8 @@ const Qak = () => {
                                   </p>
                                   {loggedUser &&
                                   q.user_id == loggedUser.user_id ? (
-                                    <p style={{ marginLeft: "auto" }}>
-                                      <div className="d-flex justify-content-end">
+                                    <div className="d-flex justify-content-end">
+                                      <p style={{ marginLeft: "auto" }}>
                                         <Link
                                           className="ms-3"
                                           to={`/qaks/${q.qak_id}/edit`}
@@ -245,8 +245,8 @@ const Qak = () => {
                                             color="green"
                                           />
                                         </Link>
-                                      </div>
-                                    </p>
+                                      </p>
+                                    </div>
                                   ) : (
                                     <></>
                                   )}
@@ -273,7 +273,7 @@ const Qak = () => {
                                     <div
                                       style={{
                                         display: "flex",
-                                        alignItems: "center",
+                                        alignItems: "center"
                                       }}
                                     >
                                       <div>
@@ -286,7 +286,7 @@ const Qak = () => {
                                         <div
                                           style={{
                                             display: "flex",
-                                            alignItems: "center",
+                                            alignItems: "center"
                                           }}
                                         >
                                           <p>
@@ -307,13 +307,13 @@ const Qak = () => {
                                           {loggedUser &&
                                           QakReplies.User.user_id ==
                                             loggedUser.user_id ? (
-                                            <p style={{ marginLeft: "auto" }}>
-                                              <div className="d-flex justify-content-end">
+                                            <div className="d-flex justify-content-end">
+                                              <p style={{ marginLeft: "auto" }}>
                                                 <Link
                                                   className="ms-3"
                                                   to={`/qakReply/edit/${QakReplies.qakReply_id}`}
                                                   style={{
-                                                    marginRight: "10px",
+                                                    marginRight: "10px"
                                                   }}
                                                 >
                                                   <FaRegEdit
@@ -335,8 +335,8 @@ const Qak = () => {
                                                     color="green"
                                                   />
                                                 </Link>
-                                              </div>
-                                            </p>
+                                              </p>
+                                            </div>
                                           ) : (
                                             <></>
                                           )}
