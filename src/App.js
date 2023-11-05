@@ -41,7 +41,7 @@ function App() {
           <SearchProvider>
             <UserProvider>
               <BrowserRouter>
-                <Navigation user={user} />
+                <Navigation />
                 <Routes>
                   <Route path="/" element={<Home />} index />
                   <Route path="/search" element={<Search />} />
