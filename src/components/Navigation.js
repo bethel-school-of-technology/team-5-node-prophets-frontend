@@ -8,7 +8,7 @@ import Search from "./Search";
 import SignIn from "./SignIn";
 import UserContext from "../contexts/UserContext";
 
-const Navigation = ({ user }) => {
+const Navigation = () => {
   const [loggedUser, setLoggedUser] = useState([]);
 
   let { getUserQaks } = useContext(UserContext);
@@ -101,10 +101,10 @@ const Navigation = ({ user }) => {
                           <strong>HOME</strong>
                         </Link>
 
-                        {user && (
+                        {loggedUser.user_id && (
                           <React.Fragment>
                             <Link
-                              to={`/profile/${user.user_id}`}
+                              to={`/profile/${loggedUser.user_id}`}
                               className="nav-link"
                               key={user_id}
                             >
@@ -130,7 +130,7 @@ const Navigation = ({ user }) => {
                             </Link>
                           </React.Fragment>
                         )}
-                        {!user && (
+                        {!loggedUser.user_id && (
                           <React.Fragment>
                             <Link to="/signup" className="nav-link">
                               <strong>SIGN UP</strong>
